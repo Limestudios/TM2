@@ -17,6 +17,21 @@ namespace TM2
     {
 
         #region Variables
+        /// <summary>
+        /// Creating our own custom contentManager
+        /// </summary>
+
+        ContentManager content;
+
+        /// <summary>
+        /// current screen that is being displayed
+        /// </summary>
+        GameScreen currentScreen;
+
+        /// <summary>
+        /// New screen that we will be loading
+        /// </summary>
+        GameScreen newScreen;
 
         /// <summary>
         /// Screen Manager Instance ( this is good coding right ;) )
@@ -55,6 +70,38 @@ namespace TM2
         {
             get { return dimensions; }
             set { dimensions = value; }
+        }
+
+        #endregion
+
+        #region Main Methods
+
+        public void AddScreen(GameScreen screen)
+        {
+            //just in case
+            newScreen = screen;
+            screenStack.Push(screen);
+            currentScreen.UnloadContent();
+            currentScreen = newScreen;
+            currentScreen.LoadContent(content);
+        }
+
+        public void Initialize()
+        {
+            currentScreen = new SplashScreen();
+        }
+        public void LoadContent(ContentManager Content)
+        {
+            content = new ContentManager(Content.ServiceProvider, "Content");
+            currentScreen.LoadContent(Content);
+        }
+        public void Update(GameTime gameTime)
+        {
+            currentScreen.Update(gameTime);
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            currentScreen.Draw(spriteBatch);
         }
 
         #endregion

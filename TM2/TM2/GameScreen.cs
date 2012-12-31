@@ -15,9 +15,23 @@ namespace TM2
 {
     public class GameScreen
     {
-        public virtual void Initialize() { }
-        public virtual void LoadContent(ContentManager Content) { }
-        public virtual void Update(GameTime gametime) { }
-        public virtual void Draw(SpriteBatch spriteBatch) { }
+        protected ContentManager content;
+
+        public virtual void LoadContent(ContentManager Content)
+        {
+            content = new ContentManager(Content.ServiceProvider, "Content");
+        }
+        public virtual void UnloadContent()
+        {
+            content.Unload();
+        }
+        public virtual void Update(GameTime gameTime)
+        {
+
+        }
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+
+        }
     }
 }
