@@ -57,8 +57,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SplashScreen\SplashTexture.png">
-      <Name>SplashTexture</Name>
+    <Compile Include="SplashScreen\LSSplash.png">
+      <Name>LSSplash</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -103,6 +103,13 @@
   <ItemGroup>
     <Compile Include="fade.png">
       <Name>fade</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SplashScreen\TMSplash.jpg">
+      <Name>TMSplash</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

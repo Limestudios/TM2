@@ -13,9 +13,6 @@ namespace TM2
 
         LoadType type;
 
-        List<List<string>> attributes = new List<List<string>>();
-        List<List<string>> contents = new List<List<string>>();
-
         List<string> tempAttributes;
         List<string> tempContents;
 
@@ -30,17 +27,18 @@ namespace TM2
                 {
                     string line = reader.ReadLine();
 
-                    if (line.Contains("load="))
+                    if (line.Contains("Load="))
                     {
                         tempAttributes = new List<string>();
-                        line.Remove(0, line.IndexOf("=") + 1);
+                        line = line.Remove(0, line.IndexOf("=") + 1);
                         type = LoadType.Attributes;
                     }
                     else
                     {
-                        tempContents = new List<string>();
                         type = LoadType.Contents;
                     }
+
+                    tempContents = new List<string>();
 
                     string[] lineArray = line.Split(']');
 

@@ -58,6 +58,11 @@ namespace TM2
             set { activateValue = value; }
         }
 
+        public bool Increase
+        {
+            set { increase = value; }
+        }
+
         public override void LoadContent(ContentManager Content, 
             Texture2D image, string text, Vector2 position)
         {
@@ -82,9 +87,15 @@ namespace TM2
                     else
                         alpha += fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (alpha <= 0.0f)
+                    {
                         alpha = 0.0f;
+                        increase = true;
+                    }
                     else if (alpha >= 1.0f)
+                    {
                         alpha = 1.0f;
+                        increase = false;
+                    }
                 }
 
                 if (alpha == activateValue)
@@ -93,7 +104,6 @@ namespace TM2
                     timer -= gameTime.ElapsedGameTime;
                     if (timer.TotalSeconds <= 0)
                     {
-                        increase = !increase;
                         timer = defaultTime;
                         stopUpdating = false;
                     }

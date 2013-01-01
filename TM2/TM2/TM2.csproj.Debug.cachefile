@@ -1,9 +1,11 @@
 Content\SplashScreen\Coolvetica Rg.xnb
 Content\SplashScreen\SplashSound.xnb
-Content\SplashScreen\SplashTexture.xnb
 Content\TitleScreen\Coolvetica Rg.xnb
 Content\TitleScreen\SplashSound.xnb
 Content\TitleScreen\SplashTexture.xnb
 Content\SplashScreen\SplashBackground.xnb
 Content\Coolvetica Rg.xnb
 Content\fade.xnb
+Content\SplashScreen\LSSplash.xnb
+Content\SplashScreen\TMSplash.xnb
+Load\Splash.txt

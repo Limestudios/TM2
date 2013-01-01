@@ -74,7 +74,8 @@ namespace TM2
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed |
+                Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // TODO: Add your update logic here
@@ -88,7 +89,7 @@ namespace TM2
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();

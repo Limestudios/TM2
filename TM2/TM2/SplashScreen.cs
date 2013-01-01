@@ -15,47 +15,92 @@ namespace TM2
 {
     public class SplashScreen : GameScreen
     {
-        Boolean first = true;
         KeyboardState keyState;
         SpriteFont font;
-        SoundEffect splashSound;
-        Texture2D splashTexture;
-        Texture2D splashBackground;
+
+        List<FadeAnimation> fade;
+        List<Texture2D> images;
+        List<SoundEffect> sounds;
+
+        FileManager fileManager;
+
+        int imageNumber;
 
         public override void LoadContent(ContentManager Content)
         {
             base.LoadContent(Content);
             //The splash screen Text
             font = content.Load<SpriteFont>("SplashScreen/Coolvetica Rg");
-            //The splash screen sound
-            splashSound = content.Load<SoundEffect>("SplashScreen/SplashSound");
-            //The splash screen Texture
-            splashTexture = content.Load<Texture2D>("SplashScreen/SplashTexture");
-            //The splash screen Background Texture
-            splashBackground = content.Load<Texture2D>("SplashScreen/SplashBackground");
+
+            imageNumber = 0;
+            fileManager = new FileManager();
+            fade = new List<FadeAnimation>();
+            images = new List<Texture2D>();
+            sounds = new List<SoundEffect>();
+
+            fileManager.LoadContent("Load/Splash.txt", attributes, contents);
+
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                for (int j = 0; j < attributes[i].Count; j++)
+                {
+                    switch (attributes[i][j])
+                    {
+                        case "Image":
+                            images.Add(content.Load<Texture2D>(contents[i][j]));
+                            fade.Add(new FadeAnimation());
+                            break;
+                        case "Sounds":
+                            sounds.Add(content.Load<SoundEffect>(contents[i][j]));
+                            break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < fade.Count; i++)
+            {
+                fade[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
+                fade[i].Scale = 1.5f;
+                fade[i].IsActive = true;
+            }
+
+            for (int i = 0; i < sounds.Count; i++)
+            {
+                sounds[i].Play();
+            }
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
+            fileManager = null;
         }
 
         public override void Update(GameTime gameTime)
         {
             keyState = Keyboard.GetState();
-            if (first) { splashSound.Play(); first = false; }
-            if (keyState.IsKeyDown(Keys.Z))
-                ScreenManager.Instance.AddScreen(new TitleScreen());
+            //if (keyState.IsKeyDown(Keys.Z))
+                //ScreenManager.Instance.AddScreen(new TitleScreen());
+
+            fade[imageNumber].Update(gameTime);
+
+            if(fade[imageNumber].Alpha == 0.0f)
+                imageNumber++;
+
+            if (imageNumber >= fade.Count - 1 || keyState.IsKeyDown(Keys.Enter))
+            {
+                if (fade[imageNumber].Alpha != 1.0f)
+                    ScreenManager.Instance.AddScreen(new TitleScreen(),
+                    fade[imageNumber].Alpha);
+                else
+                    ScreenManager.Instance.AddScreen(new TitleScreen());
+            }
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(splashBackground,
-                new Vector2(0, 0), Color.White);
-            spriteBatch.DrawString(font, "A game by",
-                new Vector2(ScreenManager.Instance.Dimensions.X/2, 100), Color.Black);
-            spriteBatch.Draw(splashTexture,
-                new Vector2(170, 200), Color.White);
+            fade[imageNumber].Draw(spriteBatch);
         }
     }
 }
