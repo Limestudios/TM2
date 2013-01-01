@@ -60,7 +60,7 @@ namespace TM2
             for (int i = 0; i < fade.Count; i++)
             {
                 fade[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
-                fade[i].Scale = 1.5f;
+                fade[i].Scale = 1.0f;
                 fade[i].IsActive = true;
             }
 
@@ -100,7 +100,8 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            fade[imageNumber].Draw(spriteBatch);
+            if (imageNumber <= fade.Count)
+                fade[imageNumber].Draw(spriteBatch);
         }
     }
 }
