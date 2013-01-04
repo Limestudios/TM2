@@ -67,10 +67,13 @@ namespace TM2
             if (inputManager.KeyDown(Keys.Space, Keys.Enter))
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
 
-            if (videoPlayer.State == MediaState.Stopped)
+            if (inputManager.KeyDown(Keys.D))
             {
-                videoPlayer.IsLooped = true;
-                videoPlayer.Play(video);
+                if (videoPlayer.State == MediaState.Stopped)
+                {
+                    videoPlayer.IsLooped = true;
+                    videoPlayer.Play(video);
+                }
             }
                 
         }
@@ -89,8 +92,8 @@ namespace TM2
             if (videoTexture != null)
             {
                 spriteBatch.Draw(videoTexture, screen, Color.White);
+                spriteBatch.DrawString(font, "Happy Birthday Dul!", new Vector2(100, 100), Color.Black);
             }
-            spriteBatch.DrawString(font, "Happy Birthday!", new Vector2(100,100), Color.Black);
         }
     }
 }

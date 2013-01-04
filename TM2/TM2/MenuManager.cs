@@ -165,7 +165,7 @@ namespace TM2
                         case "Sounds":
                             song = content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
-                            MediaPlayer.Volume = 2.0f;
+                            MediaPlayer.Volume = 0.1f;
                             MediaPlayer.IsRepeating = true;
                             break;
                         case "Align" :
