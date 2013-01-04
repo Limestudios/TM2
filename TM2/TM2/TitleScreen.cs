@@ -29,8 +29,14 @@ namespace TM2
 
         public override void UnloadContent()
         {
-            base.UnloadContent();
             menu.UnloadContent();
+            inputManager = null;
+            attributes.Clear();
+            contents.Clear();
+            attributes.Clear();
+            contents.Clear();
+            content.Unload();
+            MediaPlayer.Stop();
         }
 
         public override void Update(GameTime gameTime)

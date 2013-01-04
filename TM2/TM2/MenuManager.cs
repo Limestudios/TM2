@@ -165,7 +165,7 @@ namespace TM2
                         case "Sounds":
                             song = content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
-                            MediaPlayer.Volume = 0.1f;
+                            MediaPlayer.Volume = 2.0f;
                             MediaPlayer.IsRepeating = true;
                             break;
                         case "Align" :
@@ -192,8 +192,6 @@ namespace TM2
             menuImages.Clear();
             menuItems.Clear();
             animationTypes.Clear();
-            MediaPlayer.Stop();
-            fileManager = null;
         }
 
         public void Update(GameTime gameTime, InputManager inputManager)

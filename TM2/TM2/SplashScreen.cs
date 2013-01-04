@@ -19,7 +19,7 @@ namespace TM2
 
         List<FadeAnimation> fade;
         List<Texture2D> images;
-        List<SoundEffect> sounds;
+        Song song;
 
         FileManager fileManager;
 
@@ -35,7 +35,6 @@ namespace TM2
             fileManager = new FileManager();
             fade = new List<FadeAnimation>();
             images = new List<Texture2D>();
-            sounds = new List<SoundEffect>();
 
             fileManager.LoadContent("Load/Splash.txt", attributes, contents);
 
@@ -50,7 +49,10 @@ namespace TM2
                             fade.Add(new FadeAnimation());
                             break;
                         case "Sounds":
-                            sounds.Add(content.Load<SoundEffect>(contents[i][j]));
+                            song = content.Load<Song>(contents[i][j]);
+                            MediaPlayer.Play(song);
+                            MediaPlayer.Volume = 0.1f;
+                            MediaPlayer.IsRepeating = true;
                             break;
                     }
                 }
@@ -65,11 +67,6 @@ namespace TM2
                 fade[i].Alpha = 2.0f;
                 fade[i].Increase = true;
                 fade[i].Timer = new TimeSpan(0, 0, 10);
-            }
-
-            for (int i = 0; i < sounds.Count; i++)
-            {
-                sounds[i].Play();
             }
         }
 
