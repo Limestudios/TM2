@@ -1,8 +1,6 @@
 ﻿Load=[Image]
 [SplashScreen/LSSplash]
 [SplashScreen/TMSplash]
-EndLoad=[Image]
 
 Load=[Sounds]
 [SplashScreen/SplashSound]
-EndLoad=[Sounds]

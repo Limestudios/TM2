@@ -8,4 +8,19 @@ Content\Coolvetica Rg.xnb
 Content\fade.xnb
 Content\SplashScreen\LSSplash.xnb
 Content\SplashScreen\TMSplash.xnb
+Content\TitleScreen\CaramellDansen.xnb
+Content\TitleScreen\23 SENSATION.xnb
+Content\null.xnb
+Content\TitleScreen\button.xnb
+Content\Player\player.xnb
+Content\CreditsScreen\Coolvetica Rg.xnb
+Content\CreditsScreen\CaramellDansen.xnb
+Content\CreditsScreen\SplashSound.xnb
+Content\CreditsScreen\button.xnb
+Content\CreditsScreen\SplashTexture.xnb
+Content\CreditsScreen\23 SENSATION.xnb
+Content\TitleScreen\23 SENSATION.wma
+Content\CreditsScreen\23 SENSATION.wma
+Load\Player.txt
+Load\Menus.txt
 Load\Splash.txt

@@ -15,7 +15,6 @@ namespace TM2
 {
     public class SplashScreen : GameScreen
     {
-        KeyboardState keyState;
         SpriteFont font;
 
         List<FadeAnimation> fade;
@@ -26,9 +25,9 @@ namespace TM2
 
         int imageNumber;
 
-        public override void LoadContent(ContentManager Content)
+        public override void LoadContent(ContentManager Content, InputManager inputManager)
         {
-            base.LoadContent(Content);
+            base.LoadContent(Content, inputManager);
             //The splash screen Text
             font = content.Load<SpriteFont>("SplashScreen/Coolvetica Rg");
 
@@ -62,6 +61,10 @@ namespace TM2
                 fade[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
                 fade[i].Scale = 1.0f;
                 fade[i].IsActive = true;
+                fade[i].FadeSpeed = 0.6f;
+                fade[i].Alpha = 2.0f;
+                fade[i].Increase = true;
+                fade[i].Timer = new TimeSpan(0, 0, 10);
             }
 
             for (int i = 0; i < sounds.Count; i++)
@@ -74,26 +77,23 @@ namespace TM2
         {
             base.UnloadContent();
             fileManager = null;
+            inputManager = null;
+            attributes.Clear();
+            contents.Clear();
         }
 
         public override void Update(GameTime gameTime)
         {
-            keyState = Keyboard.GetState();
-            //if (keyState.IsKeyDown(Keys.Z))
-                //ScreenManager.Instance.AddScreen(new TitleScreen());
+            inputManager.Update();
 
             fade[imageNumber].Update(gameTime);
 
             if(fade[imageNumber].Alpha == 0.0f)
                 imageNumber++;
 
-            if (imageNumber >= fade.Count - 1 || keyState.IsKeyDown(Keys.Enter))
+            if (imageNumber >= fade.Count - 1 || inputManager.KeyPressed(Keys.Enter))
             {
-                if (fade[imageNumber].Alpha != 1.0f)
-                    ScreenManager.Instance.AddScreen(new TitleScreen(),
-                    fade[imageNumber].Alpha);
-                else
-                    ScreenManager.Instance.AddScreen(new TitleScreen());
+                ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
             }
 
         }

@@ -1,0 +1,25 @@
+﻿Load=[Title]
+
+Load=[Axis][Align][Font][Animation]
+[2][Center][Coolvetica Rg][Fade]
+
+Load=[Item][LinkType][LinkID]
+[NEW GAME][Screen][GameplayScreen]
+[LOAD GAME][Screen][SplashScreen]
+[OPTIONS][Screen][SplashScreen]
+[CREDITS][Screen][CreditsScreen]
+
+Load=[Sounds]
+[TitleScreen/23 SENSATION]
+
+EndLoad=[Title]
+
+Load=[Credits]
+
+Load=[Axis][Align][Font][Animation]
+[1][Center][Coolvetica Rg][Fade]
+
+Load=[Sounds]
+[TitleScreen/23 SENSATION]
+
+EndLoad=[Credits]

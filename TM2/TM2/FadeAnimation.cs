@@ -18,7 +18,7 @@ namespace TM2
         bool increase;
         float fadeSpeed;
         TimeSpan defaultTime, timer;
-        bool startTimer;
+        //bool startTimer;
         float activateValue;
         bool stopUpdating;
         float defaultAlpha;
@@ -112,6 +112,7 @@ namespace TM2
             else
             {
                 alpha = defaultAlpha;
+                stopUpdating = false;
             }
         }
     }

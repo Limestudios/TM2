@@ -15,32 +15,33 @@ namespace TM2
 {
     public class TitleScreen : GameScreen
     {
-        KeyboardState keyState;
         SpriteFont font;
+        MenuManager menu;
 
-        public override void LoadContent(ContentManager Content)
+        public override void LoadContent(ContentManager Content, InputManager inputManager)
         {
-            base.LoadContent(Content);
-            if (font == null)
-                font = content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
+            base.LoadContent(Content, inputManager);
+            font = content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
+
+            menu = new MenuManager();
+            menu.LoadContent(content, "Title");
         }
 
         public override void UnloadContent()
         {
             base.UnloadContent();
+            menu.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Enter))
-                ScreenManager.Instance.AddScreen(new SplashScreen());
+            inputManager.Update();
+            menu.Update(gameTime, inputManager);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font, "TitleScreen",
-                new Vector2(100, 100), Color.Black);
+            menu.Draw(spriteBatch);
         }
     }
 }
