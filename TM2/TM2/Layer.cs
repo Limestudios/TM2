@@ -7,6 +7,6 @@ namespace TM2
 {
     public class Layer
     {
-
+        //What is the purpose of this if you have Layers?
     }
 }
