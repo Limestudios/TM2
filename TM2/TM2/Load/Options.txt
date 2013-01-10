@@ -1,0 +1,13 @@
+﻿Load=[Options]
+
+Load=[Axis][Align][Font][Animation]
+[2][Center][Coolvetica Rg][Fade]
+
+Load=[Item][LinkType][LinkID][Image]
+[AUDIO][Screen][GameplayScreen][TitleScreen/button]
+[BACK][Screen][TitleScreen][TitleScreen/button]
+
+Load=[Sounds]
+[TitleScreen/23 SENSATION]
+
+EndLoad=[Options]

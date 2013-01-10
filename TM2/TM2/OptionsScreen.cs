@@ -13,10 +13,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TM2
 {
-    public class TitleScreen : GameScreen
+    public class OptionsScreen : GameScreen
     {
         SpriteFont font;
-        MenuManager menu;
+        OptionsManager options;
         FileManager fileManager;
         List<Texture2D> images;
 
@@ -35,11 +35,11 @@ namespace TM2
             base.LoadContent(content, inputManager);
             font = this.content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
 
-            menu = new MenuManager();
-            menu.LoadContent(content, "Title");
+            options = new OptionsManager();
+            options.LoadContent(content, "Options");
 
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Title.txt", attributes, contents);
+            fileManager.LoadContent("Load/Options.txt", attributes, contents);
 
             position = Vector2.Zero;
 
@@ -68,7 +68,7 @@ namespace TM2
 
         public override void UnloadContent()
         {
-            menu.UnloadContent();
+            options.UnloadContent();
             inputManager = null;
             attributes.Clear();
             contents.Clear();
@@ -76,18 +76,17 @@ namespace TM2
             contents.Clear();
             content.Unload();
             MediaPlayer.Stop();
-            this.content.Unload();
         }
 
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            menu.Update(gameTime, inputManager);
+            options.Update(gameTime, inputManager);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            menu.Draw(spriteBatch);
+            options.Draw(spriteBatch);
             spriteBatch.Draw(images[imageNumber], position, sourceRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1.0f);
         }
     }

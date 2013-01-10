@@ -37,6 +37,7 @@ namespace TM2
             ScreenManager.Instance.Initialize();
 
             ScreenManager.Instance.Dimensions = new Vector2(1280, 720);
+            graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = (int)ScreenManager.Instance.Dimensions.X;
             graphics.PreferredBackBufferHeight = (int)ScreenManager.Instance.Dimensions.Y;
             graphics.ApplyChanges();

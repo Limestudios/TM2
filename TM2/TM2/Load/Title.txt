@@ -1,0 +1,2 @@
+﻿Load=[Images][Position][Scale]
+[TitleScreen/TM][175 25][0.5]

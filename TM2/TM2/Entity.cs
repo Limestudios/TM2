@@ -17,7 +17,7 @@ namespace TM2
     {
         protected int health;
         protected SpriteSheetAnimation moveAnimation;
-        protected float moveSpeed;
+        protected float moveSpeed, jumpSpeed, gravity;
 
         protected ContentManager content;
         protected FileManager fileManager;
@@ -26,7 +26,7 @@ namespace TM2
 
         protected List<List<string>> attributes, contents;
 
-        protected Vector2 position;
+        protected Vector2 position, velocity;
 
         public virtual void LoadContent(ContentManager content, InputManager input)
         {
@@ -40,7 +40,7 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input)
+        public virtual void Update(GameTime gameTime, InputManager input, Collision col, Layers layer)
         {
 
         }

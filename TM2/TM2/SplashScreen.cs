@@ -29,7 +29,7 @@ namespace TM2
         {
             base.LoadContent(Content, inputManager);
             //The splash screen Text
-            font = content.Load<SpriteFont>("SplashScreen/Coolvetica Rg");
+            font = this.content.Load<SpriteFont>("SplashScreen/Coolvetica Rg");
 
             imageNumber = 0;
             fileManager = new FileManager();
@@ -45,11 +45,11 @@ namespace TM2
                     switch (attributes[i][j])
                     {
                         case "Image":
-                            images.Add(content.Load<Texture2D>(contents[i][j]));
+                            images.Add(this.content.Load<Texture2D>(contents[i][j]));
                             fade.Add(new FadeAnimation());
                             break;
                         case "Sounds":
-                            song = content.Load<Song>(contents[i][j]);
+                            song = this.content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
                             MediaPlayer.Volume = 0.1f;
                             MediaPlayer.IsRepeating = true;
@@ -77,6 +77,12 @@ namespace TM2
             inputManager = null;
             attributes.Clear();
             contents.Clear();
+            this.content.Unload();
+            attributes.Clear();
+            contents.Clear();
+            attributes.Clear();
+            contents.Clear();
+            content.Unload();
         }
 
         public override void Update(GameTime gameTime)

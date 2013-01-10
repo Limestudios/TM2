@@ -130,8 +130,8 @@ namespace TM2
             content = new ContentManager(Content.ServiceProvider, "Content");
             currentScreen.LoadContent(Content, inputManager);
 
-            fadeTexture = content.Load<Texture2D>("fade");
-            nullImage = content.Load<Texture2D>("null");
+            fadeTexture = this.content.Load<Texture2D>("fade");
+            nullImage = this.content.Load<Texture2D>("null");
             fade.LoadContent(content, fadeTexture, "", Vector2.Zero);
             fade.Scale = dimensions.X;
         }
@@ -157,7 +157,7 @@ namespace TM2
         private void Transition(GameTime gameTime)
         {
             fade.Update(gameTime);
-            if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 1.0f)
+            if (fade.Alpha == 1.0f && fade.Timer.TotalMilliseconds == 10.0f)
             {
                 //unkown error
                 screenStack.Push(newScreen);

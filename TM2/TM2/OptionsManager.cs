@@ -13,11 +13,11 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TM2
 {
-    public class MenuManager
+    public class OptionsManager
     {
-        List<string> menuItems;
-        List<string> animationTypes, linkType, linkID;
-        List<Texture2D> menuImages;
+        List<string> optionsItems;
+        List<string> animationTypes, linkType, linkID, values;
+        List<Texture2D> optionsImages;
         List<List<Animation>> animation;
         List<List<string>> attributes, contents;
         List<Animation> tempAnimation;
@@ -33,17 +33,17 @@ namespace TM2
         int axis, itemNumber;
         String align;
 
-        private void SetMenuItems()
+        private void SetoptionsItems()
         {
-            for (int i = 0; i < menuItems.Count; i++)
+            for (int i = 0; i < optionsItems.Count; i++)
             {
-                if (menuImages.Count == i)
-                    menuImages.Add(ScreenManager.Instance.NullImage);
+                if (optionsImages.Count == i)
+                    optionsImages.Add(ScreenManager.Instance.NullImage);
             }
-            for (int i = 0; i < menuImages.Count; i++)
+            for (int i = 0; i < optionsImages.Count; i++)
             {
-                if (menuItems.Count == i)
-                    menuItems.Add("");
+                if (optionsItems.Count == i)
+                    optionsItems.Add("");
             }
         }
 
@@ -54,10 +54,10 @@ namespace TM2
 
             if (align.Contains("Center"))
             {
-                for (int i = 0; i < menuItems.Count; i++)
+                for (int i = 0; i < optionsItems.Count; i++)
                 {
-                    dimensions.X += font.MeasureString(menuItems[i]).X + menuImages[i].Width;
-                    dimensions.Y += font.MeasureString(menuItems[i]).Y + menuImages[i].Height;
+                    dimensions.X += font.MeasureString(optionsItems[i]).X + optionsImages[i].Width;
+                    dimensions.Y += font.MeasureString(optionsItems[i]).Y + optionsImages[i].Height;
                 }
 
                 if (axis == 1)
@@ -76,15 +76,15 @@ namespace TM2
 
             tempAnimation = new List<Animation>();
 
-            for (int i = 0; i < menuImages.Count; i++)
+            for (int i = 0; i < optionsImages.Count; i++)
             {
-                dimensions = new Vector2(font.MeasureString(menuItems[i]).X + menuImages[i].Width,
-                    font.MeasureString(menuItems[i]).Y + menuImages[i].Height);
+                dimensions = new Vector2(font.MeasureString(optionsItems[i]).X + optionsImages[i].Width,
+                    font.MeasureString(optionsItems[i]).Y + optionsImages[i].Height);
 
                 if (axis == 1)
                     pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 else
-                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2 - font.MeasureString(menuItems[i]).X / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2 - font.MeasureString(optionsItems[i]).X / 2;
 
                 for (int j = 0; j < animationTypes.Count; j++)
                 {
@@ -93,7 +93,7 @@ namespace TM2
                         case "Fade" :
                             tempAnimation.Add(new FadeAnimation());
                             tempAnimation[tempAnimation.Count - 1].LoadContent(content,
-                                menuImages[i], menuItems[i], pos);
+                                optionsImages[i], optionsItems[i], pos);
                             tempAnimation[tempAnimation.Count - 1].Font = font;
                             break;
                     }
@@ -116,19 +116,20 @@ namespace TM2
         public void LoadContent(ContentManager content, string id)
         {
             this.content = new ContentManager(content.ServiceProvider, "Content");
-            menuItems = new List<string>();
-            menuImages = new List<Texture2D>();
+            optionsItems = new List<string>();
+            optionsImages = new List<Texture2D>();
             animation = new List<List<Animation>>();
             animationTypes = new List<string>();
             attributes = new List<List<string>>();
             contents = new List<List<string>>();
             linkID = new List<string>();
             linkType = new List<string>();
+            values = new List<string>();
             itemNumber = 0;
 
             position = Vector2.Zero;
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Menus.txt", attributes, contents, id);
+            fileManager.LoadContent("Load/Options.txt", attributes, contents, id);
             
             for(int i = 0; i < attributes.Count; i++)
             {
@@ -140,10 +141,10 @@ namespace TM2
                             font = this.content.Load<SpriteFont>(contents[i][j]);
                             break;
                         case "Item" :
-                            menuItems.Add(contents[i][j]);
+                            optionsItems.Add(contents[i][j]);
                             break;
                         case "Image" :
-                            menuImages.Add(this.content.Load<Texture2D>(contents[i][j]));
+                            optionsImages.Add(this.content.Load<Texture2D>(contents[i][j]));
                             break;
                         case "Axis" :
                             axis = int.Parse(contents[i][j]);
@@ -162,7 +163,7 @@ namespace TM2
                         case "Animation" :
                             animationTypes.Add(contents[i][j]);
                             break;
-                        case "Sounds":
+                        case "Sounds" :
                             song = this.content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
                             MediaPlayer.Volume = 0.1f;
@@ -174,13 +175,20 @@ namespace TM2
                         case "LinkType" :
                             linkType.Add(contents[i][j]);
                             break;
-                        case "LinkID":
+                        case "LinkID" :
                             linkID.Add(contents[i][j]);
+                            break;
+                        case "Values" :
+                            string[] tempValues = contents[i][j].Split(',');
+                            for (int k = 0; k < 10; k++)
+                            {
+                                values.Add(tempValues[k]);
+                            }
                             break;
                     }
                 }
             }
-            SetMenuItems();
+            SetoptionsItems();
             SetAnimations();
         }
 
@@ -189,8 +197,8 @@ namespace TM2
             content.Unload();
             position = Vector2.Zero;
             animation.Clear();
-            menuImages.Clear();
-            menuItems.Clear();
+            optionsImages.Clear();
+            optionsItems.Clear();
             animationTypes.Clear();
         }
 
@@ -218,11 +226,15 @@ namespace TM2
                     Type newClass = Type.GetType("TM2." + linkID[itemNumber]);
                     ScreenManager.Instance.AddScreen((GameScreen)Activator.CreateInstance(newClass), inputManager);
                 }
+                if (linkType[itemNumber] == "Option")
+                {
+                    
+                }
             }
 
             if (itemNumber < 0)
-                itemNumber = menuItems.Count - 1;
-            else if (itemNumber > menuItems.Count - 1)
+                itemNumber = optionsItems.Count - 1;
+            else if (itemNumber > optionsItems.Count - 1)
                 itemNumber = 0;
 
             for (int i = 0; i < animation.Count; i++)

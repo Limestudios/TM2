@@ -69,7 +69,7 @@ namespace TM2
             base.LoadContent(Content, image, text, position);
             increase = false;
             fadeSpeed = 1f;
-            defaultTime = new TimeSpan(0, 0, 1);
+            defaultTime = new TimeSpan(0, 0, 0, 0, 10);
             timer = defaultTime;
             activateValue = 0.0f;
             stopUpdating = false;

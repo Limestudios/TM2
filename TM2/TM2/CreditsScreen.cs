@@ -23,13 +23,17 @@ namespace TM2
         VideoPlayer videoPlayer;
         Texture2D videoTexture;
 
+        bool dul;
+
         public override void LoadContent(ContentManager Content, InputManager inputManager)
         {
             base.LoadContent(Content, inputManager);
-            font = content.Load<SpriteFont>("CreditsScreen/Coolvetica Rg");
+            font = this.content.Load<SpriteFont>("CreditsScreen/Coolvetica Rg");
 
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Credits.txt", attributes, contents);
+
+            dul = false;
 
             for (int i = 0; i < attributes.Count; i++)
             {
@@ -38,13 +42,13 @@ namespace TM2
                     switch (attributes[i][j])
                     {
                         case "Sounds":
-                            song = content.Load<Song>(contents[i][j]);
+                            song = this.content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
                             MediaPlayer.Volume = 0.1f;
                             MediaPlayer.IsRepeating = true;
                             break;
                         case "Videos" :
-                            video = Content.Load<Video>(contents[i][j]);
+                            video = this.content.Load<Video>(contents[i][j]);
                             videoPlayer = new VideoPlayer();
                             break;
                     }
@@ -67,13 +71,27 @@ namespace TM2
             if (inputManager.KeyDown(Keys.Space, Keys.Enter))
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
 
-            if (inputManager.KeyDown(Keys.D))
+            if (inputManager.KeyPressed(Keys.D))
             {
-                if (videoPlayer.State == MediaState.Stopped)
+                if (videoPlayer.State == MediaState.Paused | videoPlayer.State == MediaState.Stopped)
                 {
                     videoPlayer.IsLooped = true;
+                    videoPlayer.Resume();
                     videoPlayer.Play(video);
                 }
+                dul = !dul;
+            }
+            else if (dul == false)
+            {
+                if (videoPlayer.State == MediaState.Playing)
+                {
+                    videoPlayer.Pause();
+                    videoPlayer.IsMuted = true;
+                }
+            }
+            else
+            {
+                videoPlayer.IsMuted = false;
             }
                 
         }
@@ -81,8 +99,10 @@ namespace TM2
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Only call GetTexture if a video is playing or paused
-            if (videoPlayer.State != MediaState.Stopped)
+            if (videoPlayer.State == MediaState.Playing)
                 videoTexture = videoPlayer.GetTexture();
+            else
+                videoTexture = null;
 
             // Drawing to the rectangle will stretch the 
             // video to fill the screen
@@ -92,8 +112,9 @@ namespace TM2
             if (videoTexture != null)
             {
                 spriteBatch.Draw(videoTexture, screen, Color.White);
-                spriteBatch.DrawString(font, "Happy Birthday Dul!", new Vector2(100, 100), Color.Black);
             }
+            spriteBatch.DrawString(font, "Made by Liam Craver (Lime Studios)", new Vector2(100, 200), Color.Black);
+            spriteBatch.DrawString(font, "Based off the members of Team Mongoose", new Vector2(100, 300), Color.Black);
         }
     }
 }

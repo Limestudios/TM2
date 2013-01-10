@@ -49,6 +49,12 @@ namespace TM2
             set { font = value; }
         }
 
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
         public virtual void LoadContent(ContentManager Content, Texture2D image,
             string text, Vector2 position)
         {
@@ -58,7 +64,7 @@ namespace TM2
             this.position = position;
             if (text != String.Empty)
             {
-                font = Content.Load<SpriteFont>("Coolvetica Rg");
+                font = this.content.Load<SpriteFont>("Coolvetica Rg");
                 color = new Color(100, 100, 100);
             }
             if (image != null)
