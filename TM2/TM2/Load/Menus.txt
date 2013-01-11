@@ -3,14 +3,11 @@
 Load=[Axis][Align][Font][Animation]
 [2][Center][Coolvetica Rg][Fade]
 
-Load=[Item][LinkType][LinkID]
-[NEW GAME][Screen][GameplayScreen]
-[LOAD GAME][Screen][SplashScreen]
-[OPTIONS][Screen][OptionsScreen]
-[CREDITS][Screen][CreditsScreen]
-
-Load=[Sounds]
-[TitleScreen/23 SENSATION]
+Load=[Item][LinkType][LinkID][Image]
+[NEW GAME][Screen][GameplayScreen][null]
+[LOAD GAME][Screen][SplashScreen][null]
+[OPTIONS][Screen][OptionsScreen][null]
+[CREDITS][Screen][CreditsScreen][null]
 
 EndLoad=[Title]
 

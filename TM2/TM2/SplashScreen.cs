@@ -23,6 +23,8 @@ namespace TM2
 
         FileManager fileManager;
 
+        AudioManager audio;
+
         int imageNumber;
 
         public override void LoadContent(ContentManager Content, InputManager inputManager)
@@ -33,6 +35,7 @@ namespace TM2
 
             imageNumber = 0;
             fileManager = new FileManager();
+            audio = new AudioManager();
             fade = new List<FadeAnimation>();
             images = new List<Texture2D>();
 
@@ -48,11 +51,10 @@ namespace TM2
                             images.Add(this.content.Load<Texture2D>(contents[i][j]));
                             fade.Add(new FadeAnimation());
                             break;
-                        case "Sounds":
-                            song = this.content.Load<Song>(contents[i][j]);
-                            MediaPlayer.Play(song);
-                            MediaPlayer.Volume = 0.1f;
-                            MediaPlayer.IsRepeating = true;
+                        case "Songs":
+                            string[] temp = contents[i][j].Split(',');
+                            song = this.content.Load<Song>(temp[1]);
+                            audio.songs.Add(song);
                             break;
                     }
                 }
@@ -68,6 +70,8 @@ namespace TM2
                 fade[i].Increase = true;
                 fade[i].Timer = new TimeSpan(0, 0, 10);
             }
+
+            audio.Play(0);
         }
 
         public override void UnloadContent()
@@ -96,6 +100,8 @@ namespace TM2
 
             if (imageNumber >= fade.Count - 1 || inputManager.KeyPressed(Keys.Enter))
             {
+                //probably make it so the screenmanager handles this but for now...
+                audio.FadeSong(0.0f, new TimeSpan(0, 0, 1));
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
             }
 

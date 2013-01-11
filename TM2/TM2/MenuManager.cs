@@ -162,12 +162,6 @@ namespace TM2
                         case "Animation" :
                             animationTypes.Add(contents[i][j]);
                             break;
-                        case "Sounds":
-                            song = this.content.Load<Song>(contents[i][j]);
-                            MediaPlayer.Play(song);
-                            MediaPlayer.Volume = 0.1f;
-                            MediaPlayer.IsRepeating = true;
-                            break;
                         case "Align" :
                             align = contents[i][j];
                             break;

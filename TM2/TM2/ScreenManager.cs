@@ -65,6 +65,8 @@ namespace TM2
 
         InputManager inputManager;
 
+        AudioManager audio;
+
         #endregion
 
         #region Properties
@@ -103,6 +105,7 @@ namespace TM2
             fade.Alpha = 0.0f;
             fade.ActivateValue = 1.0f;
             this.inputManager = inputManager;
+            audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1));
         }
 
         public void AddScreen(GameScreen screen, InputManager inputManager, float alpha)
@@ -117,13 +120,15 @@ namespace TM2
                 fade.Alpha = alpha;
             fade.Increase = true;
             this.inputManager = inputManager;
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 10));
         }
 
         public void Initialize()
         {
-            currentScreen = new SplashScreen();
+            currentScreen = new TitleScreen();
             fade = new FadeAnimation();
             inputManager = new InputManager();
+            audio = new AudioManager();
         }
         public void LoadContent(ContentManager Content)
         {
@@ -157,9 +162,8 @@ namespace TM2
         private void Transition(GameTime gameTime)
         {
             fade.Update(gameTime);
-            if (fade.Alpha == 1.0f && fade.Timer.TotalMilliseconds == 10.0f)
+            if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 2.0f)
             {
-                //unkown error
                 screenStack.Push(newScreen);
                 currentScreen.UnloadContent();
                 currentScreen = newScreen;
@@ -169,6 +173,15 @@ namespace TM2
             {
                 transition = false;
                 fade.IsActive = false;
+            }
+
+            if (fade.Increase == true)
+            {
+                audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 1));
+            }
+            else
+            {
+                audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 1));
             }
         }
 

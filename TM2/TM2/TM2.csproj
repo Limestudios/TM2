@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation.cs" />
+    <Compile Include="AudioManager.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Layers.cs" />

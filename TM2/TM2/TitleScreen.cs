@@ -19,6 +19,8 @@ namespace TM2
         MenuManager menu;
         FileManager fileManager;
         List<Texture2D> images;
+        AudioManager audio;
+        Song song;
 
         protected Rectangle sourceRect;
 
@@ -40,6 +42,7 @@ namespace TM2
 
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Title.txt", attributes, contents);
+            audio = new AudioManager();
 
             position = Vector2.Zero;
 
@@ -60,10 +63,17 @@ namespace TM2
                         case "Scale":
                             scale = float.Parse(contents[i][j]);
                             break;
+                        case "Songs" :
+                            temp = contents[i][j].Split(',');
+                            song = this.content.Load<Song>(temp[1]);
+                            audio.songs.Add(song);
+                            break;
                     }
                 }
                 sourceRect = new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height);
             }
+            audio.Play(0);
+            //audio.FadeSong(0.0f, new TimeSpan(0, 0, 2));
         }
 
         public override void UnloadContent()
@@ -77,12 +87,14 @@ namespace TM2
             content.Unload();
             MediaPlayer.Stop();
             this.content.Unload();
+            audio.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
             menu.Update(gameTime, inputManager);
+            audio.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

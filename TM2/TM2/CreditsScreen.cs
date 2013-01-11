@@ -44,7 +44,6 @@ namespace TM2
                         case "Sounds":
                             song = this.content.Load<Song>(contents[i][j]);
                             MediaPlayer.Play(song);
-                            MediaPlayer.Volume = 0.1f;
                             MediaPlayer.IsRepeating = true;
                             break;
                         case "Videos" :

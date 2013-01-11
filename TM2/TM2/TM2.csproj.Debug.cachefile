@@ -13,17 +13,19 @@ Content\CreditsScreen\button.xnb
 Content\CreditsScreen\SplashTexture.xnb
 Content\TitleScreen\TM.xnb
 Content\Tiles\tileSet1.xnb
-Content\TitleScreen\SplashSound.xnb
-Content\TitleScreen\CaramellDansen.xnb
 Content\CreditsScreen\SplashSound.xnb
 Content\TitleScreen\23 SENSATION.xnb
 Content\CreditsScreen\CaramellDansen.xnb
 Content\SplashScreen\SplashSound.xnb
 Content\CreditsScreen\Dul.xnb
+Content\TitleScreen\SplashSound.xnb
+Content\TitleScreen\CaramellDansen.xnb
 Content\TitleScreen\23 SENSATION.wma
 Content\CreditsScreen\CaramellDansen.wma
 Content\SplashScreen\SplashSound.wma
 Content\CreditsScreen\Dul.wmv
+Content\TitleScreen\SplashSound.wma
+Content\TitleScreen\CaramellDansen.wma
 Load\Options.txt
 Load\Title.txt
 Load\Credits.txt

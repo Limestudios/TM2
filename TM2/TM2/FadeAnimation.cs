@@ -61,6 +61,7 @@ namespace TM2
         public bool Increase
         {
             set { increase = value; }
+            get { return increase; }
         }
 
         public override void LoadContent(ContentManager Content, 
@@ -69,7 +70,7 @@ namespace TM2
             base.LoadContent(Content, image, text, position);
             increase = false;
             fadeSpeed = 1f;
-            defaultTime = new TimeSpan(0, 0, 0, 0, 10);
+            defaultTime = new TimeSpan(0, 0, 0, 2);
             timer = defaultTime;
             activateValue = 0.0f;
             stopUpdating = false;
