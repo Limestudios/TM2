@@ -10,17 +10,3 @@ Load=[Item][LinkType][LinkID][Image]
 [CREDITS][Screen][CreditsScreen][null]
 
 EndLoad=[Title]
-
-Load=[Options]
-
-Load=[Axis][Align][Font][Animation]
-[2][Center][Coolvetica Rg][Fade]
-
-Load=[Item][LinkType][LinkID]
-[AUDIO][Screen][GameplayScreen]
-[BACK][Screen][TitleScreen]
-
-Load=[Sounds]
-[TitleScreen/23 SENSATION]
-
-EndLoad=[Options]

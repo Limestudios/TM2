@@ -19,6 +19,8 @@ namespace TM2
         OptionsManager options;
         FileManager fileManager;
         List<Texture2D> images;
+        AudioManager audio;
+        Song song;
 
         protected Rectangle sourceRect;
 
@@ -35,11 +37,14 @@ namespace TM2
             base.LoadContent(content, inputManager);
             font = this.content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
 
+            imageNumber = 0;
+
             options = new OptionsManager();
+            audio = new AudioManager();
             options.LoadContent(content, "Options");
 
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Options.txt", attributes, contents);
+            fileManager.LoadContent("Load/Options.txt", attributes, contents, "OptionsScreen");
 
             position = Vector2.Zero;
 
@@ -49,20 +54,13 @@ namespace TM2
                 {
                     switch (attributes[i][j])
                     {
-                        case "Images" :
-                            images.Add(this.content.Load<Texture2D>(contents[i][j]));
-                            break;
-                        case "Position":
-                            string[] temp = contents[i][j].Split(' ');
-                            position = new Vector2(float.Parse(temp[0]),
-                                float.Parse(temp[1]));
-                            break;
-                        case "Scale":
-                            scale = float.Parse(contents[i][j]);
+                        case "Songs":
+                            String[] temp = contents[i][j].Split(',');
+                            song = this.content.Load<Song>(temp[1]);
+                            audio.songs.Add(song);
                             break;
                     }
                 }
-                sourceRect = new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height);
             }
         }
 
@@ -87,7 +85,6 @@ namespace TM2
         public override void Draw(SpriteBatch spriteBatch)
         {
             options.Draw(spriteBatch);
-            spriteBatch.Draw(images[imageNumber], position, sourceRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1.0f);
         }
     }
 }
