@@ -3,4 +3,4 @@
 
 Load=[Songs]
 [SplashSound,TitleScreen/SplashSound]
-[CaramellDansen,TitleScreen/CaramellDansen]
+[23_SENSATION,TitleScreen/23 SENSATION]

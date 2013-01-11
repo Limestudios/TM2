@@ -72,8 +72,8 @@ namespace TM2
                 }
                 sourceRect = new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height);
             }
-            audio.Play(0);
-            //audio.FadeSong(0.0f, new TimeSpan(0, 0, 2));
+            audio.PlaySong(1, true);
+            //audio.FadeSong(0.0f, new TimeSpan(0, 0, 5));
         }
 
         public override void UnloadContent()

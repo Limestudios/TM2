@@ -15,13 +15,21 @@ namespace TM2
 {
     public class Player : Entity
     {
+        SpriteFont font;
+        public string collision;
+
         public override void LoadContent(ContentManager content, InputManager input)
         {
+            //The splash screen Text
+            font = content.Load<SpriteFont>("SplashScreen/Coolvetica Rg");
+            collision = "FALSE";
+
             base.LoadContent(content, input);
             fileManager = new FileManager();
             moveAnimation = new SpriteSheetAnimation();
             Vector2 tempFrames = Vector2.Zero;
-            moveSpeed = 1000f;
+            moveSpeed = 100f;
+            gravity = 5f;
 
             fileManager.LoadContent("Load/Player.txt", attributes, contents);
             for (int i = 0; i < attributes.Count; i++)
@@ -64,23 +72,28 @@ namespace TM2
             if (input.KeyDown(Keys.Right, Keys.D))
             {
                 moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 1);
-                position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (input.KeyDown(Keys.Left, Keys.A))
             {
                 moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 0);
-                position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (input.KeyDown(Keys.Up, Keys.W))
             {
-                position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (input.KeyDown(Keys.Down, Keys.S))
             {
                 position.Y += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+            else if (velocity.X > 0)
+                velocity.X -= 10;
             else
+            {
                 moveAnimation.IsActive = false;
+                velocity.X = 0;
+            }
 
             for (int i = 0; i < col.CollisionMap.Count; i++)
             {
@@ -94,14 +107,20 @@ namespace TM2
                             position.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
                         {
                             //no collision
+                            velocity.Y += gravity/100;
+                            collision = "FALSE";
                         }
                         else
                         {
                             position = moveAnimation.Position;
+                            collision = "TRUE";
+                            velocity.Y = 0;
                         }
                     }
                 }
             }
+
+            position += velocity;
 
             moveAnimation.Position = position;
             moveAnimation.Update(gameTime);
@@ -110,6 +129,7 @@ namespace TM2
         public override void Draw(SpriteBatch spriteBatch)
         {
             moveAnimation.Draw(spriteBatch);
+            spriteBatch.DrawString(font, collision, new Vector2(ScreenManager.Instance.Dimensions.X / 2, 200), Color.Black);
         }
     }
 }

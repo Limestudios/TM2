@@ -107,9 +107,9 @@ namespace TM2
         /// does nothing. If another song is currently playing, it is stopped first.
         /// </summary>
         /// <param name="songName">Name of the song to play</param>
-        public void PlaySong(string songName)
+        public void PlaySong(int songNum)
         {
-            PlaySong(songName, false);
+            PlaySong(songNum, false);
         }
 
         /// <summary>
@@ -118,20 +118,21 @@ namespace TM2
         /// </summary>
         /// <param name="songName">Name of the song to play</param>
         /// <param name="loop">True if song should loop, false otherwise</param>
-        public void PlaySong(string songName, bool loop)
+        public void PlaySong(int songNum, bool loop)
         {
-            if (CurrentSong != songName)
+            if (currentSong != songs[songNum])
             {
                 if (currentSong != null)
                 {
                     MediaPlayer.Stop();
                 }
 
-                CurrentSong = songName;
+                currentSong = songs[songNum];
 
                 isMusicPaused = false;
                 MediaPlayer.IsRepeating = loop;
                 MediaPlayer.Play(currentSong);
+                FadeSong(1.0f, new TimeSpan(0,0,1));
             }
         }
 

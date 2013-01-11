@@ -125,7 +125,7 @@ namespace TM2
 
         public void Initialize()
         {
-            currentScreen = new TitleScreen();
+            currentScreen = new SplashScreen();
             fade = new FadeAnimation();
             inputManager = new InputManager();
             audio = new AudioManager();

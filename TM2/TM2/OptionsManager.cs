@@ -150,6 +150,7 @@ namespace TM2
                             axis = int.Parse(contents[i][j]);
                             break;
                         case "Position" :
+   
                             string[] temp = contents[i][j].Split(' ');
                             position = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
