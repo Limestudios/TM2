@@ -1,5 +1,6 @@
 ﻿Load=[Image]
 [SplashScreen/LSSplash]
+[SplashScreen/RGSplash]
 [SplashScreen/TMSplash]
 
 Load=[Songs]
