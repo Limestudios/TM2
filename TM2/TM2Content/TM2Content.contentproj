@@ -65,13 +65,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SplashScreen\SplashBackground.jpg">
-      <Name>SplashBackground</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Coolvetica Rg.spritefont">
       <SubType>Designer</SubType>
       <Name>Coolvetica Rg</Name>

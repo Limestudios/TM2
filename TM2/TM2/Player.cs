@@ -101,14 +101,27 @@ namespace TM2
                 {
                     if (col.CollisionMap[i][j] == "X")
                     {
-                        if (position.X + moveAnimation.FrameWidth < j * layer.TileDimensions.X ||
-                            position.X > j * layer.TileDimensions.X + layer.TileDimensions.X ||
-                            position.Y + moveAnimation.FrameHeight < i * layer.TileDimensions.Y ||
-                            position.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
+                        if (position.X + moveAnimation.FrameWidth < j * layer.TileDimensions.X)
                         {
                             //no collision
-                            velocity.Y += gravity/100;
-                            collision = "FALSE";
+                            collision = "FALSE1" + " - " + i;
+                        }
+                        else if (position.X > j * layer.TileDimensions.X + layer.TileDimensions.X)
+                        {
+                            //no collision
+                            velocity.Y += gravity / 100;
+                            collision = "FALSE2";
+                        }
+                        else if (position.Y + moveAnimation.FrameHeight < i * layer.TileDimensions.Y)
+                        {
+                            //no collision
+                            collision = "FALSE3";
+                        }
+                        else if (position.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
+                        {
+                            //no collision
+                            velocity.Y += gravity / 100;
+                            collision = "FALSE4";
                         }
                         else
                         {

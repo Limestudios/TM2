@@ -58,6 +58,7 @@ namespace TM2
                             String[] temp = contents[i][j].Split(',');
                             song = this.content.Load<Song>(temp[1]);
                             audio.songs.Add(song);
+                            audio.PlaySong(0, true);
                             break;
                     }
                 }
