@@ -67,6 +67,11 @@ namespace TM2
 
         AudioManager audio;
 
+        public ContentManager Content
+        {
+            get { return content; }
+        }
+
         #endregion
 
         #region Properties
@@ -105,7 +110,7 @@ namespace TM2
             fade.Alpha = 0.0f;
             fade.ActivateValue = 1.0f;
             this.inputManager = inputManager;
-            audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1));
+            audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1200));
         }
 
         public void AddScreen(GameScreen screen, InputManager inputManager, float alpha)
@@ -120,7 +125,7 @@ namespace TM2
                 fade.Alpha = alpha;
             fade.Increase = true;
             this.inputManager = inputManager;
-            audio.FadeSong(1.0f, new TimeSpan(0, 0, 10));
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 0, 1200));
         }
 
         public void Initialize()
@@ -142,6 +147,7 @@ namespace TM2
         }
         public void Update(GameTime gameTime)
         {
+            audio.Update(gameTime);
             if (!transition)
                 currentScreen.Update(gameTime);
             else
@@ -177,11 +183,11 @@ namespace TM2
 
             if (fade.Increase == true)
             {
-                audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 1));
+                audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 0, 1200));
             }
             else
             {
-                audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 1));
+                audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1200));
             }
         }
 

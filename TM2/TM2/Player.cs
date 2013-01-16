@@ -81,11 +81,12 @@ namespace TM2
             }
             else if (input.KeyDown(Keys.Up, Keys.W))
             {
-                velocity.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if ((float)gameTime.ElapsedGameTime.TotalSeconds < 2.0f)
+                    velocity.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds - gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (input.KeyDown(Keys.Down, Keys.S))
             {
-                position.Y += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                velocity.Y += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (velocity.X > 0)
                 velocity.X -= 10;
@@ -101,33 +102,33 @@ namespace TM2
                 {
                     if (col.CollisionMap[i][j] == "X")
                     {
-                        if (position.X + moveAnimation.FrameWidth < j * layer.TileDimensions.X)
+                        if (position.X + velocity.X + moveAnimation.FrameWidth < j * layer.TileDimensions.X)
                         {
                             //no collision
-                            collision = "FALSE1" + " - " + i;
+                            collision = "FALSE1" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.X > j * layer.TileDimensions.X + layer.TileDimensions.X)
+                        else if (position.X + velocity.X > j * layer.TileDimensions.X + layer.TileDimensions.X + 1)
                         {
                             //no collision
                             velocity.Y += gravity / 100;
-                            collision = "FALSE2";
+                            collision = "FALSE2" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.Y + moveAnimation.FrameHeight < i * layer.TileDimensions.Y)
+                        else if (position.Y + velocity.Y + moveAnimation.FrameHeight < i * layer.TileDimensions.Y)
                         {
                             //no collision
-                            collision = "FALSE3";
+                            collision = "FALSE3" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
+                        else if (position.Y + velocity.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
                         {
                             //no collision
                             velocity.Y += gravity / 100;
-                            collision = "FALSE4";
+                            collision = "FALSE4" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
                         else
                         {
-                            position = moveAnimation.Position;
                             collision = "TRUE";
-                            velocity.Y = 0;
+                            if (velocity.Y >= 0)
+                                velocity.Y = 0;
                         }
                     }
                 }
@@ -142,7 +143,7 @@ namespace TM2
         public override void Draw(SpriteBatch spriteBatch)
         {
             moveAnimation.Draw(spriteBatch);
-            spriteBatch.DrawString(font, collision, new Vector2(ScreenManager.Instance.Dimensions.X / 2, 200), Color.Black);
+            spriteBatch.DrawString(font, collision, new Vector2(400, 200), Color.Black);
         }
     }
 }

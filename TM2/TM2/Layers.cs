@@ -55,7 +55,7 @@ namespace TM2
                     switch (attributes[i][j])
                     {
                         case "TileSet" :
-                            tileSet = this.content.Load<Texture2D>("Tiles/" + contents[i][j]);
+                            tileSet = this.content.Load<Texture2D>("TileSets/" + contents[i][j]);
                             break;
                         case "TileDimensions" :
                             string[] split = contents[i][j].Split(',');

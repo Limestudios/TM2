@@ -1,0 +1,6 @@
+﻿Load=[Images][Position][Scale]
+[TitleScreen/TM][175 25][0.5]
+
+Load=[Songs]
+[SplashSound,TitleScreen/SplashSound]
+[23_SENSATION,TitleScreen/23 SENSATION]

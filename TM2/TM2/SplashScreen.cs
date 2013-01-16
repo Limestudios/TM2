@@ -101,7 +101,6 @@ namespace TM2
             if (imageNumber >= fade.Count - 1 || inputManager.KeyPressed(Keys.Enter))
             {
                 //probably make it so the screenmanager handles this but for now...
-                audio.FadeSong(0.0f, new TimeSpan(0, 0, 1));
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
             }
 

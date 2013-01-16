@@ -23,7 +23,7 @@ namespace TM2
             base.LoadContent(content, input);
             player = new Player();
             map = new Map();
-            map.LoadContent(content, "Map1");
+            map.LoadContent(content, map, "Map1");
             player.LoadContent(content, input);
         }
 
@@ -37,7 +37,7 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            player.Update(gameTime, inputManager, map.collision, map.layer);
+            //player.Update(gameTime, inputManager, map.collision, map.layer);
             map.Update(gameTime);
         }
 

@@ -26,6 +26,8 @@ namespace TM2
         float range;
         int counter;
 
+        Animation animation;
+
         private Texture2D CropImage(Texture2D tileSheet, Rectangle tileArea)
         {
             Texture2D croppedImage = new Texture2D(tileSheet.GraphicsDevice, tileArea.Width, tileArea.Height);
@@ -36,9 +38,9 @@ namespace TM2
             tileSheet.GetData<Color>(tileSheetData);
 
             int index = 0;
-            for (int i = 0; i < tileArea.Y + tileArea.Height; i++)
+            for (int i = tileArea.Y; i < tileArea.Y + tileArea.Height; i++)
             {
-                for (int j = 0; j < tileArea.X + tileArea.Width; j++)
+                for (int j = tileArea.X; j < tileArea.X + tileArea.Width; j++)
                 {
                     croppedImageData[index] = tileSheetData[i * tileSheet.Width + j];
                     index++;
@@ -58,6 +60,13 @@ namespace TM2
             tileImage = CropImage(tileSheet, tileArea);
             range = 50;
             counter = 0;
+            animation = new Animation();
+            animation.LoadContent(ScreenManager.Instance.Content, tileImage, "", position);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            animation.Draw(spriteBatch);
         }
     }
 }

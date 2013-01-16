@@ -132,7 +132,6 @@ namespace TM2
                 isMusicPaused = false;
                 MediaPlayer.IsRepeating = loop;
                 MediaPlayer.Play(currentSong);
-                FadeSong(1.0f, new TimeSpan(0,0,1));
             }
         }
 

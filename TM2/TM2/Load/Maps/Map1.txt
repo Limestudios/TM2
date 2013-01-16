@@ -1,7 +1,22 @@
 ﻿Load=[Layers]
 
-Load=[TileSet][TileDimensions]
-[tileSet1][60,60]
+Load=[MapProperties]
+
+Load=[TileDimensions]
+[60,60]
+
+EndLoad=[MapProperties]
+
+Load=[Layer1]
+
+Load=[Solid]
+[9,0]
+
+Load=[Motion]
+[9,0:Horizontal]
+
+Load=[TileSet]
+[tileSet1]
 
 Load=[StartLayer]
 
@@ -19,11 +34,9 @@ Load=[StartLayer]
 [9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0][9,0]
 
 Load=[EndLayer]
-
-
 [dummy]
 
-EndLoad=[Layers]
+EndLoad=[Layer1]
 
 Load=[Collision]
 
@@ -42,3 +55,8 @@ Load=[Map]
 [X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X][X]
 
 EndLoad=[Collision]
+
+EndLoad=[Layers]
+
+Load=[Songs]
+[memories,TitleScreen/memories]

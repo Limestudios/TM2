@@ -11,21 +11,29 @@ namespace TM2
 {
     public class Map
     {
-        public Layers layer;
+        public Layer layer;
         public Collision collision;
 
-        public void LoadContent(ContentManager content, string mapID)
-        {
-            layer = new Layers();
-            collision = new Collision();
+        string id;
 
-            layer.LoadContent(content, mapID);
+        public string ID
+        {
+            get { return id; }
+        }
+
+        public void LoadContent(ContentManager content, Map map, string mapID)
+        {
+            layer = new Layer();
+            collision = new Collision();
+            id = mapID;
+
+            layer.LoadContent(map, "Layer1");
             collision.LoadContent(content, mapID);
         }
 
         public void UnloadContent()
         {
-            layer.UnloadContent();
+            //layer.UnloadContent();
             //collision.UnLoadContent();
         }
 
