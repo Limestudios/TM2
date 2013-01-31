@@ -17,6 +17,7 @@ namespace TM2
     {
         Player player;
         Map map;
+        ParticleEngine particleEngine;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -25,6 +26,8 @@ namespace TM2
             map = new Map();
             map.LoadContent(content, map, "Map1");
             player.LoadContent(content, input);
+            List<Texture2D> textures = new List<Texture2D>();
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));
         }
 
         public override void UnloadContent()
@@ -39,6 +42,8 @@ namespace TM2
             inputManager.Update();
             player.Update(gameTime, inputManager, map.collision, map.layer);
             map.Update(gameTime);
+            particleEngine.EmitterLocation = new Vector2(player.position.X + 32/2, player.position.Y + 32/2);
+            particleEngine.Update(map.collision, gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -46,6 +51,7 @@ namespace TM2
             base.Draw(spriteBatch);
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            particleEngine.Draw(spriteBatch);
         }
     }
 }

@@ -20,6 +20,8 @@ Content\Player\potato.xnb
 Content\TileSets\tileSet1.xnb
 Content\TitleScreen\memories.xnb
 Content\TitleScreen\PewPewPew.xnb
+Content\circle1.xnb
+Content\circle2.xnb
 Content\TitleScreen\23 SENSATION.wma
 Content\SplashScreen\SplashSound.wma
 Content\CreditsScreen\Dul.wmv
@@ -28,6 +30,7 @@ Content\TitleScreen\CaramellDansen.wma
 Content\TitleScreen\memories.wma
 Content\TitleScreen\PewPewPew.wma
 Load\CharacterSelect.txt
+Load\Particle.txt
 Load\Options.txt
 Load\Title.txt
 Load\Credits.txt

@@ -92,15 +92,18 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            fade[imageNumber].Update(gameTime);
 
             if(fade[imageNumber].Alpha == 0.0f)
                 imageNumber++;
 
-            if (imageNumber + 1 > fade.Count || inputManager.KeyPressed(Keys.Enter))
+            if (imageNumber + 1 == fade.Count && fade[imageNumber].Alpha == 1.0f || inputManager.KeyPressed(Keys.Enter))
             {
                 //probably make it so the screenmanager handles this but for now...
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
+            }
+            else
+            {
+                fade[imageNumber].Update(gameTime);
             }
 
         }

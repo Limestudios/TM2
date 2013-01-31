@@ -26,7 +26,7 @@ namespace TM2
 
         protected List<List<string>> attributes, contents;
 
-        protected Vector2 position, velocity;
+        public Vector2 position, velocity;
 
         public virtual void LoadContent(ContentManager content, InputManager input)
         {
