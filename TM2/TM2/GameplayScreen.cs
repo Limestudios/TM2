@@ -37,7 +37,7 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            //player.Update(gameTime, inputManager, map.collision, map.layer);
+            player.Update(gameTime, inputManager, map.collision, map.layer);
             map.Update(gameTime);
         }
 

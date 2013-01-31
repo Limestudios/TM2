@@ -65,9 +65,9 @@ namespace TM2
 
                                 foreach (string m in motion)
                                 {
-                                    if (m.Contains(contents[i][j]))
+                                    getMotion = m.Split(':');
+                                    if (getMotion[0] == contents[i][k])
                                     {
-                                        getMotion = m.Split(':');
                                         tempMotion = (Tile.Motion)Enum.Parse(typeof(Tile.Motion), getMotion[1]);
                                         break;
                                     }
@@ -81,6 +81,17 @@ namespace TM2
                             indexY++;
                             break;
                     }
+                }
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                for (int j = 0; j < tiles[i].Count; j++)
+                {
+                    tiles[i][j].Update(gameTime);
                 }
             }
         }

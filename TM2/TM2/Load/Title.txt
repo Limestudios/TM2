@@ -3,4 +3,4 @@
 
 Load=[Songs]
 [SplashSound,TitleScreen/SplashSound]
-[memories,TitleScreen/memories]
+[memories,TitleScreen/PewPewPew]

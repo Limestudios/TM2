@@ -65,7 +65,7 @@ namespace TM2
             moveAnimation.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input, Collision col, Layers layer)
+        public override void Update(GameTime gameTime, InputManager input, Collision col, Layer layer)
         {
             moveAnimation.IsActive = true;
 
@@ -102,23 +102,23 @@ namespace TM2
                 {
                     if (col.CollisionMap[i][j] == "X")
                     {
-                        if (position.X + velocity.X + moveAnimation.FrameWidth < j * layer.TileDimensions.X)
+                        if (position.X + velocity.X + moveAnimation.FrameWidth < j * 60)
                         {
                             //no collision
                             collision = "FALSE1" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.X + velocity.X > j * layer.TileDimensions.X + layer.TileDimensions.X + 1)
+                        else if (position.X + velocity.X > j * 60 + 60)
                         {
                             //no collision
                             velocity.Y += gravity / 100;
                             collision = "FALSE2" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.Y + velocity.Y + moveAnimation.FrameHeight < i * layer.TileDimensions.Y)
+                        else if (position.Y + velocity.Y + moveAnimation.FrameHeight < i * 60)
                         {
                             //no collision
                             collision = "FALSE3" + " - " + i + " - " + j + " X : " + position.X + " Y : " + position.Y;
                         }
-                        else if (position.Y + velocity.Y > i * layer.TileDimensions.Y + layer.TileDimensions.Y)
+                        else if (position.Y + velocity.Y > i * 60 + 60)
                         {
                             //no collision
                             velocity.Y += gravity / 100;

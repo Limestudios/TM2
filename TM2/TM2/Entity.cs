@@ -40,7 +40,7 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input, Collision col, Layers layer)
+        public virtual void Update(GameTime gameTime, InputManager input, Collision col, Layer layer)
         {
 
         }

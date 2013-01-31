@@ -65,10 +65,10 @@ namespace TM2
                 fade[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
                 fade[i].Scale = 1.0f;
                 fade[i].IsActive = true;
-                fade[i].FadeSpeed = 0.6f;
-                fade[i].Alpha = 2.0f;
+                fade[i].FadeSpeed = 0.8f;
+                fade[i].Alpha = 0.000000001f;
                 fade[i].Increase = true;
-                fade[i].Timer = new TimeSpan(0, 0, 10);
+                fade[i].Timer = new TimeSpan(0, 0, 5);
             }
 
             audio.Play(0);
@@ -92,13 +92,12 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-
             fade[imageNumber].Update(gameTime);
 
             if(fade[imageNumber].Alpha == 0.0f)
                 imageNumber++;
 
-            if (imageNumber >= fade.Count - 1 || inputManager.KeyPressed(Keys.Enter))
+            if (imageNumber + 1 > fade.Count || inputManager.KeyPressed(Keys.Enter))
             {
                 //probably make it so the screenmanager handles this but for now...
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
@@ -108,7 +107,7 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (imageNumber <= fade.Count)
+            if (imageNumber < fade.Count)
                 fade[imageNumber].Draw(spriteBatch);
         }
     }

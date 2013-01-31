@@ -19,12 +19,14 @@ Content\SplashScreen\RGSplash.xnb
 Content\Player\potato.xnb
 Content\TileSets\tileSet1.xnb
 Content\TitleScreen\memories.xnb
+Content\TitleScreen\PewPewPew.xnb
 Content\TitleScreen\23 SENSATION.wma
 Content\SplashScreen\SplashSound.wma
 Content\CreditsScreen\Dul.wmv
 Content\TitleScreen\SplashSound.wma
 Content\TitleScreen\CaramellDansen.wma
 Content\TitleScreen\memories.wma
+Content\TitleScreen\PewPewPew.wma
 Load\CharacterSelect.txt
 Load\Options.txt
 Load\Title.txt

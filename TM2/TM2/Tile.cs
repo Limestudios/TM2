@@ -22,9 +22,11 @@ namespace TM2
         Motion motion;
         Vector2 position;
         Texture2D tileImage;
-
+        
+        bool increase;
         float range;
         int counter;
+        float moveSpeed;
 
         Animation animation;
 
@@ -56,12 +58,43 @@ namespace TM2
             this.state = state;
             this.motion = motion;
             this.position = position;
+            increase = true;
 
             tileImage = CropImage(tileSheet, tileArea);
             range = 50;
             counter = 0;
+            moveSpeed = 100f;
             animation = new Animation();
             animation.LoadContent(ScreenManager.Instance.Content, tileImage, "", position);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            //should make this based on timespan...for now this will work tho (bad coding habits)
+            counter++;
+
+            if (counter >= range)
+            {
+                counter = 0;
+                increase = !increase;
+            }
+
+            if (motion == Motion.Horizontal)
+            {
+                if (increase)
+                    position.X += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                    position.X -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else if (motion == Motion.Vertical)
+            {
+                if (increase)
+                    position.Y += moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                else
+                    position.Y -= moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            animation.Position = position;
         }
 
         public void Draw(SpriteBatch spriteBatch)
