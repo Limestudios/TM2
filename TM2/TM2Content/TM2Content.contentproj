@@ -200,13 +200,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="circle2.png">
-      <Name>circle2</Name>
+    <Compile Include="square1.png">
+      <Name>square1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="circle1.png">
       <Name>circle1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="square2.png">
+      <Name>square2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace TM2
 {
@@ -18,6 +22,8 @@ namespace TM2
         ContentManager content;
         Texture2D tileSheet;
         string[] getMotion;
+        Song song;
+        AudioManager audio;
 
         public void LoadContent(Map map, string layerID)
         {
@@ -27,6 +33,7 @@ namespace TM2
             motion = new List<string>();
             solid = new List<string>();
             fileManager = new FileManager();
+            audio = new AudioManager();
             content = new ContentManager(ScreenManager.Instance.Content.ServiceProvider, "Content");
 
             fileManager.LoadContent("Load/Maps/" + map.ID + ".txt", attributes, contents, layerID);
@@ -80,9 +87,15 @@ namespace TM2
                             tiles.Add(tempTiles);
                             indexY++;
                             break;
+                        case "Songs":
+                            string[] temp = contents[i][j].Split(',');
+                            song = this.content.Load<Song>(temp[1]);
+                            audio.songs.Add(song);
+                            break;
                     }
                 }
             }
+            audio.PlaySong(0,true);
         }
 
         public void Update(GameTime gameTime)

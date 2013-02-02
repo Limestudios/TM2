@@ -17,6 +17,8 @@ namespace TM2
     {
         SpriteFont font;
         public string collision;
+        double frameRate;
+        ParticleEngine particleEngine;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -30,6 +32,10 @@ namespace TM2
             Vector2 tempFrames = Vector2.Zero;
             moveSpeed = 100f;
             gravity = 5f;
+
+            List<Texture2D> textures = new List<Texture2D>();
+
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 200));
 
             fileManager.LoadContent("Load/Player.txt", attributes, contents);
             for (int i = 0; i < attributes.Count; i++)
@@ -138,12 +144,17 @@ namespace TM2
 
             moveAnimation.Position = position;
             moveAnimation.Update(gameTime);
+            frameRate = Math.Round(1 / (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+            particleEngine.Update(col, gameTime);
+            particleEngine.EmitterLocation = this.position;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             moveAnimation.Draw(spriteBatch);
             spriteBatch.DrawString(font, collision, new Vector2(400, 200), Color.Black);
+            spriteBatch.DrawString(font, frameRate.ToString(), new Vector2(400, 400), Color.Black);
+            particleEngine.Draw(spriteBatch);
         }
     }
 }

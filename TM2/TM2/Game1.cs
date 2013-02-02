@@ -23,6 +23,7 @@ namespace TM2
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            this.IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -77,7 +78,9 @@ namespace TM2
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed |
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
                 this.Exit();
+            }
 
             // TODO: Add your update logic here
             ScreenManager.Instance.Update(gameTime);

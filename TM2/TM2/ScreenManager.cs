@@ -130,7 +130,7 @@ namespace TM2
 
         public void Initialize()
         {
-            currentScreen = new GameplayScreen();
+            currentScreen = new SplashScreen();
             fade = new FadeAnimation();
             inputManager = new InputManager();
             audio = new AudioManager();
@@ -152,7 +152,6 @@ namespace TM2
                 currentScreen.Update(gameTime);
             else
                 Transition(gameTime);
-
         }
         public void Draw(SpriteBatch spriteBatch)
         {

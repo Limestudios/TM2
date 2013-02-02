@@ -43,12 +43,12 @@ namespace TM2
             float angle = 0;
             float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
             Color color = new Color(
-                    (float)random.NextDouble(),
-                    (float)random.NextDouble(),
-                    (float)random.NextDouble());
-            float size = (float)random.NextDouble()/2;
-            int ttl = 200 + random.Next(40);
-            float gravity = 0f;
+                    (float)1.0,
+                    (float)0.0,
+                    (float)0.0);
+            float size = (float)random.NextDouble()/4;
+            int ttl = 10 + random.Next(40);
+            float gravity = 2f;
 
             return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl, gravity);
         }
@@ -78,7 +78,7 @@ namespace TM2
 
         public void Update(Collision col, GameTime gameTime)
         {
-            int total = 2;
+            int total = 5;
 
             for (int i = 0; i < total; i++)
             {
