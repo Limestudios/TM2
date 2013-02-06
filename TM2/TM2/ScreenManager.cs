@@ -153,7 +153,11 @@ namespace TM2
         {
             currentScreen.Draw(spriteBatch);
             if (transition)
+            {
+                spriteBatch.Begin();
                 fade.Draw(spriteBatch);
+                spriteBatch.End();
+            }
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace TM2
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
 
         public Game1()
         {
@@ -96,9 +96,7 @@ namespace TM2
             GraphicsDevice.Clear(Color.White);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
             ScreenManager.Instance.Draw(spriteBatch);
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }

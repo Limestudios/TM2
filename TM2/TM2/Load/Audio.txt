@@ -25,7 +25,7 @@ EndLoad=[Options]
 Load=[Credits]
 
 Load=[Songs]
-[memories,Audio/Chambermaid Swing]
+[memories,Audio/memories]
 
 EndLoad=[Credits]
 
@@ -33,6 +33,6 @@ EndLoad=[Credits]
 Load=[Map1]
 
 Load=[Songs]
-[memories,Audio/memories]
+[memories,Audio/Chambermaid Swing]
 
 EndLoad=[Map1]

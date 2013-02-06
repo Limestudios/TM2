@@ -112,7 +112,6 @@ namespace TM2
                     rotation, origin, scale, 
                     SpriteEffects.None, 0.0f);
             }
-
         }
     }
 }

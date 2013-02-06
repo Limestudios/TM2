@@ -63,8 +63,10 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             gui.Draw(spriteBatch);
             menu.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

@@ -103,8 +103,10 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             if (imageNumber < fade.Count)
                 fade[imageNumber].Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

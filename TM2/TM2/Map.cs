@@ -13,6 +13,9 @@ namespace TM2
     {
         public Layer layer;
         public Collision collision;
+        Camera camera;
+        Vector2 parallax;
+        Viewport viewport;
 
         string id;
 
@@ -29,6 +32,10 @@ namespace TM2
 
             layer.LoadContent(map, "Layer1");
             collision.LoadContent(content, mapID);
+
+            viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
+            camera = new Camera(viewport);
+            parallax = Vector2.One;
         }
 
         public void UnloadContent()
