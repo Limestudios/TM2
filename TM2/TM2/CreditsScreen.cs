@@ -121,6 +121,7 @@ namespace TM2
             }
             spriteBatch.DrawString(font, "Made by Liam Craver (Lime Studios)", new Vector2(100, 200), Color.Black);
             spriteBatch.DrawString(font, "Based off the members of Team Mongoose", new Vector2(100, 300), Color.Black);
+            gui.Draw(spriteBatch);
         }
     }
 }

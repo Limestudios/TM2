@@ -18,8 +18,8 @@ namespace TM2
         SpriteFont font;
         OptionsManager options;
         FileManager fileManager;
+        AudioManager audioManager;
         List<Texture2D> images;
-        AudioManager audio;
         Song song;
 
         protected Rectangle sourceRect;
@@ -40,29 +40,16 @@ namespace TM2
             imageNumber = 0;
 
             options = new OptionsManager();
-            audio = new AudioManager();
             options.LoadContent(content, "Options");
+
+            audioManager = new AudioManager();
+            audioManager.LoadContent(content, "Options");
+            audioManager.PlaySong(0, true);
 
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Options.txt", attributes, contents, "OptionsScreen");
 
             position = Vector2.Zero;
-
-            for (int i = 0; i < attributes.Count; i++)
-            {
-                for (int j = 0; j < attributes[i].Count; j++)
-                {
-                    switch (attributes[i][j])
-                    {
-                        case "Songs":
-                            String[] temp = contents[i][j].Split(',');
-                            song = this.content.Load<Song>(temp[1]);
-                            audio.songs.Add(song);
-                            audio.PlaySong(0, true);
-                            break;
-                    }
-                }
-            }
         }
 
         public override void UnloadContent()

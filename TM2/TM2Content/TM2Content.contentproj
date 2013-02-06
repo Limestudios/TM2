@@ -87,7 +87,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\23 SENSATION.mp3">
+    <Compile Include="Audio\23 SENSATION.mp3">
       <Name>23 SENSATION</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
@@ -130,13 +130,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SplashScreen\SplashSound.mp3">
-      <Name>SplashSound</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="CreditsScreen\Dul.wmv">
       <Name>Dul</Name>
       <Importer>WmvImporter</Importer>
@@ -151,14 +144,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\SplashSound.mp3">
+    <Compile Include="Audio\SplashSound.mp3">
       <Name>SplashSound</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\CaramellDansen.mp3">
+    <Compile Include="Audio\CaramellDansen.mp3">
       <Name>CaramellDansen</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
@@ -179,14 +172,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\memories.mp3">
+    <Compile Include="Audio\memories.mp3">
       <Name>memories</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\PewPewPew.mp3">
+    <Compile Include="Audio\PewPewPew.mp3">
       <Name>PewPewPew</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
@@ -216,6 +209,13 @@
       <Name>TM</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\Chambermaid Swing.mp3">
+      <Name>Chambermaid Swing</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

@@ -1,7 +1,14 @@
 ﻿Load=[Title]
 
 Load=[Images][Position][Scale][Align]
-[TitleScreen/TM][175,25][0.5][Center,X]
-[TitleScreen/TM][175,25][0.25][Center,Y]
+[TitleScreen/TM][175,10][0.5][Center,X]
 
 EndLoad=[Title]
+
+Load=[Credits]
+
+Load=[Images][Position][Scale][Align]
+[SplashScreen/LSSplash][600,210][0.1][Center,X]
+[TitleScreen/TM][600,300][.1][Center,X]
+
+EndLoad=[Credits]

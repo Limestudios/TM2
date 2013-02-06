@@ -1,24 +1,38 @@
 ﻿Load=[Splash]
 
 Load=[Songs]
-[SplashSound,TitleScreen/SplashSound]
+[SplashSound,Audio/SplashSound]
 
 EndLoad=[Splash]
+
+
 Load=[Title]
 
 Load=[Songs]
-[memories,TitleScreen/PewPewPew]
+[memories,Audio/PewPewPew]
 
 EndLoad=[Title]
+
+
+Load=[Options]
+
+Load=[Songs]
+[memories,Audio/PewPewPew]
+
+EndLoad=[Options]
+
+
 Load=[Credits]
 
 Load=[Songs]
-[memories,TitleScreen/PewPewPew]
+[memories,Audio/Chambermaid Swing]
 
 EndLoad=[Credits]
+
+
 Load=[Map1]
 
 Load=[Songs]
-[memories,TitleScreen/PewPewPew]
+[memories,Audio/memories]
 
 EndLoad=[Map1]

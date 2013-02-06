@@ -9,27 +9,27 @@ Content\null.xnb
 Content\TitleScreen\button.xnb
 Content\Player\player.xnb
 Content\CreditsScreen\button.xnb
-Content\TitleScreen\23 SENSATION.xnb
-Content\SplashScreen\SplashSound.xnb
 Content\CreditsScreen\Dul.xnb
-Content\TitleScreen\SplashSound.xnb
-Content\TitleScreen\CaramellDansen.xnb
 Content\SplashScreen\RGSplash.xnb
 Content\Player\potato.xnb
 Content\TileSets\tileSet1.xnb
-Content\TitleScreen\memories.xnb
-Content\TitleScreen\PewPewPew.xnb
 Content\circle1.xnb
 Content\square1.xnb
 Content\square2.xnb
 Content\TitleScreen\TM.xnb
-Content\TitleScreen\23 SENSATION.wma
-Content\SplashScreen\SplashSound.wma
+Content\Audio\23 SENSATION.xnb
+Content\Audio\SplashSound.xnb
+Content\Audio\CaramellDansen.xnb
+Content\Audio\memories.xnb
+Content\Audio\PewPewPew.xnb
+Content\Audio\Chambermaid Swing.xnb
 Content\CreditsScreen\Dul.wmv
-Content\TitleScreen\SplashSound.wma
-Content\TitleScreen\CaramellDansen.wma
-Content\TitleScreen\memories.wma
-Content\TitleScreen\PewPewPew.wma
+Content\Audio\23 SENSATION.wma
+Content\Audio\SplashSound.wma
+Content\Audio\CaramellDansen.wma
+Content\Audio\memories.wma
+Content\Audio\PewPewPew.wma
+Content\Audio\Chambermaid Swing.wma
 Load\CharacterSelect.txt
 Load\GUIs.txt
 Load\Particle.txt

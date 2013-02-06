@@ -56,6 +56,7 @@ namespace TM2
                     {
                         case "Images":
                             images.Add(this.content.Load<Texture2D>(contents[i][j]));
+                            sourceRect.Add(new Rectangle(0, 0, images[i].Width, images[i].Height));
                             break;
                         case "Position":
                             string[] temp = contents[i][j].Split(',');
@@ -67,9 +68,9 @@ namespace TM2
                             break;
                         case "Align":
                             temp = contents[i][j].Split(',');
-                            align = temp[1];
                             if (temp[0] == "Center")
                             {
+                                align = temp[1];
                                 if (align == "X")
                                 {
                                     position.Add(new Vector2((ScreenManager.Instance.Dimensions.X - images[i].Width * scale[i]) / 2, posTemp.Y));
@@ -86,7 +87,6 @@ namespace TM2
                             break;
                     }
                 }
-                sourceRect.Add(new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height));
             }
         }
 
