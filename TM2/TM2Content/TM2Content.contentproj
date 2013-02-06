@@ -144,13 +144,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TitleScreen\TM.jpg">
-      <Name>TM</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="TileSets\tileSet1.png">
       <Name>tileSet1</Name>
       <Importer>TextureImporter</Importer>
@@ -214,6 +207,13 @@
   <ItemGroup>
     <Compile Include="square2.png">
       <Name>square2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TitleScreen\TM.png">
+      <Name>TM</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

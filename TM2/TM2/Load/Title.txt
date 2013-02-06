@@ -1,5 +1,6 @@
-﻿Load=[Images][Position][Scale]
-[TitleScreen/TM][175 25][0.5]
+﻿Load=[Images][Position][Scale][Align]
+[TitleScreen/TM][175,25][0.5][Center,X]
+[TitleScreen/TM][175,25][0.25][Center,Y]
 
 Load=[Songs]
 [SplashSound,TitleScreen/SplashSound]

@@ -22,13 +22,17 @@ namespace TM2
         AudioManager audio;
         Song song;
 
-        protected Rectangle sourceRect;
+        List<Rectangle> sourceRect;
 
         int imageNumber;
 
-        protected float scale;
+        List<float> scale;
 
-        Vector2 position;
+        List<Vector2> position;
+
+        String align;
+
+        Vector2 posTemp;
 
         public override void LoadContent(ContentManager content, InputManager inputManager)
         {
@@ -44,7 +48,9 @@ namespace TM2
             fileManager.LoadContent("Load/Title.txt", attributes, contents);
             audio = new AudioManager();
 
-            position = Vector2.Zero;
+            position = new List<Vector2>();
+            scale = new List<float>();
+            sourceRect = new List<Rectangle>();
 
             for (int i = 0; i < attributes.Count; i++)
             {
@@ -56,21 +62,40 @@ namespace TM2
                             images.Add(this.content.Load<Texture2D>(contents[i][j]));
                             break;
                         case "Position":
-                            string[] temp = contents[i][j].Split(' ');
-                            position = new Vector2(float.Parse(temp[0]),
+                            string[] temp = contents[i][j].Split(',');
+                            posTemp = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
                             break;
                         case "Scale":
-                            scale = float.Parse(contents[i][j]);
+                            scale.Add(float.Parse(contents[i][j]));
                             break;
                         case "Songs" :
                             temp = contents[i][j].Split(',');
                             song = this.content.Load<Song>(temp[1]);
                             audio.songs.Add(song);
                             break;
+                        case "Align":
+                            temp = contents[i][j].Split(',');
+                            align = temp[1];
+                            if (temp[0] == "Center")
+                            {
+                                if (align == "X")
+                                {
+                                    position.Add(new Vector2((ScreenManager.Instance.Dimensions.X - images[i].Width * scale[i]) / 2, posTemp.Y));
+                                }
+                                else if (align == "Y")
+                                {
+                                    position.Add(new Vector2(posTemp.X, (ScreenManager.Instance.Dimensions.Y - images[i].Height * scale[i]) / 2));
+                                }
+                            }
+                            else
+                            {
+                                position.Add(posTemp);
+                            }
+                            break;
                     }
                 }
-                sourceRect = new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height);
+                sourceRect.Add(new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height));
             }
             audio.PlaySong(1, true);
             //audio.FadeSong(0.0f, new TimeSpan(0, 0, 5));
@@ -99,8 +124,11 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            for (int k = 0; k < images.Count; k++)
+            {
+                spriteBatch.Draw(images[k], position[k], sourceRect[k], Color.White, 0.0f, Vector2.Zero, scale[k], SpriteEffects.None, 1.0f);
+            }
             menu.Draw(spriteBatch);
-            spriteBatch.Draw(images[imageNumber], position, sourceRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1.0f);
         }
     }
 }

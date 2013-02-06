@@ -9,7 +9,6 @@ Content\null.xnb
 Content\TitleScreen\button.xnb
 Content\Player\player.xnb
 Content\CreditsScreen\button.xnb
-Content\TitleScreen\TM.xnb
 Content\TitleScreen\23 SENSATION.xnb
 Content\SplashScreen\SplashSound.xnb
 Content\CreditsScreen\Dul.xnb
@@ -23,6 +22,7 @@ Content\TitleScreen\PewPewPew.xnb
 Content\circle1.xnb
 Content\square1.xnb
 Content\square2.xnb
+Content\TitleScreen\TM.xnb
 Content\TitleScreen\23 SENSATION.wma
 Content\SplashScreen\SplashSound.wma
 Content\CreditsScreen\Dul.wmv
