@@ -5,6 +5,14 @@ Load=[Images][Position][Scale][Align]
 
 EndLoad=[Title]
 
+Load=[CharacterSelect]
+
+Load=[Images][Position][Scale][Align]
+[Player/potato][100,100][1][Center,Y]
+[Player/player][100,100][1][Center,X]
+
+EndLoad=[CharacterSelect]
+
 Load=[Credits]
 
 Load=[Images][Position][Scale][Align]
@@ -12,3 +20,10 @@ Load=[Images][Position][Scale][Align]
 [TitleScreen/TM][600,300][.1][Center,X]
 
 EndLoad=[Credits]
+
+Load=[Map1]
+
+Load=[Images][Position][Scale][Align]
+[TitleScreen/TM][10,10][0.2][None]
+
+EndLoad=[Map1]

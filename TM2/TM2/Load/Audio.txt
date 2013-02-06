@@ -14,10 +14,18 @@ Load=[Songs]
 EndLoad=[Title]
 
 
-Load=[Options]
+Load=[CharacterSelect]
 
 Load=[Songs]
 [memories,Audio/PewPewPew]
+
+EndLoad=[CharacterSelect]
+
+
+Load=[Options]
+
+Load=[Songs]
+[memories,Audio/Daft Punk - Digital Love]
 
 EndLoad=[Options]
 

@@ -2,6 +2,3 @@
 [SplashScreen/LSSplash]
 [SplashScreen/RGSplash]
 [SplashScreen/TMSplash]
-
-Load=[Songs]
-[SplashSound,SplashScreen/SplashSound]

@@ -15,7 +15,6 @@ namespace TM2
 {
     public class TitleScreen : GameScreen
     {
-        SpriteFont font;
         MenuManager menu;
         List<Texture2D> images;
         public AudioManager audio;
@@ -25,7 +24,6 @@ namespace TM2
         {
             images = new List<Texture2D>();
             base.LoadContent(content, inputManager);
-            font = this.content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
 
             gui = new GUIManager();
             gui.LoadContent(content, "Title");

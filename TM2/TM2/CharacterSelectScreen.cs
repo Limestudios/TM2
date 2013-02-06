@@ -17,62 +17,26 @@ namespace TM2
     {
         SpriteFont font;
         MenuManager menu;
-        FileManager fileManager;
         List<Texture2D> images;
-        AudioManager audio;
-        Song song;
-
-        protected Rectangle sourceRect;
-
-        int imageNumber;
-
-        protected float scale;
-
-        Vector2 position;
+        public AudioManager audio;
+        GUIManager gui;
 
         public override void LoadContent(ContentManager content, InputManager inputManager)
         {
-            this.content = new ContentManager(content.ServiceProvider, "Content");
             images = new List<Texture2D>();
             base.LoadContent(content, inputManager);
             font = this.content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
 
+            gui = new GUIManager();
+            gui.LoadContent(content, "CharacterSelect");
+
             menu = new MenuManager();
             menu.LoadContent(content, "CharacterSelect");
 
-            fileManager = new FileManager();
-            fileManager.LoadContent("Load/CharacterSelect.txt", attributes, contents);
             audio = new AudioManager();
+            audio.LoadContent(content, "CharacterSelect");
 
-            position = Vector2.Zero;
-
-            for (int i = 0; i < attributes.Count; i++)
-            {
-                for (int j = 0; j < attributes[i].Count; j++)
-                {
-                    switch (attributes[i][j])
-                    {
-                        case "Images":
-                            images.Add(this.content.Load<Texture2D>(contents[i][j]));
-                            break;
-                        case "Position":
-                            string[] temp = contents[i][j].Split(' ');
-                            position = new Vector2(float.Parse(temp[0]),
-                                float.Parse(temp[1]));
-                            break;
-                        case "Scale":
-                            scale = float.Parse(contents[i][j]);
-                            break;
-                        case "Songs":
-                            temp = contents[i][j].Split(',');
-                            song = this.content.Load<Song>(temp[1]);
-                            audio.songs.Add(song);
-                            break;
-                    }
-                }
-                sourceRect = new Rectangle(0, 0, images[imageNumber].Width, images[imageNumber].Height);
-            }
-            audio.PlaySong(1, true);
+            audio.PlaySong(0, true);
             //audio.FadeSong(0.0f, new TimeSpan(0, 0, 5));
         }
 
@@ -87,20 +51,22 @@ namespace TM2
             content.Unload();
             MediaPlayer.Stop();
             this.content.Unload();
-            audio.UnloadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
             menu.Update(gameTime, inputManager, audio);
+            gui.Update(gameTime);
             audio.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
+            gui.Draw(spriteBatch);
             menu.Draw(spriteBatch);
-            spriteBatch.Draw(images[imageNumber], position, sourceRect, Color.White, 0.0f, Vector2.Zero, scale, SpriteEffects.None, 1.0f);
+            spriteBatch.End();
         }
     }
 }

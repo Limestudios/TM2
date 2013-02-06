@@ -21,6 +21,7 @@ namespace TM2
         Camera camera;
         Vector2 parallax;
         Viewport viewport;
+        GUIManager guiManager;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -35,6 +36,9 @@ namespace TM2
             viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
             camera = new Camera(viewport);
             parallax = Vector2.One;
+
+            guiManager = new GUIManager();
+            guiManager.LoadContent(content, "Map1");
 
             audio.PlaySong(0, true);
         }
@@ -52,6 +56,7 @@ namespace TM2
             player.Update(gameTime, inputManager, map.collision, map.layer);
             map.Update(gameTime);
             camera.LookAt(player.position);
+            guiManager.Update(gameTime);
 
             if (inputManager.KeyPressed(Keys.R))
             {
@@ -66,6 +71,9 @@ namespace TM2
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(parallax));
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            spriteBatch.End();
+            spriteBatch.Begin();
+            guiManager.Draw(spriteBatch);
             spriteBatch.End();
         }
     }
