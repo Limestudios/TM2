@@ -12,17 +12,21 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TM2
 {
-    class AudioManager
+    public class AudioManager
     {
-        public List<Song> songs = new List<Song>();
+        public List<Song> songs;
         float volume;
         bool increase, fading;
         float targetVolume, sourceVolume;
         TimeSpan time, targetTime;
         private MusicFadeEffect fadeEffect;
-        private bool isMusicPaused = false;
+        bool isMusicPaused = false;
+        ContentManager content;
+        FileManager fileManager;
+        List<List<string>> attributes, contents;
+        Song song;
 
-        private Song currentSong = null;
+        Song currentSong = null;
         public bool IsSongPaused { get { return currentSong != null && isMusicPaused; } }
 
         /// <summary>
@@ -39,9 +43,30 @@ namespace TM2
             set { MediaPlayer.Volume = value; }
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager content, string id)
         {
+            content = new ContentManager(content.ServiceProvider, "Content");
+            attributes = new List<List<string>>();
+            contents = new List<List<string>>();
+            songs = new List<Song>();
 
+            fileManager = new FileManager();
+            fileManager.LoadContent("Load/Audio.txt", attributes, contents, id);
+
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                for (int j = 0; j < attributes[i].Count; j++)
+                {
+                    switch (attributes[i][j])
+                    {
+                        case "Songs":
+                            String[] temp = contents[i][j].Split(',');
+                            song = content.Load<Song>(temp[1]);
+                            songs.Add(song);
+                            break;
+                    }
+                }
+            }
         }
 
         public void UnloadContent()

@@ -31,9 +31,10 @@ Content\TitleScreen\CaramellDansen.wma
 Content\TitleScreen\memories.wma
 Content\TitleScreen\PewPewPew.wma
 Load\CharacterSelect.txt
+Load\GUIs.txt
 Load\Particle.txt
 Load\Options.txt
-Load\Title.txt
+Load\Audio.txt
 Load\Credits.txt
 Load\Player.txt
 Load\Menus.txt

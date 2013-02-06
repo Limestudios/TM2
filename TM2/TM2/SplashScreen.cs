@@ -40,6 +40,8 @@ namespace TM2
             images = new List<Texture2D>();
 
             fileManager.LoadContent("Load/Splash.txt", attributes, contents);
+            audio = new AudioManager();
+            audio.LoadContent(content, "Splash");
 
             for (int i = 0; i < attributes.Count; i++)
             {
@@ -50,11 +52,6 @@ namespace TM2
                         case "Image":
                             images.Add(this.content.Load<Texture2D>(contents[i][j]));
                             fade.Add(new FadeAnimation());
-                            break;
-                        case "Songs":
-                            string[] temp = contents[i][j].Split(',');
-                            song = this.content.Load<Song>(temp[1]);
-                            audio.songs.Add(song);
                             break;
                     }
                 }
@@ -70,7 +67,6 @@ namespace TM2
                 fade[i].Increase = true;
                 fade[i].Timer = new TimeSpan(0, 0, 5);
             }
-
             audio.Play(0);
         }
 
@@ -82,16 +78,13 @@ namespace TM2
             attributes.Clear();
             contents.Clear();
             this.content.Unload();
-            attributes.Clear();
-            contents.Clear();
-            attributes.Clear();
-            contents.Clear();
-            content.Unload();
         }
 
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
+
+            audio.Update(gameTime);
 
             if(fade[imageNumber].Alpha == 0.0f)
                 imageNumber++;

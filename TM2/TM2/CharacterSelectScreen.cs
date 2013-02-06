@@ -93,7 +93,7 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            menu.Update(gameTime, inputManager);
+            menu.Update(gameTime, inputManager, audio);
             audio.Update(gameTime);
         }
 

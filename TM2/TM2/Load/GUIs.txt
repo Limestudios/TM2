@@ -1,0 +1,7 @@
+﻿Load=[Title]
+
+Load=[Images][Position][Scale][Align]
+[TitleScreen/TM][175,25][0.5][Center,X]
+[TitleScreen/TM][175,25][0.25][Center,Y]
+
+EndLoad=[Title]

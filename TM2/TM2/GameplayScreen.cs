@@ -17,14 +17,19 @@ namespace TM2
     {
         Player player;
         Map map;
+        AudioManager audio;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
             base.LoadContent(content, input);
             player = new Player();
             map = new Map();
+            audio = new AudioManager();
             map.LoadContent(content, map, "Map1");
             player.LoadContent(content, input);
+            audio.LoadContent(content, "Map1");
+
+            audio.PlaySong(0, true);
         }
 
         public override void UnloadContent()

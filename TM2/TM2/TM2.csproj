@@ -124,6 +124,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterSelectScreen.cs" />
+    <Compile Include="GUIManager.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Layers.cs" />
     <Compile Include="Collision.cs" />
@@ -192,13 +193,16 @@
     <Content Include="Load\CharacterSelect.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Load\GUIs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Load\Particle.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Load\Options.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Load\Title.txt">
+    <Content Include="Load\Audio.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Load\Credits.txt">

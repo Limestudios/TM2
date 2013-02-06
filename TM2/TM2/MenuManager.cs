@@ -25,6 +25,7 @@ namespace TM2
 
         ContentManager content;
         FileManager fileManager;
+        AudioManager audio;
 
         Vector2 position;
         Rectangle source;
@@ -188,7 +189,7 @@ namespace TM2
             animationTypes.Clear();
         }
 
-        public void Update(GameTime gameTime, InputManager inputManager)
+        public void Update(GameTime gameTime, InputManager inputManager, AudioManager audio)
         {
             if (axis == 1)
             {

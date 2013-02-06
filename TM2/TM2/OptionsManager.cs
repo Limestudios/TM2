@@ -26,6 +26,7 @@ namespace TM2
 
         ContentManager content;
         FileManager fileManager;
+        AudioManager audio;
 
         Vector2 position, limits;
         Rectangle source;

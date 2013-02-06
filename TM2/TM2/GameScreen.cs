@@ -18,6 +18,7 @@ namespace TM2
         protected ContentManager content;
         protected List<List<string>> attributes, contents;
         protected InputManager inputManager;
+        protected AudioManager audioManager;
 
         public virtual void LoadContent(ContentManager Content, InputManager inputManager)
         {
@@ -25,6 +26,7 @@ namespace TM2
             attributes = new List<List<string>>();
             contents = new List<List<string>>();
             this.inputManager = inputManager;
+            audioManager = new AudioManager();
         }
         public virtual void UnloadContent()
         {

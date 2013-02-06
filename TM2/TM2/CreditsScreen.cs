@@ -18,6 +18,8 @@ namespace TM2
         SpriteFont font;
         Song song;
         FileManager fileManager;
+        GUIManager gui;
+        AudioManager audio;
 
         Video video;
         VideoPlayer videoPlayer;
@@ -33,6 +35,12 @@ namespace TM2
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Credits.txt", attributes, contents);
 
+            gui = new GUIManager();
+            gui.LoadContent(content, "Credits");
+
+            audio = new AudioManager();
+            audio.LoadContent(content, "Credits");
+
             dul = false;
 
             for (int i = 0; i < attributes.Count; i++)
@@ -41,11 +49,6 @@ namespace TM2
                 {
                     switch (attributes[i][j])
                     {
-                        case "Sounds":
-                            song = this.content.Load<Song>(contents[i][j]);
-                            MediaPlayer.Play(song);
-                            MediaPlayer.IsRepeating = true;
-                            break;
                         case "Videos" :
                             video = this.content.Load<Video>(contents[i][j]);
                             videoPlayer = new VideoPlayer();
@@ -53,6 +56,8 @@ namespace TM2
                     }
                 }
             }
+
+            audio.PlaySong(0, true);
         }
 
         public override void UnloadContent()
@@ -77,6 +82,7 @@ namespace TM2
                     videoPlayer.IsLooped = true;
                     videoPlayer.Resume();
                     videoPlayer.Play(video);
+                    MediaPlayer.Pause();
                 }
                 dul = !dul;
             }
@@ -86,6 +92,7 @@ namespace TM2
                 {
                     videoPlayer.Pause();
                     videoPlayer.IsMuted = true;
+                    MediaPlayer.Resume();
                 }
             }
             else
