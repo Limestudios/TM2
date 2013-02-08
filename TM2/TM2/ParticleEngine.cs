@@ -21,6 +21,7 @@ namespace TM2
         public List<Texture2D> textures;
         public ContentManager content;
         public FileManager fileManager;
+        public int total { get; set; }
 
         protected List<List<string>> attributes, contents;
 
@@ -31,6 +32,7 @@ namespace TM2
             this.particles = new List<Particle>();
             random = new Random();
             this.LoadContent(content);
+            this.total = total;
         }
 
         private Particle GenerateNewParticle()
@@ -78,8 +80,6 @@ namespace TM2
 
         public void Update(Collision col, GameTime gameTime)
         {
-            int total = 5;
-
             for (int i = 0; i < total; i++)
             {
                 particles.Add(GenerateNewParticle());

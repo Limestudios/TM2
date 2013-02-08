@@ -104,7 +104,6 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             // Only call GetTexture if a video is playing or paused
             if (videoPlayer.State == MediaState.Playing)
                 videoTexture = videoPlayer.GetTexture();
@@ -123,7 +122,6 @@ namespace TM2
             spriteBatch.DrawString(font, "Made by Liam Craver (Lime Studios)", new Vector2(100, 200), Color.Black);
             spriteBatch.DrawString(font, "Based off the members of Team Mongoose", new Vector2(100, 300), Color.Black);
             gui.Draw(spriteBatch);
-            spriteBatch.End();
         }
     }
 }

@@ -15,50 +15,19 @@ namespace TM2
 {
     public class SpriteSheetAnimation : Animation
     {
-        int frameCounter;
-        int switchFrame;
+        int frameCounter, switchFrame;
+        Vector2 currentFrame;
 
-        Vector2 frames, currentFrame;
-
-        public Vector2 Frames
+        public SpriteSheetAnimation()
         {
-            set { frames = value; }
-        }
-
-        public Vector2 CurrentFrame
-        {
-            set { currentFrame = value; }
-            get { return currentFrame; }
-        }
-
-        public int FrameWidth
-        {
-            get { return image.Width / (int)frames.X; }
-        }
-
-        public int FrameHeight
-        {
-            get { return image.Height / (int)frames.Y; }
-        }
-        public override void LoadContent(ContentManager Content, Texture2D image, string text, Vector2 position)
-        {
-            base.LoadContent(Content, image, text, position);
             frameCounter = 0;
             switchFrame = 100;
-            frames = new Vector2(3, 2);
-            currentFrame = new Vector2(0, 0);
-            sourceRect = new Rectangle((int)currentFrame.X * FrameWidth,
-                (int)currentFrame.Y * FrameHeight, FrameWidth, FrameHeight);
         }
 
-        public override void UnloadContent()
+        public override void Update(GameTime gameTime, ref Animation a)
         {
-            base.UnloadContent();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if (isActive)
+            currentFrame = a.CurrentFrame;
+            if (a.IsActive)
             {
                 frameCounter += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                 if (frameCounter >= switchFrame)
@@ -66,7 +35,7 @@ namespace TM2
                     frameCounter = 0;
                     currentFrame.X++;
 
-                    if (currentFrame.X * FrameWidth >= image.Width)
+                    if (currentFrame.X * a.FrameWidth >= a.Image.Width)
                         currentFrame.X = 0;
                 }
             }
@@ -75,9 +44,8 @@ namespace TM2
                 frameCounter = 0;
                 currentFrame.X = 1;
             }
-
-            sourceRect = new Rectangle((int)currentFrame.X * FrameWidth,
-                (int)currentFrame.Y * FrameHeight, FrameWidth, FrameHeight);
+            a.CurrentFrame = currentFrame;
+            a.SourceRect = new Rectangle((int)currentFrame.X * a.FrameWidth, (int)currentFrame.Y * a.FrameHeight, a.FrameWidth, a.FrameHeight);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace TM2
         FileManager fileManager;
 
         Texture2D tileSet;
-        Vector2 tileDimensions;
+        public Vector2 tileDimensions;
 
         int layerNumber;
 

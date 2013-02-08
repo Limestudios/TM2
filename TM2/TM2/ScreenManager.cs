@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,6 +58,7 @@ namespace TM2
         bool transition;
 
         FadeAnimation fade;
+        Animation animation;
 
         Texture2D fadeTexture;
 
@@ -107,6 +108,7 @@ namespace TM2
             fade.IsActive = true;
             fade.Alpha = 0.0f;
             fade.ActivateValue = 1.0f;
+            fade.Increase = true;
             this.inputManager = inputManager;
             //audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1200));
         }
@@ -121,15 +123,15 @@ namespace TM2
                 fade.Alpha = 1.0f - alpha;
             else
                 fade.Alpha = alpha;
-            fade.Increase = true;
             this.inputManager = inputManager;
             //audio.Play(0);
         }
 
         public void Initialize()
         {
-            currentScreen = new SplashScreen();
+            currentScreen = new GameplayScreen();
             fade = new FadeAnimation();
+            animation = new Animation();
             inputManager = new InputManager();
         }
         public void LoadContent(ContentManager Content)
@@ -139,8 +141,8 @@ namespace TM2
 
             fadeTexture = this.content.Load<Texture2D>("fade");
             nullImage = this.content.Load<Texture2D>("null");
-            fade.LoadContent(content, fadeTexture, "", Vector2.Zero);
-            fade.Scale = dimensions.X;
+            animation.LoadContent(content, fadeTexture, "", Vector2.Zero);
+            animation.Scale = dimensions.X;
         }
         public void Update(GameTime gameTime)
         {
@@ -154,9 +156,7 @@ namespace TM2
             currentScreen.Draw(spriteBatch);
             if (transition)
             {
-                spriteBatch.Begin();
-                fade.Draw(spriteBatch);
-                spriteBatch.End();
+                animation.Draw(spriteBatch);
             }
         }
 
@@ -166,7 +166,7 @@ namespace TM2
 
         private void Transition(GameTime gameTime)
         {
-            fade.Update(gameTime);
+            fade.Update(gameTime, ref animation);
             if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 2.0f)
             {
                 screenStack.Push(newScreen);

@@ -18,7 +18,9 @@ namespace TM2
         List<string> menuItems;
         List<string> animationTypes, linkType, linkID;
         List<Texture2D> menuImages;
-        List<List<Animation>> animation;
+        List<Animation> animation;
+        FadeAnimation fAnimation;
+        SpriteSheetAnimation ssAnimation;
         List<List<string>> attributes, contents;
         List<Animation> tempAnimation;
         Song song;
@@ -75,8 +77,6 @@ namespace TM2
                 pos = position;
             }
 
-            tempAnimation = new List<Animation>();
-
             for (int i = 0; i < menuImages.Count; i++)
             {
                 dimensions = new Vector2(font.MeasureString(menuItems[i]).X + menuImages[i].Width,
@@ -87,21 +87,9 @@ namespace TM2
                 else
                     pos.X = (ScreenManager.Instance.Dimensions.X) / 2 - font.MeasureString(menuItems[i]).X / 2;
 
-                for (int j = 0; j < animationTypes.Count; j++)
-                {
-                    switch (animationTypes[j])
-                    {
-                        case "Fade" :
-                            tempAnimation.Add(new FadeAnimation());
-                            tempAnimation[tempAnimation.Count - 1].LoadContent(content,
-                                menuImages[i], menuItems[i], pos);
-                            tempAnimation[tempAnimation.Count - 1].Font = font;
-                            break;
-                    }
-                }
-                if(tempAnimation.Count > 0)
-                    animation.Add(tempAnimation);
-                tempAnimation = new List<Animation>();
+                animation.Add(new FadeAnimation());
+                animation[animation.Count - 1].LoadContent(content, menuImages[i], menuItems[i], pos);
+                animation[animation.Count - 1].Font = font;
 
                 if (axis == 1)
                 {
@@ -119,7 +107,9 @@ namespace TM2
             this.content = new ContentManager(content.ServiceProvider, "Content");
             menuItems = new List<string>();
             menuImages = new List<Texture2D>();
-            animation = new List<List<Animation>>();
+            animation = new List<Animation>();
+            fAnimation = new FadeAnimation();
+            ssAnimation = new SpriteSheetAnimation();
             animationTypes = new List<string>();
             attributes = new List<List<string>>();
             contents = new List<List<string>>();
@@ -130,43 +120,43 @@ namespace TM2
             position = Vector2.Zero;
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Menus.txt", attributes, contents, id);
-            
-            for(int i = 0; i < attributes.Count; i++)
+
+            for (int i = 0; i < attributes.Count; i++)
             {
                 for (int j = 0; j < attributes[i].Count; j++)
                 {
                     switch (attributes[i][j])
                     {
-                        case "Font" :
+                        case "Font":
                             font = this.content.Load<SpriteFont>(contents[i][j]);
                             break;
-                        case "Item" :
+                        case "Item":
                             menuItems.Add(contents[i][j]);
                             break;
-                        case "Image" :
+                        case "Image":
                             menuImages.Add(this.content.Load<Texture2D>(contents[i][j]));
                             break;
-                        case "Axis" :
+                        case "Axis":
                             axis = int.Parse(contents[i][j]);
                             break;
-                        case "Position" :
+                        case "Position":
                             string[] temp = contents[i][j].Split(' ');
                             position = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
                             break;
-                        case "Source" :
+                        case "Source":
                             temp = contents[i][j].Split(' ');
                             source = new Rectangle(int.Parse(temp[0]),
                                 int.Parse(temp[1]), int.Parse(temp[2]),
                                 int.Parse(temp[3]));
                             break;
-                        case "Animation" :
+                        case "Animation":
                             animationTypes.Add(contents[i][j]);
                             break;
-                        case "Align" :
+                        case "Align":
                             align = contents[i][j];
                             break;
-                        case "LinkType" :
+                        case "LinkType":
                             linkType.Add(contents[i][j]);
                             break;
                         case "LinkID":
@@ -222,27 +212,35 @@ namespace TM2
 
             for (int i = 0; i < animation.Count; i++)
             {
-                for (int j = 0; j < animation[i].Count; j++)
+                for (int j = 0; j < animationTypes.Count; j++)
                 {
                     if (itemNumber == i)
-                        animation[i][j].IsActive = true;
+                        animation[i].IsActive = true;
                     else
-                        animation[i][j].IsActive = false;
+                        animation[i].IsActive = false;
 
-                    animation[i][j].Update(gameTime);
+                    Animation a = animation[i];
+
+                    switch (animationTypes[i])
+                    {
+                        case "Fade" :
+                            fAnimation.Update(gameTime, ref a);
+                            break;
+                        case "SSheet":
+                            ssAnimation.Update(gameTime, ref a);
+                            break;
+                    }
+
+                    animation[i] = a;
                 }
-
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for(int i = 0; i < animation.Count; i++)
+            for (int i = 0; i < animation.Count; i++)
             {
-                for (int j = 0; j < animation[i].Count; j++)
-                {
-                    animation[i][j].Draw(spriteBatch);
-                }
+                animation[i].Draw(spriteBatch);
             }
         }
     }

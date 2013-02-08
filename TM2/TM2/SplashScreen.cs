@@ -17,15 +17,15 @@ namespace TM2
     {
         SpriteFont font;
 
-        List<FadeAnimation> fade;
+        List<Animation> animation;
         List<Texture2D> images;
         Song song;
 
         FileManager fileManager;
-
         AudioManager audio;
-
         int imageNumber;
+
+        FadeAnimation fAnimation;
 
         public override void LoadContent(ContentManager Content, InputManager inputManager)
         {
@@ -36,7 +36,8 @@ namespace TM2
             imageNumber = 0;
             fileManager = new FileManager();
             audio = new AudioManager();
-            fade = new List<FadeAnimation>();
+            animation = new List<Animation>();
+            fAnimation = new FadeAnimation();
             images = new List<Texture2D>();
 
             fileManager.LoadContent("Load/Splash.txt", attributes, contents);
@@ -51,21 +52,18 @@ namespace TM2
                     {
                         case "Image":
                             images.Add(this.content.Load<Texture2D>(contents[i][j]));
-                            fade.Add(new FadeAnimation());
+                            animation.Add(new FadeAnimation());
                             break;
                     }
                 }
             }
 
-            for (int i = 0; i < fade.Count; i++)
+            for (int i = 0; i < animation.Count; i++)
             {
-                fade[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
-                fade[i].Scale = 1.0f;
-                fade[i].IsActive = true;
-                fade[i].FadeSpeed = 0.8f;
-                fade[i].Alpha = 0.000000001f;
-                fade[i].Increase = true;
-                fade[i].Timer = new TimeSpan(0, 0, 5);
+                animation[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
+                animation[i].Scale = 1.0f;
+                animation[i].IsActive = true;
+                animation[i].Alpha = 0.000000001f;
             }
             audio.Play(0);
         }
@@ -83,30 +81,29 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-
             audio.Update(gameTime);
 
-            if(fade[imageNumber].Alpha == 0.0f)
+            Animation a = animation[imageNumber];
+            fAnimation.Update(gameTime, ref a);
+            animation[imageNumber] = a;
+
+            if (animation[imageNumber].Alpha == 0.0f)
                 imageNumber++;
 
-            if (imageNumber + 1 == fade.Count && fade[imageNumber].Alpha == 1.0f || inputManager.KeyPressed(Keys.Enter))
+            if (imageNumber >= animation.Count || inputManager.KeyPressed(Keys.Enter))
             {
-                //probably make it so the screenmanager handles this but for now...
-                ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
-            }
-            else
-            {
-                fade[imageNumber].Update(gameTime);
+                if(animation[imageNumber].Alpha != 1.0f)
+                    ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager, animation[imageNumber].Alpha);
+                else
+                    ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
             }
 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
-            if (imageNumber < fade.Count)
-                fade[imageNumber].Draw(spriteBatch);
-            spriteBatch.End();
+            if (imageNumber < animation.Count)
+                animation[imageNumber].Draw(spriteBatch);
         }
     }
 }

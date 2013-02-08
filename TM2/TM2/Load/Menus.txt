@@ -6,7 +6,7 @@ Load=[Axis][Align][Font][Animation]
 Load=[Item][LinkType][LinkID][Image]
 [NEW GAME][Screen][GameplayScreen][null]
 [LOAD GAME][Screen][SplashScreen][null]
-[OPTIONS][Screen][OptionsScreen][null]
+[OPTIONS][Screen][SplashScreen][null]
 [CREDITS][Screen][CreditsScreen][null]
 
 EndLoad=[Title]

@@ -22,6 +22,12 @@ namespace TM2
         ContentManager content;
         Texture2D tileSheet;
         string[] getMotion;
+        public Vector2 tileDimensions;
+
+        public Vector2 TileDimensions
+        {
+            get { return new Vector2(60, 60); }
+        }
 
         public void LoadContent(Map map, string layerID)
         {
@@ -46,6 +52,10 @@ namespace TM2
                         case "TileSet" :
                             tileSheet = content.Load<Texture2D>("TileSets/" + contents[i][j]);
                             break;
+                        case "TileDimensions":
+                            string[] split = contents[i][j].Split(',');
+                            tileDimensions = new Vector2(int.Parse(split[0]), int.Parse(split[1]));
+                            break;
                         case "Solid":
                             solid.Add(contents[i][j]);
                             break;
@@ -59,7 +69,7 @@ namespace TM2
 
                             for (int k = 0; k < contents[i].Count; k++)
                             {
-                                string[] split = contents[i][k].Split(',');
+                                split = contents[i][k].Split(',');
                                 tempTiles.Add(new Tile());
 
                                 if (solid.Contains(contents[i][k]))
@@ -89,13 +99,13 @@ namespace TM2
             }
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, ref Player player)
         {
             for (int i = 0; i < tiles.Count; i++)
             {
                 for (int j = 0; j < tiles[i].Count; j++)
                 {
-                    tiles[i][j].Update(gameTime);
+                    tiles[i][j].Update(gameTime, ref player);
                 }
             }
         }

@@ -15,16 +15,48 @@ namespace TM2
 {
     public class Animation
     {
-        protected Texture2D image;
-        protected string text;
-        protected SpriteFont font;
-        protected Color color;
-        protected Rectangle sourceRect;
-        protected float rotation, scale, axis;
-        protected Vector2 origin, position;
-        protected ContentManager content;
-        protected bool isActive;
-        protected float alpha;
+        public Texture2D image;
+        private string text;
+        private SpriteFont font;
+        private Color color;
+        private Rectangle sourceRect;
+        private float rotation, scale, axis;
+        private Vector2 origin, position;
+        private ContentManager content;
+        private bool isActive;
+        private float alpha;
+        private Vector2 frames, currentFrame;
+
+        public Texture2D Image
+        {
+            get { return image; }
+        }
+
+        public Rectangle SourceRect
+        {
+            set { sourceRect = value; }
+        }
+
+        public Vector2 Frames
+        {
+            set { frames = value; }
+        }
+
+        public Vector2 CurrentFrame
+        {
+            set { currentFrame = value; }
+            get { return currentFrame; }
+        }
+
+        public int FrameWidth
+        {
+            get { return image.Width / (int)frames.X; }
+        }
+
+        public int FrameHeight
+        {
+            get { return image.Height / (int)frames.Y; }
+        }
 
         public virtual float Alpha
         {
@@ -55,7 +87,7 @@ namespace TM2
             set { position = value; }
         }
 
-        public virtual void LoadContent(ContentManager Content, Texture2D image,
+        public void LoadContent(ContentManager Content, Texture2D image,
             string text, Vector2 position)
         {
             content = new ContentManager(Content.ServiceProvider, "Content");
@@ -67,15 +99,19 @@ namespace TM2
                 font = this.content.Load<SpriteFont>("Coolvetica Rg");
                 color = new Color(100, 100, 100);
             }
-            if (image != null)
-                sourceRect = new Rectangle(0, 0, image.Width, image.Height);
             rotation = 0.0f;
             axis = 0.0f;
             scale = alpha = 1.0f;
             isActive = false;
+
+            currentFrame = new Vector2(0, 0);
+            if (image != null && frames != Vector2.Zero)
+                sourceRect = new Rectangle((int)currentFrame.X * FrameWidth, (int)currentFrame.Y * FrameHeight, FrameWidth, FrameHeight);
+            else
+                sourceRect = new Rectangle(0, 0, image.Width, image.Height);
         }
 
-        public virtual void UnloadContent()
+        public void UnloadContent()
         {
             //have to watch this for memory usage (might have to fix later)
             content.Unload();
@@ -85,13 +121,13 @@ namespace TM2
             image = null;
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, ref Animation a)
         {
 
         }
 
         //not sure if I will keep this virtual
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (image != null)
             {

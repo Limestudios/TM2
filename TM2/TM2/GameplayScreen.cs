@@ -33,10 +33,6 @@ namespace TM2
             player.LoadContent(content, input);
             audio.LoadContent(content, "Map1");
 
-            viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
-            camera = new Camera(viewport);
-            parallax = Vector2.One;
-
             guiManager = new GUIManager();
             guiManager.LoadContent(content, "Map1");
 
@@ -54,8 +50,7 @@ namespace TM2
         {
             inputManager.Update();
             player.Update(gameTime, inputManager, map.collision, map.layer);
-            map.Update(gameTime);
-            camera.LookAt(player.position);
+            map.Update(gameTime, ref player);
             guiManager.Update(gameTime);
 
             if (inputManager.KeyPressed(Keys.R))
@@ -68,13 +63,9 @@ namespace TM2
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(parallax));
             map.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            spriteBatch.End();
-            spriteBatch.Begin();
             guiManager.Draw(spriteBatch);
-            spriteBatch.End();
         }
     }
 }

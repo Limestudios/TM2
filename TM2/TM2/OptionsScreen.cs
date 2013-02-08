@@ -72,9 +72,7 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
             options.Draw(spriteBatch);
-            spriteBatch.End();
         }
     }
 }

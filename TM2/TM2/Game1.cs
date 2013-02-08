@@ -94,10 +94,11 @@ namespace TM2
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.White);
-
+            spriteBatch.Begin();
             // TODO: Add your drawing code here
             ScreenManager.Instance.Draw(spriteBatch);
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }

@@ -35,23 +35,6 @@ namespace TM2
             set { fadeSpeed = value; }
         }
 
-        public override float Alpha
-        {
-            get
-            {
-                return alpha;
-            }
-            set
-            {
-                alpha = value;
-
-                if (alpha == 1.0f)
-                    increase = false;
-                else if (alpha == 0.0f)
-                    increase = true;
-            }
-        }
-
         public float ActivateValue
         {
             get { return activateValue; }
@@ -64,42 +47,45 @@ namespace TM2
             get { return increase; }
         }
 
-        public override void LoadContent(ContentManager Content, 
-            Texture2D image, string text, Vector2 position)
+        public float DefaultAlpha
         {
-            base.LoadContent(Content, image, text, position);
+            set { defaultAlpha = value; }
+        }
+
+        public FadeAnimation()
+        {
             increase = false;
             fadeSpeed = 1f;
-            defaultTime = new TimeSpan(0, 0, 0, 2);
+            defaultTime = new TimeSpan(0, 0, 0, 1);
             timer = defaultTime;
             activateValue = 0.0f;
             stopUpdating = false;
-            defaultAlpha = alpha;
+            defaultAlpha = 1.0f;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, ref Animation a)
         {
-            if (isActive)
+            if (a.IsActive)
             {
                 if (!stopUpdating)
                 {
                     if (!increase)
-                        alpha -= fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        a.Alpha -= fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                     else
-                        alpha += fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                    if (alpha <= 0.0f)
+                        a.Alpha += fadeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    if (a.Alpha <= 0.0f)
                     {
-                        alpha = 0.0f;
+                        a.Alpha = 0.0f;
                         increase = true;
                     }
-                    else if (alpha >= 1.0f)
+                    else if (a.Alpha >= 1.0f)
                     {
-                        alpha = 1.0f;
+                        a.Alpha = 1.0f;
                         increase = false;
                     }
                 }
 
-                if (alpha == activateValue)
+                if (a.Alpha == activateValue)
                 {
                     stopUpdating = true;
                     timer -= gameTime.ElapsedGameTime;
@@ -112,7 +98,7 @@ namespace TM2
             }
             else
             {
-                alpha = defaultAlpha;
+                a.Alpha = defaultAlpha;
                 stopUpdating = false;
             }
         }
