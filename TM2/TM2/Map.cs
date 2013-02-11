@@ -44,9 +44,14 @@ namespace TM2
             //collision.UnLoadContent();
         }
 
-        public void Update(GameTime gameTime, ref Player player)
+        public void Update(GameTime gameTime)
         {
-            layer.Update(gameTime, ref player);
+            layer.Update(gameTime);
+        }
+
+        public void UpdateCollision(ref Entity entity, InputManager inputManager)
+        {
+            layer.UpdateCollision(ref entity, inputManager);
         }
 
         public void Draw(SpriteBatch spriteBatch)

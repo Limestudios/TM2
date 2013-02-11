@@ -16,21 +16,45 @@ namespace TM2
     public class Entity
     {
         protected int health;
-        protected Animation moveAnimation;
-        protected SpriteSheetAnimation ssAnimation;
-        protected float moveSpeed, jumpSpeed, gravity;
-
-        protected ContentManager content;
-        protected FileManager fileManager;
+        protected List<int> healths;
 
         protected Texture2D image;
+        protected List<Texture2D> images;
 
-        protected List<List<string>> attributes, contents;
+        protected Vector2 frames;
+        protected List<Vector2> framesList;
+
+        protected float moveSpeed;
+        protected List<float> moveSpeeds;
+
+        protected Animation moveAnimation;
+        protected SpriteSheetAnimation ssAnimation;
+        protected FadeAnimation fAnimation;
+        protected float jumpSpeed, gravity;
+
+        protected ContentManager content;
+
+        protected List<string> attributes, contents;
 
         protected Vector2 position, velocity, prevPosition;
 
         protected bool activateGravity;
         protected bool syncTilePosition;
+        protected bool onTile;
+        protected int range;
+        protected bool canJump;
+
+        public bool CanJump
+        {
+            get { return canJump; }
+            set { canJump = value; }
+        }
+
+        public bool OnTile
+        {
+            get { return onTile; }
+            set { onTile = value; }
+        }
 
         public Vector2 PrevPosition
         {
@@ -54,6 +78,14 @@ namespace TM2
             set { position = value; }
         }
 
+        /// <summary>
+        /// Collision rectangle (Rect) for player.
+        /// </summary>
+        public FloatRect Rect
+        {
+            get { return new FloatRect(position.X, position.Y, moveAnimation.FrameWidth, moveAnimation.FrameHeight); }
+        }
+
         public bool ActivateGravity
         {
             set { activateGravity = value; }
@@ -65,11 +97,77 @@ namespace TM2
             set { syncTilePosition = value; }
         }
 
-        public virtual void LoadContent(ContentManager content, InputManager input)
+        public Texture2D Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
+        public int Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
+
+        public Vector2 Frames
+        {
+            get { return frames; }
+            set { frames = value; }
+        }
+
+        public float MoveSpeed
+        {
+            get { return moveSpeed; }
+            set { moveSpeed = value; }
+        }
+
+        public virtual void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
             this.content = new ContentManager(content.ServiceProvider, "Content");
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
+
+            moveAnimation = new Animation();
+            ssAnimation = new SpriteSheetAnimation();
+            fAnimation = new FadeAnimation();
+            images = new List<Texture2D>();
+            healths = new List<int>();
+            framesList = new List<Vector2>();
+            moveSpeeds = new List<float>();
+
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                switch (attributes[i])
+                {
+                    case "Image":
+                        Texture2D tempImage = this.content.Load<Texture2D>(contents[i]);
+                        string[] name = contents[i].Split('/');
+                        tempImage.Name = name[name.Count() - 1];
+                        image = tempImage;
+                        break;
+                    case "Frames":
+                        string[] framesTemp = contents[i].Split(',');
+                        moveAnimation.Frames = new Vector2(int.Parse(framesTemp[0]), int.Parse(framesTemp[1]));
+                        break;
+                    case "Position":
+                        string[] pos = contents[i].Split(',');
+                        position = new Vector2(int.Parse(pos[0]), int.Parse(pos[1]));
+                        break;
+                    case "Health":
+                        health = int.Parse(contents[i]);
+                        break;
+                    case "MoveSpeed" :
+                        moveSpeed = float.Parse(contents[i]);
+                        break;
+                    case "Range":
+                        range = int.Parse(contents[i]);
+                        break;
+                }
+            }
+
+            gravity = 100f;
+            velocity = Vector2.Zero;
+            syncTilePosition = false;
+            activateGravity = true;
+            moveAnimation.LoadContent(content, image, "", position);
         }
 
         public virtual void UnloadContent()
@@ -77,7 +175,7 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input, Collision col, Layer layer)
+        public virtual void Update(GameTime gameTime, InputManager input)
         {
 
         }

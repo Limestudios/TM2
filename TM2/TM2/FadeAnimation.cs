@@ -54,11 +54,11 @@ namespace TM2
 
         public FadeAnimation()
         {
-            increase = false;
+            increase = true;
             fadeSpeed = 1f;
-            defaultTime = new TimeSpan(0, 0, 0, 1);
+            defaultTime = new TimeSpan(0, 0, 1);
             timer = defaultTime;
-            activateValue = 0.0f;
+            activateValue = 1.0f;
             stopUpdating = false;
             defaultAlpha = 1.0f;
         }

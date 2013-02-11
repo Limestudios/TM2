@@ -51,19 +51,19 @@ namespace TM2
                 {
                     if (col.CollisionMap[i][j] == "X")
                     {
-                        if (Position.X + Velocity.X + Size * 32 <= j * 60)
+                        if (Position.X + Velocity.X + Size * 32 <= j * 64)
                         {
                             //no collision
                         }
-                        else if (Position.X + Velocity.X + Size * 32 >= j * 60 + 60)
+                        else if (Position.X + Velocity.X + Size * 32 >= j * 64 + 64)
                         {
                             //no collision
                         }
-                        else if (Position.Y + Velocity.Y + Size * 32 <= i * 60)
+                        else if (Position.Y + Velocity.Y + Size * 32 <= i * 64)
                         {
                             //no collision
                         }
-                        else if (Position.Y + Velocity.Y + Size * 32 >= i * 60 + 60)
+                        else if (Position.Y + Velocity.Y + Size * 32 >= i * 64 + 64)
                         {
                             //no collision
                         }

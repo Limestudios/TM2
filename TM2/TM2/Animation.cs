@@ -40,6 +40,7 @@ namespace TM2
         public Vector2 Frames
         {
             set { frames = value; }
+            get { return frames; }
         }
 
         public Vector2 CurrentFrame

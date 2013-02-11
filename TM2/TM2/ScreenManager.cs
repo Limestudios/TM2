@@ -123,6 +123,7 @@ namespace TM2
                 fade.Alpha = 1.0f - alpha;
             else
                 fade.Alpha = alpha;
+            fade.Increase = true;
             this.inputManager = inputManager;
             //audio.Play(0);
         }
@@ -167,7 +168,7 @@ namespace TM2
         private void Transition(GameTime gameTime)
         {
             fade.Update(gameTime, ref animation);
-            if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 2.0f)
+            if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 1.0f)
             {
                 screenStack.Push(newScreen);
                 currentScreen.UnloadContent();

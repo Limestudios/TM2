@@ -24,6 +24,11 @@ Content\Audio\memories.xnb
 Content\Audio\PewPewPew.xnb
 Content\Audio\Chambermaid Swing.xnb
 Content\Audio\Daft Punk - Digital Love.xnb
+Content\Coolvetica Rg 12.xnb
+Content\highlight.xnb
+Content\Player\playerTemplate.xnb
+Content\Enemy\greenSlime.xnb
+Content\Enemy\redSlime.xnb
 Content\CreditsScreen\Dul.wmv
 Content\Audio\23 SENSATION.wma
 Content\Audio\SplashSound.wma
@@ -33,6 +38,7 @@ Content\Audio\PewPewPew.wma
 Content\Audio\Chambermaid Swing.wma
 Content\Audio\Daft Punk - Digital Love.wma
 Load\CharacterSelect.txt
+Load\Enemy.txt
 Load\GUIs.txt
 Load\Particle.txt
 Load\Options.txt

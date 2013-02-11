@@ -1,0 +1,6 @@
+﻿Load=[Level1]
+
+Load=[Image][Position][Frames][MoveSpeed][Range]
+[Enemy/greenSlime][500,110][3,2][50][100]
+
+EndLoad=[Level1]

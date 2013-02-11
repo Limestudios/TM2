@@ -29,7 +29,7 @@ namespace TM2
         float range;
         int counter;
         float moveSpeed;
-        bool onTile;
+        bool containsEntity;
 
         Animation animation;
 
@@ -64,16 +64,16 @@ namespace TM2
             increase = true;
 
             tileImage = CropImage(tileSheet, tileArea);
-            range = 50;
+            range = 90;
             counter = 0;
-            moveSpeed = 100f;
+            moveSpeed = 80f;
             animation = new Animation();
             animation.LoadContent(ScreenManager.Instance.Content, tileImage, "", position);
-            onTile = false;
+            containsEntity = false;
             velocity = Vector2.Zero;
         }
 
-        public void Update(GameTime gameTime, ref Player player)
+        public void Update(GameTime gameTime)
         {
             //should make this based on timespan...for now this will work tho (bad coding habits)
             counter++;
@@ -102,51 +102,67 @@ namespace TM2
 
             position += velocity;
             animation.Position = position;
+        }
 
+        public void UpdateCollision(ref Entity entity)
+        {
             FloatRect rect = new FloatRect(position.X, position.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
-            if (onTile)
+            if (entity.OnTile && containsEntity)
             {
-                if (!player.SyncTilePosition)
+                if (!entity.SyncTilePosition)
                 {
-                    player.Position += velocity;
-                    player.SyncTilePosition = true;
+                    entity.Position += velocity;
+                    entity.SyncTilePosition = true;
                 }
 
-                if (player.Rect.Right < rect.Left || player.Rect.Left > rect.Right || player.Rect.Bottom != rect.Top)
+                if (entity.Rect.Right < rect.Left || entity.Rect.Left > rect.Right || entity.Rect.Bottom != rect.Top)
                 {
-                    onTile = false;
-                    player.ActivateGravity = true;
+                    entity.OnTile = false;
+                    containsEntity = false;
+                    entity.ActivateGravity = true;
+                    entity.CanJump = false;
                 }
             }
 
-            if (player.Rect.Intersects(rect) && state == State.Solid)
+            if (entity.Rect.Intersects(rect) && state == State.Solid)
             {
-                FloatRect prevPlayer = new FloatRect(player.PrevPosition.X, player.PrevPosition.Y, player.Animation.FrameWidth, player.Animation.FrameHeight);
+                FloatRect preventity = new FloatRect(entity.PrevPosition.X, entity.PrevPosition.Y, entity.Animation.FrameWidth, entity.Animation.FrameHeight);
 
                 FloatRect prevTile = new FloatRect(prevPosition.X, prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
-                if (player.Rect.Bottom >= rect.Top && prevPlayer.Bottom <= prevTile.Top)
+                if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
                 {
                     //bottom collision
-                    player.Position = new Vector2(player.Position.X, position.Y - player.Animation.FrameHeight);
-                    player.ActivateGravity = false;
-                    onTile = true;
+                    entity.Position = new Vector2(entity.Position.X, position.Y - entity.Animation.FrameHeight);
+                    entity.ActivateGravity = false;
+                    entity.OnTile = true;
+                    containsEntity = true;
+                    entity.CanJump = true;
                 }
-                else if (player.Rect.Top >= rect.Bottom && prevPlayer.Top <= prevTile.Bottom)
+                else if (entity.Rect.Top >= rect.Bottom && preventity.Top <= prevTile.Bottom)
                 {
                     //top collision
-                    player.Position = new Vector2(player.Position.X, position.Y + layer.TileDimensions.Y);
-                    player.Velocity = new Vector2(player.Velocity.X, 0);
-                    player.ActivateGravity = true;
+                    entity.Position = new Vector2(entity.Position.X, position.Y + layer.TileDimensions.Y);
+                    entity.Velocity = new Vector2(entity.Velocity.X, 0);
+                    entity.ActivateGravity = true;
+                    entity.OnTile = false;
+                    containsEntity = false;
+                    entity.CanJump = false;
+                }
+                else if (entity.Rect.Right >= rect.Left && preventity.Right <= prevTile.Left)
+                {
+                    //Right collision
+                    entity.Position = new Vector2(position.X -entity.Animation.FrameWidth, entity.Position.Y);
+                    //entity.Velocity = new Vector2(0, entity.Velocity.Y);
                 }
                 else
                 {
-                    player.Position -= player.Velocity;
+                    entity.Position -= entity.Velocity;
                 }
             }
 
-            player.Animation.Position = player.Position;
+            entity.Animation.Position = entity.Position;
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -24,9 +24,12 @@ namespace TM2
         string[] getMotion;
         public Vector2 tileDimensions;
 
+        /// <summary>
+        /// Dimensions for a single tile in the map.
+        /// </summary>
         public Vector2 TileDimensions
         {
-            get { return new Vector2(60, 60); }
+            get { return new Vector2(64, 64); }
         }
 
         public void LoadContent(Map map, string layerID)
@@ -87,8 +90,8 @@ namespace TM2
                                     }
                                 }
                                 
-                                tempTiles[k].SetTile(tempState, tempMotion, new Vector2(k * 60, indexY * 60), tileSheet,
-                                    new Rectangle(int.Parse(split[0]) * 60, int.Parse(split[1]) * 60, 60, 60));
+                                tempTiles[k].SetTile(tempState, tempMotion, new Vector2(k * 64, indexY * 64), tileSheet,
+                                    new Rectangle(int.Parse(split[0]) * 64, int.Parse(split[1]) * 64, 64, 64));
                             }
 
                             tiles.Add(tempTiles);
@@ -99,13 +102,24 @@ namespace TM2
             }
         }
 
-        public void Update(GameTime gameTime, ref Player player)
+        public void Update(GameTime gameTime)
         {
             for (int i = 0; i < tiles.Count; i++)
             {
                 for (int j = 0; j < tiles[i].Count; j++)
                 {
-                    tiles[i][j].Update(gameTime, ref player);
+                    tiles[i][j].Update(gameTime);
+                }
+            }
+        }
+
+        public void UpdateCollision(ref Entity entity, InputManager inputManager)
+        {
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                for (int j = 0; j < tiles[i].Count; j++)
+                {
+                    tiles[i][j].UpdateCollision(ref entity);
                 }
             }
         }

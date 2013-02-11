@@ -17,51 +17,9 @@ namespace TM2
     {
         float jumpSpeed = 1500f;
 
-        public FloatRect Rect
+        public override void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
-            get { return new FloatRect(position.X, position.Y, moveAnimation.FrameWidth, moveAnimation.FrameHeight); }
-        }
-        public override void LoadContent(ContentManager content, InputManager input)
-        {
-            base.LoadContent(content, input);
-            fileManager = new FileManager();
-            moveAnimation = new Animation();
-            ssAnimation = new SpriteSheetAnimation();
-            Vector2 tempFrames = Vector2.Zero;
-            moveSpeed = 500f;
-
-            fileManager.LoadContent("Load/Player.txt", attributes, contents);
-            for (int i = 0; i < attributes.Count; i++)
-            {
-                for (int j = 0; j < attributes[i].Count; j++)
-                {
-                    switch (attributes[i][j])
-                    {
-                        case "Health":
-                            health = int.Parse(contents[i][j]);
-                            break;
-                        case "Frames":
-                            string[] frames = contents[i][j].Split(' ');
-                            tempFrames = new Vector2(int.Parse(frames[0]), int.Parse(frames[1]));
-                            break;
-                        case "Image":
-                            image = this.content.Load<Texture2D>(contents[i][j]);
-                            break;
-                        case "Postion":
-                            frames = contents[i][j].Split(' ');
-                            position = new Vector2(int.Parse(frames[0]), int.Parse(frames[1]));
-                            break;
-                    }
-                }
-            }
-
-            gravity = 100f;
-            velocity = Vector2.Zero;
-            syncTilePosition = false;
-            activateGravity = true;
-
-            moveAnimation.Frames = new Vector2(3, 2);
-            moveAnimation.LoadContent(content, image, "", position);
+            base.LoadContent(content, attributes, contents,input);
         }
 
         public override void UnloadContent()
@@ -70,7 +28,7 @@ namespace TM2
             moveAnimation.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input, Collision col, Layer layer)
+        public override void Update(GameTime gameTime, InputManager input)
         {
             syncTilePosition = false;
             prevPosition = position;
@@ -92,7 +50,7 @@ namespace TM2
                 velocity.X = 0;
             }
 
-            if (input.KeyDown(Keys.Up, Keys.W) && !activateGravity)
+            if (input.KeyDown(Keys.Up, Keys.W) && canJump)
             {
                 velocity.Y = -jumpSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 activateGravity = true;

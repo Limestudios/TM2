@@ -63,7 +63,7 @@ namespace TM2
                 animation[i].LoadContent(content, images[i], "", new Vector2(ScreenManager.Instance.Dimensions.X / 2 - images[i].Bounds.Width / 2, ScreenManager.Instance.Dimensions.Y / 2 - images[i].Bounds.Height / 2));
                 animation[i].Scale = 1.0f;
                 animation[i].IsActive = true;
-                animation[i].Alpha = 0.000000001f;
+                animation[i].Alpha = 1.0f;
             }
             audio.Play(0);
         }
@@ -84,26 +84,26 @@ namespace TM2
             audio.Update(gameTime);
 
             Animation a = animation[imageNumber];
-            fAnimation.Update(gameTime, ref a);
             animation[imageNumber] = a;
 
             if (animation[imageNumber].Alpha == 0.0f)
                 imageNumber++;
 
-            if (imageNumber >= animation.Count || inputManager.KeyPressed(Keys.Enter))
+            if (imageNumber + 1 == animation.Count && animation[imageNumber].Alpha == 1.0f || inputManager.KeyPressed(Keys.Enter))
             {
-                if(animation[imageNumber].Alpha != 1.0f)
-                    ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager, animation[imageNumber].Alpha);
-                else
-                    ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
+                //probably make it so the screenmanager handles this but for now...
+                ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
+            }
+            else
+            {
+                fAnimation.Update(gameTime, ref a);
             }
 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (imageNumber < animation.Count)
-                animation[imageNumber].Draw(spriteBatch);
+            animation[imageNumber].Draw(spriteBatch);
         }
     }
 }
