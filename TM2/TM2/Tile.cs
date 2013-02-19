@@ -17,7 +17,7 @@ namespace TM2
     {
         Layer layer = new Layer();
 
-        public enum State { Solid, Passive };
+        public enum State { Solid, Passive, Platform};
         public enum Motion { Static, Horizontal, Vertical };
 
         State state;
@@ -154,6 +154,21 @@ namespace TM2
                 {
                     entity.Position = new Vector2(position.X + layer.TileDimensions.X, entity.Position.Y);
                     entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
+                }
+            }
+            else if (entity.Rect.Intersects(rect) && state == State.Platform)
+            {
+                FloatRect preventity = new FloatRect(entity.PrevPosition.X, entity.PrevPosition.Y, entity.Animation.FrameWidth, entity.Animation.FrameHeight);
+
+                FloatRect prevTile = new FloatRect(prevPosition.X, prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
+
+                if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
+                {
+                    //bottom collision
+                    entity.Position = new Vector2(entity.Position.X, position.Y - entity.Animation.FrameHeight);
+                    entity.ActivateGravity = false;
+                    entity.OnTile = true;
+                    containsEntity = true;
                 }
             }
 

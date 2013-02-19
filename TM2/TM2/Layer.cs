@@ -17,7 +17,7 @@ namespace TM2
     {
         List<List<Tile>> tiles;
         List<List<string>> attributes, contents;
-        List<string> motion, solid;
+        List<string> motion, solid, platform;
         FileManager fileManager;
         ContentManager content;
         Texture2D tileSheet;
@@ -57,6 +57,7 @@ namespace TM2
             contents = new List<List<string>>();
             motion = new List<string>();
             solid = new List<string>();
+            platform = new List<string>();
             fileManager = new FileManager();
             content = new ContentManager(ScreenManager.Instance.Content.ServiceProvider, "Content");
 
@@ -84,6 +85,9 @@ namespace TM2
                         case "Solid":
                             solid.Add(contents[i][j]);
                             break;
+                        case "Platform":
+                            platform.Add(contents[i][j]);
+                            break;
                         case "Motion":
                             motion.Add(contents[i][j]);
                             break;
@@ -99,6 +103,8 @@ namespace TM2
 
                                 if (solid.Contains(contents[i][k]))
                                     tempState = Tile.State.Solid;
+                                else if (platform.Contains(contents[i][k]))
+                                    tempState = Tile.State.Platform;
                                 else
                                     tempState = Tile.State.Passive;
 

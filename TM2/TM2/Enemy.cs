@@ -37,9 +37,9 @@ namespace TM2
             base.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input)
+        public override void Update(GameTime gameTime, InputManager input, Map map)
         {
-            base.Update(gameTime, input);
+            base.Update(gameTime, input, map);
             moveAnimation.IsActive = true;
 
             if (direction == 1)

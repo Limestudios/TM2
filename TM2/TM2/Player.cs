@@ -32,11 +32,12 @@ namespace TM2
             moveAnimation.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input)
+        public override void Update(GameTime gameTime, InputManager input, Map map)
         {
-            base.Update(gameTime, input);
+            base.Update(gameTime, input, map);
             moveAnimation.IsActive = true;
             this.Bleeding = false;
+            this.shaking = false;
 
             if (input.KeyDown(Keys.Right, Keys.D))
             {
@@ -71,7 +72,7 @@ namespace TM2
             ssAnimation.Update(gameTime, ref moveAnimation);
 
             particleEngine.EmitterLocation = new Vector2(this.Position.X + this.Animation.FrameWidth / 2, this.Position.Y + this.Animation.FrameHeight / 2);
-            particleEngine.Update();
+            particleEngine.Update(map, gameTime);
         }
 
         public override void OnCollision(Entity e)
@@ -82,6 +83,7 @@ namespace TM2
             {
                 health--;
                 bleeding = true;
+                shaking = true;
             }
         }
 
@@ -89,7 +91,14 @@ namespace TM2
         {
             moveAnimation.Draw(spriteBatch);
             if (bleeding == true)
+            {
                 particleEngine.Blood(spriteBatch);
+                particleEngine.isActive = true;
+            }
+            else
+            {
+                particleEngine.isActive = false;
+            }
         }
     }
 }

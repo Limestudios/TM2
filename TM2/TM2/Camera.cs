@@ -19,11 +19,28 @@ namespace TM2
         public Matrix transform;
         public Vector2 currentPosition;
         public Vector2 targetPosition;
+        public Vector3 cameraPosition;
         private float rotation;
-        private Int32 viewportWidth = new Int32();
-        private Int32 viewportHeight;
         private float halfViewportWidth;
         private float halfViewportHeight;
+
+        // We only need one Random object no matter how many Cameras we have
+        private static readonly Random random = new Random();
+
+        // Are we shaking?
+        private bool shaking;
+
+        // The maximum magnitude of our shake offset
+        private float shakeMagnitude;
+
+        // The total duration of the current shake
+        private float shakeDuration;
+
+        // A timer that determines how far into our shake we are
+        private float shakeTimer;
+
+        // The shake offset vector
+        private Vector2 shakeOffset;
 
         public Camera(GraphicsDevice graphicsDevice)
         {
@@ -35,8 +52,8 @@ namespace TM2
             halfViewportHeight = new float();
             halfViewportWidth = new float();
 
-            halfViewportWidth = 1280 / 2.0f;
-            halfViewportHeight = 720 / 2.0f;
+            halfViewportWidth = ScreenManager.Instance.Dimensions.X / 2.0f;
+            halfViewportHeight = ScreenManager.Instance.Dimensions.Y / 2.0f;
 
         }
 
@@ -63,15 +80,46 @@ namespace TM2
             }
         }
 
-        public void Update(float delta)
+        public void Update(float delta, GameTime gameTime)
         {
+            // If we're shaking...
+            if (shaking)
+            {
+                // Move our timer ahead based on the elapsed time
+                shakeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                // If we're at the max duration, we're not going to be shaking anymore
+                if (shakeTimer >= shakeDuration)
+                {
+                    shaking = false;
+                    shakeTimer = shakeDuration;
+                }
+
+                // Compute our progress in a [0, 1] range
+                float progress = shakeTimer / shakeDuration;
+
+                // Compute our magnitude based on our maximum value and our progress. This causes
+                // the shake to reduce in magnitude as time moves on, giving us a smooth transition
+                // back to being stationary. We use progress * progress to have a non-linear fall 
+                // off of our magnitude. We could switch that with just progress if we want a linear 
+                // fall off.
+                float magnitude = shakeMagnitude * (1f - (progress * progress));
+
+                // Generate a new offset vector with three random values and our magnitude
+                shakeOffset = new Vector2(NextFloat(), NextFloat()) * magnitude;
+
+                // If we're shaking, add our offset to our position and target
+                currentPosition += shakeOffset;
+                targetPosition += shakeOffset;
+            }
+
             Int32 mapWidth, mapHeight;
 
             currentPosition.X = MathHelper.SmoothStep(currentPosition.X, MathHelper.Clamp(targetPosition.X, 0 + halfViewportWidth, Layer.Instance.MapDimensions.X * Layer.Instance.TileDimensions.X - halfViewportWidth), delta * 9.0f);
             currentPosition.Y = MathHelper.SmoothStep(currentPosition.Y, MathHelper.Clamp(targetPosition.Y, 0 - halfViewportHeight, Layer.Instance.MapDimensions.Y * Layer.Instance.TileDimensions.Y - halfViewportHeight), delta * 9.0f);
 
-            mapWidth = 1280 * 10;
-            mapHeight = 720 * 3;
+            mapWidth = (int)ScreenManager.Instance.Dimensions.X * 10;
+            mapHeight = (int)ScreenManager.Instance.Dimensions.Y * 3;
 
             if (currentPosition.X < 640) currentPosition.X = 640;
             if (currentPosition.Y < 360) currentPosition.Y = 360;
@@ -102,6 +150,32 @@ namespace TM2
             if (pos.Y > (currentPosition.Y + halfViewportHeight)) return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Helper to generate a random float in the range of [-1, 1].
+        /// </summary>
+        private float NextFloat()
+        {
+            return (float)random.NextDouble() * 2f - 1f;
+        }
+
+        /// <summary>
+        /// Shakes the camera with a specific magnitude and duration.
+        /// </summary>
+        /// <param name="magnitude">The largest magnitude to apply to the shake.</param>
+        /// <param name="duration">The length of time (in seconds) for which the shake should occur.</param>
+        public void Shake(float magnitude, float duration)
+        {
+            // We're now shaking
+            shaking = true;
+
+            // Store our magnitude and duration
+            shakeMagnitude = magnitude;
+            shakeDuration = duration;
+
+            // Reset our timer
+            shakeTimer = 0f;
         }
     }
 }

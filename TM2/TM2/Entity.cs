@@ -42,9 +42,15 @@ namespace TM2
 
         protected bool activateGravity;
         protected bool syncTilePosition;
-        protected bool onTile, bleeding;
+        protected bool onTile, bleeding, shaking;
         protected int range;
         protected int direction;
+
+        public bool Shaking
+        {
+            set { shaking = value; }
+            get { return shaking; }
+        }
 
         public bool Bleeding
         {
@@ -187,7 +193,7 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input)
+        public virtual void Update(GameTime gameTime, InputManager input, Map map)
         {
             syncTilePosition = false;
             prevPosition = position;

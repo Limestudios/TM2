@@ -17,9 +17,11 @@ namespace TM2
     {
         private Random random;
         public Vector2 EmitterLocation { get; set; }
+        public bool isActive { get; set; }
         private List<Particle> particles;
         private List<Texture2D> textures;
         public Color Color { get; set; }
+        public bool collision;
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location)
         {
@@ -27,26 +29,39 @@ namespace TM2
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
+            isActive = false;
         }
 
-        public void Update()
+        public void Update(Map map,GameTime gameTime)
         {
-            int total = 2;
-
-            for (int i = 0; i < total; i++)
+            if (isActive)
             {
-                particles.Add(GenerateNewParticle());
-            }
+                int total = 2;
 
-            for (int particle = 0; particle < particles.Count; particle++)
-            {
-                particles[particle].Update();
-                if (particles[particle].TTL <= 0)
+                for (int i = 0; i < total; i++)
                 {
-                    particles.RemoveAt(particle);
-                    particle--;
+                    particles.Add(GenerateNewParticle());
+                }
+
+                for (int particle = 0; particle < particles.Count; particle++)
+                {
+                    particles[particle].Update();
+                    if (particles[particle].TTL <= 0)
+                    {
+                        particles.RemoveAt(particle);
+                        particle--;
+                    }
                 }
             }
+            else
+            {
+                this.UnloadContent();
+            }
+        }
+
+        private void UnloadContent()
+        {
+            particles.Clear();
         }
 
         private Particle GenerateNewParticle()

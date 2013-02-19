@@ -24,6 +24,7 @@ namespace TM2
         float zoom;
         SpriteFont font;
         protected Camera camera;
+        Collision col = new Collision();
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -66,7 +67,7 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            player.Entities[playerIndex].Update(gameTime, inputManager);
+            player.Entities[playerIndex].Update(gameTime, inputManager, map);
             enemies.Update(gameTime, map);
             map.Update(gameTime);
 
@@ -112,8 +113,18 @@ namespace TM2
             }
 
             player.EntityCollision(enemies);
-            camera.Update((float)(gameTime.ElapsedGameTime.TotalSeconds));
-            camera.SetPosition(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y, false); 
+            camera.Update((float)(gameTime.ElapsedGameTime.TotalSeconds), gameTime);
+            camera.SetPosition(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y, false);
+
+            if (player.Entities[playerIndex].Shaking)
+            {
+                camera.Shake(5f, 1f);
+            }
+
+            if (inputManager.KeyDown(Keys.T))
+            {
+                camera.Shake(25f, 1f);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -121,13 +132,13 @@ namespace TM2
             spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransformation(ScreenManager.Instance.graphicsDevice));
             base.Draw(spriteBatch);
             map.Draw(spriteBatch);
-            this.player.Entities[playerIndex].Draw(spriteBatch);
             enemies.Draw(spriteBatch);
+            player.Entities[playerIndex].Draw(spriteBatch);
             spriteBatch.End();
             spriteBatch.Begin();
             guiManager.Draw(spriteBatch);
             spriteBatch.DrawString(font, "Use + / - keys to switch between characters", new Vector2(126, 10), Color.Black);
-            spriteBatch.DrawString(font, "Use [ / ] keys to zoom the camera in and out    Zoom : " + zoom, new Vector2(126, 30), Color.Black);
+            spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30), Color.Black);
             spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name , new Vector2(966, 10), Color.Black);
             spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40), Color.Black);
             spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);

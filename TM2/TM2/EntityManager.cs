@@ -55,7 +55,7 @@ namespace TM2
         public void Update(GameTime gameTime, Map map)
         {
             for (int i = 0; i < entities.Count; i++)
-                entities[i].Update(gameTime, inputManager);
+                entities[i].Update(gameTime, inputManager, map);
         }
 
         public void EntityCollision(EntityManager E2)
