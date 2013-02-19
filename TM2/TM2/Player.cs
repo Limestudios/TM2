@@ -15,11 +15,15 @@ namespace TM2
 {
     public class Player : Entity
     {
-        float jumpSpeed = 1500f;
-
         public override void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
             base.LoadContent(content, attributes, contents,input);
+            jumpSpeed = 1500f;
+
+            List<Texture2D> textures = new List<Texture2D>();
+            textures.Add(content.Load<Texture2D>("square2"));
+
+            particleEngine = new ParticleEngine(textures, this.Position);
         }
 
         public override void UnloadContent()
@@ -30,9 +34,9 @@ namespace TM2
 
         public override void Update(GameTime gameTime, InputManager input)
         {
-            syncTilePosition = false;
-            prevPosition = position;
+            base.Update(gameTime, input);
             moveAnimation.IsActive = true;
+            this.Bleeding = false;
 
             if (input.KeyDown(Keys.Right, Keys.D))
             {
@@ -50,7 +54,7 @@ namespace TM2
                 velocity.X = 0;
             }
 
-            if (input.KeyDown(Keys.Up, Keys.W) && canJump)
+            if (input.KeyDown(Keys.Up, Keys.W) && !activateGravity)
             {
                 velocity.Y = -jumpSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 activateGravity = true;
@@ -65,11 +69,27 @@ namespace TM2
 
             moveAnimation.Position = position;
             ssAnimation.Update(gameTime, ref moveAnimation);
+
+            particleEngine.EmitterLocation = new Vector2(this.Position.X + this.Animation.FrameWidth / 2, this.Position.Y + this.Animation.FrameHeight / 2);
+            particleEngine.Update();
+        }
+
+        public override void OnCollision(Entity e)
+        {
+            Type type = e.GetType();
+
+            if (type == typeof(Enemy))
+            {
+                health--;
+                bleeding = true;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             moveAnimation.Draw(spriteBatch);
+            if (bleeding == true)
+                particleEngine.Blood(spriteBatch);
         }
     }
 }

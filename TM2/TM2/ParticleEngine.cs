@@ -18,12 +18,8 @@ namespace TM2
         private Random random;
         public Vector2 EmitterLocation { get; set; }
         private List<Particle> particles;
-        public List<Texture2D> textures;
-        public ContentManager content;
-        public FileManager fileManager;
-        public int total { get; set; }
-
-        protected List<List<string>> attributes, contents;
+        private List<Texture2D> textures;
+        public Color Color { get; set; }
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location)
         {
@@ -31,55 +27,12 @@ namespace TM2
             this.textures = textures;
             this.particles = new List<Particle>();
             random = new Random();
-            this.LoadContent(content);
-            this.total = total;
         }
 
-        private Particle GenerateNewParticle()
+        public void Update()
         {
-            Texture2D texture = textures[random.Next(textures.Count)];
-            Vector2 position = new Vector2(EmitterLocation.X + random.Next(-32,32), EmitterLocation.Y + random.Next(-32,32));
-            Vector2 velocity = new Vector2(
-                    3f * (float)(random.NextDouble() * 2 - 1),
-                    3f * (float)(random.NextDouble() * 2 - 1));
-            float angle = 0;
-            float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
-            Color color = new Color(
-                    (float)1.0,
-                    (float)0.0,
-                    (float)0.0);
-            float size = (float)random.NextDouble()/4;
-            int ttl = 10 + random.Next(40);
-            float gravity = 2f;
+            int total = 2;
 
-            return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl, gravity);
-        }
-
-        public void LoadContent(ContentManager content)
-        {
-            fileManager = new FileManager();
-            content = new ContentManager(ScreenManager.Instance.Content.ServiceProvider, "Content");
-            textures = new List<Texture2D>();
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
-
-            fileManager.LoadContent("Load/Particle.txt", attributes, contents);
-            for (int i = 0; i < attributes.Count; i++)
-            {
-                for (int j = 0; j < attributes[i].Count; j++)
-                {
-                    switch (attributes[i][j])
-                    {
-                        case "Image":
-                            textures.Add(content.Load<Texture2D>(contents[i][j]));
-                            break;
-                    }
-                }
-            }
-        }
-
-        public void Update(Collision col, GameTime gameTime)
-        {
             for (int i = 0; i < total; i++)
             {
                 particles.Add(GenerateNewParticle());
@@ -87,13 +40,37 @@ namespace TM2
 
             for (int particle = 0; particle < particles.Count; particle++)
             {
-                particles[particle].Update(col, gameTime);
+                particles[particle].Update();
                 if (particles[particle].TTL <= 0)
                 {
                     particles.RemoveAt(particle);
                     particle--;
                 }
             }
+        }
+
+        private Particle GenerateNewParticle()
+        {
+            Texture2D texture = textures[random.Next(textures.Count)];
+            Vector2 position = EmitterLocation;
+            Vector2 velocity = new Vector2(
+                                    1f * (float)(random.NextDouble() * 2 - 1),
+                                    1f * (float)(random.NextDouble() * 2 - 1));
+            float angle = 0;
+            float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
+            float size = (float)random.NextDouble();
+            int ttl = 20 + random.Next(40);
+
+            return new Particle(texture, position, velocity, angle, angularVelocity, Color, size, ttl);
+        }
+
+        public void Blood(SpriteBatch spriteBatch)
+        {
+            Color = new Color(
+                        (float)random.NextDouble(),
+                        0.0f,
+                        0.0f);
+            this.Draw(spriteBatch);
         }
 
         public void Draw(SpriteBatch spriteBatch)

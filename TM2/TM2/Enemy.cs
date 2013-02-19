@@ -15,8 +15,7 @@ namespace TM2
 {
     public class Enemy : Entity
     {
-        int rangeCounter, direction;
-        Vector2 destPosition, origPosition;
+        int rangeCounter;
 
         public override void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
@@ -31,7 +30,6 @@ namespace TM2
             else
                 destPosition.X = origPosition.X - range;
 
-            moveAnimation.IsActive = true;
         }
 
         public override void UnloadContent()
@@ -41,15 +39,18 @@ namespace TM2
 
         public override void Update(GameTime gameTime, InputManager input)
         {
+            base.Update(gameTime, input);
+            moveAnimation.IsActive = true;
+
             if (direction == 1)
             {
+                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 0);
                 velocity.X = moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 2);
             }
             else if (direction == 2)
             {
-                velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 1);
+                velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
             if (activateGravity)

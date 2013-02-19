@@ -16,7 +16,6 @@ namespace TM2
     public class CreditsScreen : GameScreen
     {
         SpriteFont font;
-        Song song;
         FileManager fileManager;
         GUIManager gui;
         AudioManager audio;

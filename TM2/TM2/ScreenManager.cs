@@ -157,7 +157,9 @@ namespace TM2
             currentScreen.Draw(spriteBatch);
             if (transition)
             {
+                spriteBatch.Begin();
                 animation.Draw(spriteBatch);
+                spriteBatch.End();
             }
         }
 

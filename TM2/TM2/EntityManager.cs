@@ -58,6 +58,18 @@ namespace TM2
                 entities[i].Update(gameTime, inputManager);
         }
 
+        public void EntityCollision(EntityManager E2)
+        {
+            foreach (Entity e in entities)
+            {
+                foreach (Entity e2 in E2.entities)
+                {
+                    if (e.Rect.Intersects(e2.Rect))
+                        e.OnCollision(e2);
+                }
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < entities.Count; i++)

@@ -121,7 +121,6 @@ namespace TM2
                     entity.OnTile = false;
                     containsEntity = false;
                     entity.ActivateGravity = true;
-                    entity.CanJump = false;
                 }
             }
 
@@ -138,27 +137,23 @@ namespace TM2
                     entity.ActivateGravity = false;
                     entity.OnTile = true;
                     containsEntity = true;
-                    entity.CanJump = true;
                 }
-                else if (entity.Rect.Top >= rect.Bottom && preventity.Top <= prevTile.Bottom)
+                else if (entity.Rect.Top <= rect.Bottom && preventity.Top >= prevTile.Bottom)
                 {
                     //top collision
                     entity.Position = new Vector2(entity.Position.X, position.Y + layer.TileDimensions.Y);
                     entity.Velocity = new Vector2(entity.Velocity.X, 0);
                     entity.ActivateGravity = true;
-                    entity.OnTile = false;
-                    containsEntity = false;
-                    entity.CanJump = false;
                 }
                 else if (entity.Rect.Right >= rect.Left && preventity.Right <= prevTile.Left)
                 {
-                    //Right collision
-                    entity.Position = new Vector2(position.X -entity.Animation.FrameWidth, entity.Position.Y);
-                    //entity.Velocity = new Vector2(0, entity.Velocity.Y);
+                    entity.Position = new Vector2(position.X - entity.Animation.FrameWidth, entity.Position.Y);
+                    entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
                 }
-                else
+                else if (entity.Rect.Left <= rect.Right && preventity.Left >= prevTile.Left)
                 {
-                    entity.Position -= entity.Velocity;
+                    entity.Position = new Vector2(position.X + layer.TileDimensions.X, entity.Position.Y);
+                    entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
                 }
             }
 

@@ -25,7 +25,6 @@ namespace TM2
         private Texture2D highlight;
         int playerIndex;
         float zoom;
-
         SpriteFont font;
 
         public override void LoadContent(ContentManager content, InputManager input)
@@ -133,6 +132,8 @@ namespace TM2
                     zoom++;
                 camera.Zoom = zoom;
             }
+
+            player.EntityCollision(enemies);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -15,6 +15,8 @@ namespace TM2
 {
     public class Entity
     {
+        protected ParticleEngine particleEngine;
+
         protected int health;
         protected List<int> healths;
 
@@ -36,18 +38,28 @@ namespace TM2
 
         protected List<string> attributes, contents;
 
-        protected Vector2 position, velocity, prevPosition;
+        protected Vector2 position, velocity, prevPosition, destPosition, origPosition;
 
         protected bool activateGravity;
         protected bool syncTilePosition;
-        protected bool onTile;
+        protected bool onTile, bleeding;
         protected int range;
-        protected bool canJump;
+        protected int direction;
 
-        public bool CanJump
+        public bool Bleeding
         {
-            get { return canJump; }
-            set { canJump = value; }
+            set { bleeding = value; }
+        }
+
+        public int Direction
+        {
+            get { return direction; }
+            set 
+            { 
+                direction = value; 
+                destPosition.X = (direction == 2) ? destPosition.X = origPosition.X - range :
+                    destPosition.X = origPosition.X + range;
+            }
         }
 
         public bool OnTile
@@ -176,6 +188,12 @@ namespace TM2
         }
 
         public virtual void Update(GameTime gameTime, InputManager input)
+        {
+            syncTilePosition = false;
+            prevPosition = position;
+        }
+
+        public virtual void OnCollision(Entity e)
         {
 
         }
