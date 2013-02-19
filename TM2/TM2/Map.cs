@@ -12,7 +12,6 @@ namespace TM2
     public class Map
     {
         public Layer layer;
-        public Collision collision;
 
         string id;
 
@@ -24,11 +23,9 @@ namespace TM2
         public void LoadContent(ContentManager content, Map map, string mapID)
         {
             layer = new Layer();
-            collision = new Collision();
             id = mapID;
 
             layer.LoadContent(map, "Layer1");
-            collision.LoadContent(content, mapID);
         }
 
         public void UnloadContent()
@@ -37,9 +34,9 @@ namespace TM2
             //collision.UnLoadContent();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Camera camera, Map map)
         {
-            layer.Update(gameTime);
+            layer.Update(gameTime, camera, map);
         }
 
         public void UpdateCollision(ref Entity entity, InputManager inputManager)

@@ -40,7 +40,7 @@ namespace TM2
             fAnimation = new FadeAnimation();
             images = new List<Texture2D>();
 
-            fileManager.LoadContent("Load/Splash.txt", attributes, contents);
+            fileManager.LoadContent("Load/Splash.txt");
             audio = new AudioManager();
             audio.LoadContent(content, "Splash");
 

@@ -18,7 +18,7 @@ namespace TM2
         public override void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
             base.LoadContent(content, attributes, contents,input);
-            jumpSpeed = 1500f;
+            jumpSpeed = 1700f;
 
             List<Texture2D> textures = new List<Texture2D>();
             textures.Add(content.Load<Texture2D>("square2"));
@@ -97,6 +97,7 @@ namespace TM2
             }
             else
             {
+                particleEngine.Blood(spriteBatch);
                 particleEngine.isActive = false;
             }
         }

@@ -16,7 +16,6 @@ namespace TM2
     public class EntityManager
     {
         List<Entity> entities;
-        List<List<string>> attributes, contents;
         FileManager fileManager;
         InputManager inputManager;
 
@@ -29,20 +28,18 @@ namespace TM2
         {
             this.inputManager = inputManager;
             entities = new List<Entity>();
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
             fileManager = new FileManager();
 
             if (identifier == String.Empty)
-                fileManager.LoadContent(fileName, attributes, contents);
+                fileManager.LoadContent(fileName);
             else
-                fileManager.LoadContent(fileName, attributes, contents, identifier);
+                fileManager.LoadContent(fileName, identifier);
 
-            for (int i = 0; i < attributes.Count; i++)
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
                 Type newClass = Type.GetType("TM2." + entityType);
                 entities.Add((Entity)Activator.CreateInstance(newClass));
-                entities[i].LoadContent(Content, attributes[i], contents[i], this.inputManager);
+                entities[i].LoadContent(Content, fileManager.Attributes[i], fileManager.Contents[i], this.inputManager);
             }
         }
 

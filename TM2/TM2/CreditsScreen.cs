@@ -32,7 +32,7 @@ namespace TM2
             font = this.content.Load<SpriteFont>("CreditsScreen/Coolvetica Rg");
 
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Credits.txt", attributes, contents);
+            fileManager.LoadContent("Load/Credits.txt");
 
             gui = new GUIManager();
             gui.LoadContent(content, "Credits");

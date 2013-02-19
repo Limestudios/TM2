@@ -41,6 +41,6 @@ EndLoad=[Credits]
 Load=[Map1]
 
 Load=[Songs]
-[memories,Audio/Chambermaid Swing]
+[memories,Audio/monstercat]
 
 EndLoad=[Map1]

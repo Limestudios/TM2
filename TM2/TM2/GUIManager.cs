@@ -42,7 +42,7 @@ namespace TM2
             imageNumber = 0;
 
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/GUIs.txt", attributes, contents, id);
+            fileManager.LoadContent("Load/GUIs.txt", id);
 
             position = new List<Vector2>();
             scale = new List<float>();

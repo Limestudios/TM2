@@ -29,6 +29,7 @@ Content\highlight.xnb
 Content\Player\playerTemplate.xnb
 Content\Enemy\greenSlime.xnb
 Content\Enemy\redSlime.xnb
+Content\Audio\monstercat.xnb
 Content\CreditsScreen\Dul.wmv
 Content\Audio\23 SENSATION.wma
 Content\Audio\SplashSound.wma
@@ -37,6 +38,7 @@ Content\Audio\memories.wma
 Content\Audio\PewPewPew.wma
 Content\Audio\Chambermaid Swing.wma
 Content\Audio\Daft Punk - Digital Love.wma
+Content\Audio\monstercat.wma
 Load\CharacterSelect.txt
 Load\Enemy.txt
 Load\GUIs.txt

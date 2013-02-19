@@ -21,10 +21,9 @@ namespace TM2
         GUIManager guiManager;
         private Texture2D highlight;
         int playerIndex;
-        float zoom;
+        float zoom, frameRate;
         SpriteFont font;
         protected Camera camera;
-        Collision col = new Collision();
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -69,7 +68,7 @@ namespace TM2
             inputManager.Update();
             player.Entities[playerIndex].Update(gameTime, inputManager, map);
             enemies.Update(gameTime, map);
-            map.Update(gameTime);
+            map.Update(gameTime, camera, map);
 
             Entity entity;
 
@@ -125,6 +124,9 @@ namespace TM2
             {
                 camera.Shake(25f, 1f);
             }
+
+            //update FrameRate
+            frameRate = (float)Math.Floor(1 / (double)gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -139,6 +141,15 @@ namespace TM2
             guiManager.Draw(spriteBatch);
             spriteBatch.DrawString(font, "Use + / - keys to switch between characters", new Vector2(126, 10), Color.Black);
             spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30), Color.Black);
+            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString(), new Vector2(126, 50), Color.Black);
+
+            int minX = (int)(Math.Round((double)((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
+            int maxX = (int)(Math.Round((double)((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
+
+            int minY = (int)(Math.Round((double)((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y)));
+            int maxY = (int)(Math.Round((double)((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y)));
+
+            spriteBatch.DrawString(font, "Camera :   X: " + new Vector2(minX, maxX) + " Y: " + new Vector2(minY, maxY), new Vector2(126, 80), Color.Black);
             spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name , new Vector2(966, 10), Color.Black);
             spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40), Color.Black);
             spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);

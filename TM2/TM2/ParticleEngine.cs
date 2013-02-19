@@ -17,10 +17,12 @@ namespace TM2
     {
         private Random random;
         public Vector2 EmitterLocation { get; set; }
+        public Vector2 velocity { get; set; }
         public bool isActive { get; set; }
         private List<Particle> particles;
         private List<Texture2D> textures;
         public Color Color { get; set; }
+        public float angularVelocity { get; set; }
         public bool collision;
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location)
@@ -55,7 +57,15 @@ namespace TM2
             }
             else
             {
-                this.UnloadContent();
+                for (int particle = 0; particle < particles.Count; particle++)
+                {
+                    particles[particle].Update();
+                    if (particles[particle].TTL <= 0)
+                    {
+                        particles.RemoveAt(particle);
+                        particle--;
+                    }
+                }
             }
         }
 
@@ -68,11 +78,7 @@ namespace TM2
         {
             Texture2D texture = textures[random.Next(textures.Count)];
             Vector2 position = EmitterLocation;
-            Vector2 velocity = new Vector2(
-                                    1f * (float)(random.NextDouble() * 2 - 1),
-                                    1f * (float)(random.NextDouble() * 2 - 1));
             float angle = 0;
-            float angularVelocity = 0.1f * (float)(random.NextDouble() * 2 - 1);
             float size = (float)random.NextDouble();
             int ttl = 20 + random.Next(40);
 
@@ -85,6 +91,8 @@ namespace TM2
                         (float)random.NextDouble(),
                         0.0f,
                         0.0f);
+            angularVelocity = 1f;
+            velocity = new Vector2(1f * (float)(random.NextDouble() * 2 - 1), 1f);
             this.Draw(spriteBatch);
         }
 

@@ -41,6 +41,7 @@ namespace TM2
             graphics.IsFullScreen = false;
             graphics.PreferredBackBufferWidth = (int)ScreenManager.Instance.Dimensions.X;
             graphics.PreferredBackBufferHeight = (int)ScreenManager.Instance.Dimensions.Y;
+            this.Window.Title = "TEAM MONGOOSE VS ZAMBIES!";
             graphics.ApplyChanges();
 
             base.Initialize();

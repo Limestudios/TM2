@@ -21,7 +21,6 @@ namespace TM2
         List<Animation> animation;
         FadeAnimation fAnimation;
         SpriteSheetAnimation ssAnimation;
-        List<List<string>> attributes, contents;
         List<Animation> tempAnimation;
         Song song;
 
@@ -111,56 +110,54 @@ namespace TM2
             fAnimation = new FadeAnimation();
             ssAnimation = new SpriteSheetAnimation();
             animationTypes = new List<string>();
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
             linkID = new List<string>();
             linkType = new List<string>();
             itemNumber = 0;
 
             position = Vector2.Zero;
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Menus.txt", attributes, contents, id);
+            fileManager.LoadContent("Load/Menus.txt", id);
 
-            for (int i = 0; i < attributes.Count; i++)
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
-                for (int j = 0; j < attributes[i].Count; j++)
+                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                 {
-                    switch (attributes[i][j])
+                    switch (fileManager.Attributes[i][j])
                     {
                         case "Font":
-                            font = this.content.Load<SpriteFont>(contents[i][j]);
+                            font = this.content.Load<SpriteFont>(fileManager.Contents[i][j]);
                             break;
                         case "Item":
-                            menuItems.Add(contents[i][j]);
+                            menuItems.Add(fileManager.Contents[i][j]);
                             break;
                         case "Image":
-                            menuImages.Add(this.content.Load<Texture2D>(contents[i][j]));
+                            menuImages.Add(this.content.Load<Texture2D>(fileManager.Contents[i][j]));
                             break;
                         case "Axis":
-                            axis = int.Parse(contents[i][j]);
+                            axis = int.Parse(fileManager.Contents[i][j]);
                             break;
                         case "Position":
-                            string[] temp = contents[i][j].Split(' ');
+                            string[] temp = fileManager.Contents[i][j].Split(' ');
                             position = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
                             break;
                         case "Source":
-                            temp = contents[i][j].Split(' ');
+                            temp = fileManager.Contents[i][j].Split(' ');
                             source = new Rectangle(int.Parse(temp[0]),
                                 int.Parse(temp[1]), int.Parse(temp[2]),
                                 int.Parse(temp[3]));
                             break;
                         case "Animation":
-                            animationTypes.Add(contents[i][j]);
+                            animationTypes.Add(fileManager.Contents[i][j]);
                             break;
                         case "Align":
-                            align = contents[i][j];
+                            align = fileManager.Contents[i][j];
                             break;
                         case "LinkType":
-                            linkType.Add(contents[i][j]);
+                            linkType.Add(fileManager.Contents[i][j]);
                             break;
                         case "LinkID":
-                            linkID.Add(contents[i][j]);
+                            linkID.Add(fileManager.Contents[i][j]);
                             break;
                     }
                 }

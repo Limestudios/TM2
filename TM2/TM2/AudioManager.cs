@@ -23,7 +23,6 @@ namespace TM2
         bool isMusicPaused = false;
         ContentManager content;
         FileManager fileManager;
-        List<List<string>> attributes, contents;
         Song song;
 
         Song currentSong = null;
@@ -46,21 +45,19 @@ namespace TM2
         public void LoadContent(ContentManager content, string id)
         {
             content = new ContentManager(content.ServiceProvider, "Content");
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
             songs = new List<Song>();
 
             fileManager = new FileManager();
-            fileManager.LoadContent("Load/Audio.txt", attributes, contents, id);
+            fileManager.LoadContent("Load/Audio.txt", id);
 
-            for (int i = 0; i < attributes.Count; i++)
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
-                for (int j = 0; j < attributes[i].Count; j++)
+                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                 {
-                    switch (attributes[i][j])
+                    switch (fileManager.Attributes[i][j])
                     {
                         case "Songs":
-                            String[] temp = contents[i][j].Split(',');
+                            String[] temp = fileManager.Contents[i][j].Split(',');
                             song = content.Load<Song>(temp[1]);
                             songs.Add(song);
                             break;

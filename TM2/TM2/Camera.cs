@@ -24,6 +24,21 @@ namespace TM2
         private float halfViewportWidth;
         private float halfViewportHeight;
 
+        public Vector2 CurrentPosision
+        {
+            get { return currentPosition; }
+        }
+
+        public float HalfViewportWidth
+        {
+            get { return halfViewportWidth; }
+        }
+
+        public float HalfViewportHeight
+        {
+            get { return halfViewportHeight; }
+        }
+
         // We only need one Random object no matter how many Cameras we have
         private static readonly Random random = new Random();
 

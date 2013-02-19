@@ -13,13 +13,30 @@ namespace TM2
 
         LoadType type;
 
-        List<string> tempAttributes;
-        List<string> tempContents;
+        List<string> tempAttributes, tempContents;
+        List<List<string>> attributes, contents;
+
+        public FileManager()
+        {
+            attributes = new List<List<string>>();
+            contents = new List<List<string>>();
+        }
+
+        public List<List<string>> Attributes
+        {
+            get { return attributes; }
+            set { attributes = value; }
+        }
+
+        public List<List<string>> Contents
+        {
+            get { return contents; }
+            set { contents = value; }
+        }
 
         bool identifierFound = false;
 
-        public void LoadContent(string filename, List<List<string>> attributes,
-            List<List<string>> contents)
+        public void LoadContent(string filename)
         {
             using (StreamReader reader = new StreamReader(filename))
             {
@@ -63,8 +80,7 @@ namespace TM2
             }
         }
 
-        public void LoadContent(string filename, List<List<string>> attributes,
-            List<List<string>> contents, string identifier)
+        public void LoadContent(string filename, string identifier)
         {
             using (StreamReader reader = new StreamReader(filename))
             {
