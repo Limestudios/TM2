@@ -97,6 +97,8 @@ namespace TM2
             get { return nullImage; }
         }
 
+        public GraphicsDevice graphicsDevice;
+
         #endregion
 
         #region Main Methods

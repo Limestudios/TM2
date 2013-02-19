@@ -18,19 +18,17 @@ namespace TM2
         EntityManager player, enemies;
         Map map;
         AudioManager audio;
-        Camera camera;
-        Vector2 parallax;
-        Viewport viewport;
         GUIManager guiManager;
         private Texture2D highlight;
         int playerIndex;
         float zoom;
         SpriteFont font;
+        protected Camera camera;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
-            viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
-            camera = new Camera(viewport);
+            camera = new Camera(ScreenManager.Instance.graphicsDevice);
+            //viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
 
             playerIndex = 0;
             zoom = 1.0f;
@@ -71,8 +69,6 @@ namespace TM2
             player.Entities[playerIndex].Update(gameTime, inputManager);
             enemies.Update(gameTime, map);
             map.Update(gameTime);
-            //camera.LookAt(new Vector2(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y));
-            camera.LookAt(new Vector2(64 * 27 / 2, 64 * 13 / 2));
 
             Entity entity;
 
@@ -115,31 +111,14 @@ namespace TM2
                 entity = this.player.Entities[playerIndex];
             }
 
-            if (inputManager.KeyPressed(Keys.OemOpenBrackets) && zoom > 0.1f)
-            {
-                if (zoom <= 1.0f)
-                    zoom = zoom - 0.1f;
-                else
-                    zoom--;
-                camera.Zoom = zoom;
-            }
-
-            if (inputManager.KeyPressed(Keys.OemCloseBrackets) && camera.Zoom < 10.0f)
-            {
-                if (zoom < 1.0f)
-                    zoom = zoom + 0.1f;
-                else
-                    zoom++;
-                camera.Zoom = zoom;
-            }
-
             player.EntityCollision(enemies);
+            camera.Update((float)(gameTime.ElapsedGameTime.TotalSeconds));
+            camera.SetPosition(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y, false); 
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 parallax = new Vector2(1.0f);
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(parallax));
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransformation(ScreenManager.Instance.graphicsDevice));
             base.Draw(spriteBatch);
             map.Draw(spriteBatch);
             this.player.Entities[playerIndex].Draw(spriteBatch);

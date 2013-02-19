@@ -22,7 +22,18 @@ namespace TM2
         ContentManager content;
         Texture2D tileSheet;
         string[] getMotion;
-        public Vector2 tileDimensions;
+        Vector2 tileDimensions, mapDimensions;
+        private static Layer instance;
+
+        public static Layer Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Layer();
+                return instance;
+            }
+        }
 
         /// <summary>
         /// Dimensions for a single tile in the map.
@@ -30,6 +41,13 @@ namespace TM2
         public Vector2 TileDimensions
         {
             get { return new Vector2(64, 64); }
+            set { tileDimensions = value; }
+        }
+
+        public Vector2 MapDimensions
+        {
+            get { return new Vector2(27, 13); }
+            set { mapDimensions = value; }
         }
 
         public void LoadContent(Map map, string layerID)
@@ -57,7 +75,11 @@ namespace TM2
                             break;
                         case "TileDimensions":
                             string[] split = contents[i][j].Split(',');
-                            tileDimensions = new Vector2(int.Parse(split[0]), int.Parse(split[1]));
+                            this.tileDimensions = new Vector2(int.Parse(split[0]), int.Parse(split[1]));
+                            break;
+                        case "MapDimensions":
+                            string[] split2 = contents[i][j].Split(',');
+                            this.mapDimensions = new Vector2(int.Parse(split2[0]), int.Parse(split2[1]));
                             break;
                         case "Solid":
                             solid.Add(contents[i][j]);
@@ -89,9 +111,9 @@ namespace TM2
                                         break;
                                     }
                                 }
-                                
-                                tempTiles[k].SetTile(tempState, tempMotion, new Vector2(k * 64, indexY * 64), tileSheet,
-                                    new Rectangle(int.Parse(split[0]) * 64, int.Parse(split[1]) * 64, 64, 64));
+
+                                tempTiles[k].SetTile(tempState, tempMotion, new Vector2(k * (int)TileDimensions.X, indexY * (int)TileDimensions.Y), tileSheet,
+                                    new Rectangle(int.Parse(split[0]) * (int)TileDimensions.X, int.Parse(split[1]) * (int)TileDimensions.Y, (int)TileDimensions.X, (int)TileDimensions.Y));
                             }
 
                             tiles.Add(tempTiles);

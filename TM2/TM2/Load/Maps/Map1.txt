@@ -2,12 +2,16 @@
 
 Load=[MapProperties]
 
-Load=[TileDimensions]
-[64,64]
 
 EndLoad=[MapProperties]
 
 Load=[Layer1]
+
+Load=[TileDimensions]
+[64,64]
+
+Load=[MapDimensions]
+[27,13]
 
 Load=[Solid]
 [9,0]
