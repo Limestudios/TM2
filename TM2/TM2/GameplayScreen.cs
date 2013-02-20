@@ -24,6 +24,7 @@ namespace TM2
         float zoom, frameRate;
         SpriteFont font;
         protected Camera camera;
+        SoundEngine soundEngine;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -38,6 +39,7 @@ namespace TM2
 
             audio = new AudioManager();
             audio.LoadContent(content, "Map1");
+            audio.MusicVolume = 0.01f;
             audio.PlaySong(0, true);
 
             map = new Map();
@@ -54,6 +56,9 @@ namespace TM2
             guiManager.LoadContent(content, "Map1");
 
             highlight = content.Load<Texture2D>("highlight");
+
+            soundEngine = new SoundEngine();
+            soundEngine.LoadContent(content);
         }
 
         public override void UnloadContent()
@@ -69,6 +74,7 @@ namespace TM2
             player.Entities[playerIndex].Update(gameTime, inputManager, map);
             enemies.Update(gameTime, map);
             map.Update(gameTime, camera, map);
+            soundEngine.Update(gameTime, enemies.Entities[0], player.Entities[playerIndex]);
 
             Entity entity;
 
@@ -118,11 +124,17 @@ namespace TM2
             if (player.Entities[playerIndex].Shaking)
             {
                 camera.Shake(5f, 1f);
+                soundEngine.PlaySound("mario shrink");
             }
 
             if (inputManager.KeyDown(Keys.T))
             {
                 camera.Shake(25f, 1f);
+            }
+
+            if (inputManager.KeyPressed(Keys.L))
+            {
+                map.LoadContent(content, map, "Map1");
             }
 
             //update FrameRate

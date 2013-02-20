@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace TM2
+namespace TM2_Map_Editor
 {
     /// <summary>
     /// This is the main type for your game
@@ -17,13 +17,12 @@ namespace TM2
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        SpriteBatch spriteBatch;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.IsFixedTimeStep = false;
         }
 
         /// <summary>
@@ -35,14 +34,6 @@ namespace TM2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            ScreenManager.Instance.Initialize();
-
-            ScreenManager.Instance.Dimensions = new Vector2(1280, 720);
-            graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferWidth = (int)ScreenManager.Instance.Dimensions.X;
-            graphics.PreferredBackBufferHeight = (int)ScreenManager.Instance.Dimensions.Y;
-            this.Window.Title = "TEAM MONGOOSE VS ZAMBIES!";
-            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -57,7 +48,6 @@ namespace TM2
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            ScreenManager.Instance.LoadContent(Content);
         }
 
         /// <summary>
@@ -77,13 +67,11 @@ namespace TM2
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed |
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            }
+
             // TODO: Add your update logic here
-            ScreenManager.Instance.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -93,10 +81,10 @@ namespace TM2
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            ScreenManager.Instance.Draw(spriteBatch);
+
             base.Draw(gameTime);
         }
     }

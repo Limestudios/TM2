@@ -45,6 +45,13 @@ namespace TM2
         protected bool onTile, bleeding, shaking;
         protected int range;
         protected int direction;
+        protected bool canJump;
+
+        public bool CanJump
+        {
+            get { return canJump; }
+            set { canJump = value; }
+        }
 
         public bool Shaking
         {
@@ -167,7 +174,7 @@ namespace TM2
                         break;
                     case "Position":
                         string[] pos = contents[i].Split(',');
-                        position = new Vector2(int.Parse(pos[0]), int.Parse(pos[1]));
+                        position = new Vector2(int.Parse(pos[0]) * Layer.Instance.TileDimensions.X, int.Parse(pos[1]) * Layer.Instance.TileDimensions.Y);
                         break;
                     case "Health":
                         health = int.Parse(contents[i]);

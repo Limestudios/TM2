@@ -61,6 +61,12 @@ namespace TM2
                 activateGravity = true;
             }
 
+            if (input.KeyDown(Keys.Up, Keys.W) && !activateGravity)
+            {
+                velocity.Y = -jumpSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                activateGravity = true;
+            }
+
             if (activateGravity)
                 velocity.Y += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             else
@@ -84,6 +90,7 @@ namespace TM2
                 health--;
                 bleeding = true;
                 shaking = true;
+                
             }
         }
 

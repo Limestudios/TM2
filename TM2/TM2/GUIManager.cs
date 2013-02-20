@@ -17,7 +17,6 @@ namespace TM2
     {
         FileManager fileManager;
         List<Texture2D> images;
-        List<List<string>> attributes, contents;
         List<Rectangle> sourceRect;
 
         int imageNumber;
@@ -36,8 +35,6 @@ namespace TM2
         {
             this.content = new ContentManager(content.ServiceProvider, "Content");
             images = new List<Texture2D>();
-            attributes = new List<List<string>>();
-            contents = new List<List<string>>();
 
             imageNumber = 0;
 
@@ -48,26 +45,26 @@ namespace TM2
             scale = new List<float>();
             sourceRect = new List<Rectangle>();
 
-            for (int i = 0; i < attributes.Count; i++)
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
-                for (int j = 0; j < attributes[i].Count; j++)
+                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                 {
-                    switch (attributes[i][j])
+                    switch (fileManager.Attributes[i][j])
                     {
                         case "Images":
-                            images.Add(this.content.Load<Texture2D>(contents[i][j]));
+                            images.Add(this.content.Load<Texture2D>(fileManager.Contents[i][j]));
                             sourceRect.Add(new Rectangle(0, 0, images[i].Width, images[i].Height));
                             break;
                         case "Position":
-                            string[] temp = contents[i][j].Split(',');
+                            string[] temp = fileManager.Contents[i][j].Split(',');
                             posTemp = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
                             break;
                         case "Scale":
-                            scale.Add(float.Parse(contents[i][j]));
+                            scale.Add(float.Parse(fileManager.Contents[i][j]));
                             break;
                         case "Align":
-                            temp = contents[i][j].Split(',');
+                            temp = fileManager.Contents[i][j].Split(',');
                             if (temp[0] == "Center")
                             {
                                 align = temp[1];
@@ -93,8 +90,8 @@ namespace TM2
         public void UnloadContent()
         {
             fileManager = null;
-            attributes = null;
-            contents = null;
+            fileManager.Attributes = null;
+            fileManager.Contents = null;
             images = null;
             position = null;
             posTemp = Vector2.Zero;

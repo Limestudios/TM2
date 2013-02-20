@@ -121,6 +121,7 @@ namespace TM2
                     entity.OnTile = false;
                     containsEntity = false;
                     entity.ActivateGravity = true;
+                    entity.CanJump = false;
                 }
             }
 
@@ -149,11 +150,13 @@ namespace TM2
                 {
                     entity.Position = new Vector2(position.X - entity.Animation.FrameWidth, entity.Position.Y);
                     entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
+                    entity.CanJump = true;
                 }
                 else if (entity.Rect.Left <= rect.Right && preventity.Left >= prevTile.Left)
                 {
                     entity.Position = new Vector2(position.X + layer.TileDimensions.X, entity.Position.Y);
                     entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
+                    entity.CanJump = true;
                 }
             }
             else if (entity.Rect.Intersects(rect) && state == State.Platform)

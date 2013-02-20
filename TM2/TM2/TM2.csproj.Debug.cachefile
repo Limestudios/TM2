@@ -30,6 +30,8 @@ Content\Player\playerTemplate.xnb
 Content\Enemy\greenSlime.xnb
 Content\Enemy\redSlime.xnb
 Content\Audio\monstercat.xnb
+Content\Audio\mario shrink.xnb
+Content\Audio\zombie moan.xnb
 Content\CreditsScreen\Dul.wmv
 Content\Audio\23 SENSATION.wma
 Content\Audio\SplashSound.wma
@@ -39,6 +41,10 @@ Content\Audio\PewPewPew.wma
 Content\Audio\Chambermaid Swing.wma
 Content\Audio\Daft Punk - Digital Love.wma
 Content\Audio\monstercat.wma
+Content\Audio\TM2Audio.xgs
+Content\Audio\Wave Bank.xwb
+Content\Audio\Sound Bank.xsb
+Load\Maps\Map1.txt
 Load\CharacterSelect.txt
 Load\Enemy.txt
 Load\GUIs.txt
@@ -49,4 +55,3 @@ Load\Credits.txt
 Load\Player.txt
 Load\Menus.txt
 Load\Splash.txt
-Load\Maps\Map1.txt
