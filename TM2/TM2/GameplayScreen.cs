@@ -22,9 +22,14 @@ namespace TM2
         private Texture2D highlight;
         int playerIndex;
         float zoom, frameRate;
+        string frameRateAcceptable;
         SpriteFont font;
         protected Camera camera;
         SoundEngine soundEngine;
+
+        Random random = new Random();
+
+        TimeSpan previousEnemySoundTime, enemySoundTime;
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
@@ -120,7 +125,6 @@ namespace TM2
             player.EntityCollision(enemies);
             camera.Update((float)(gameTime.ElapsedGameTime.TotalSeconds), gameTime);
             camera.SetPosition(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y, false);
-
             if (player.Entities[playerIndex].Shaking)
             {
                 camera.Shake(5f, 1f);
@@ -139,6 +143,27 @@ namespace TM2
 
             //update FrameRate
             frameRate = (float)Math.Floor(1 / (double)gameTime.ElapsedGameTime.TotalSeconds);
+
+            if (frameRate < 59f)
+            {
+                frameRateAcceptable = "FALSE";
+            }
+            else
+            {
+                frameRateAcceptable = "TRUE";
+            }
+
+            if (gameTime.TotalGameTime - previousEnemySoundTime > enemySoundTime)
+            {
+                soundEngine.PlaySound("zombie moan", enemies.Entities[0], player.Entities[playerIndex]);
+
+                // Update the time left next enemy spawn
+                previousEnemySoundTime = gameTime.TotalGameTime;
+                var spawnSeconds = random.Next(1, 6); // random should be a member of the class
+                enemySoundTime = TimeSpan.FromSeconds(spawnSeconds);
+            }
+
+            soundEngine.Update(gameTime, enemies.Entities[0], player.Entities[playerIndex]);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -153,7 +178,7 @@ namespace TM2
             guiManager.Draw(spriteBatch);
             spriteBatch.DrawString(font, "Use + / - keys to switch between characters", new Vector2(126, 10), Color.Black);
             spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30), Color.Black);
-            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString(), new Vector2(126, 50), Color.Black);
+            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString() + frameRateAcceptable, new Vector2(126, 50), Color.Black);
 
             int minX = (int)(Math.Round((double)((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
             int maxX = (int)(Math.Round((double)((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X)));

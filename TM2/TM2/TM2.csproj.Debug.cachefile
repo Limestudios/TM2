@@ -2,6 +2,7 @@ Content\SplashScreen\Coolvetica Rg.xnb
 Content\TitleScreen\Coolvetica Rg.xnb
 Content\Coolvetica Rg.xnb
 Content\CreditsScreen\Coolvetica Rg.xnb
+Content\Coolvetica Rg 12.xnb
 Content\SplashScreen\LSSplash.xnb
 Content\fade.xnb
 Content\SplashScreen\TMSplash.xnb
@@ -9,14 +10,17 @@ Content\null.xnb
 Content\TitleScreen\button.xnb
 Content\Player\player.xnb
 Content\CreditsScreen\button.xnb
-Content\CreditsScreen\Dul.xnb
+Content\TileSets\tileSet1.xnb
 Content\SplashScreen\RGSplash.xnb
 Content\Player\potato.xnb
-Content\TileSets\tileSet1.xnb
-Content\circle1.xnb
 Content\square1.xnb
+Content\circle1.xnb
 Content\square2.xnb
 Content\TitleScreen\TM.xnb
+Content\highlight.xnb
+Content\Player\playerTemplate.xnb
+Content\Enemy\greenSlime.xnb
+Content\Enemy\redSlime.xnb
 Content\Audio\23 SENSATION.xnb
 Content\Audio\SplashSound.xnb
 Content\Audio\CaramellDansen.xnb
@@ -24,15 +28,11 @@ Content\Audio\memories.xnb
 Content\Audio\PewPewPew.xnb
 Content\Audio\Chambermaid Swing.xnb
 Content\Audio\Daft Punk - Digital Love.xnb
-Content\Coolvetica Rg 12.xnb
-Content\highlight.xnb
-Content\Player\playerTemplate.xnb
-Content\Enemy\greenSlime.xnb
-Content\Enemy\redSlime.xnb
 Content\Audio\monstercat.xnb
+Content\CreditsScreen\Dul.xnb
 Content\Audio\mario shrink.xnb
 Content\Audio\zombie moan.xnb
-Content\CreditsScreen\Dul.wmv
+Content\Audio\zombie moan 2.xnb
 Content\Audio\23 SENSATION.wma
 Content\Audio\SplashSound.wma
 Content\Audio\CaramellDansen.wma
@@ -41,6 +41,7 @@ Content\Audio\PewPewPew.wma
 Content\Audio\Chambermaid Swing.wma
 Content\Audio\Daft Punk - Digital Love.wma
 Content\Audio\monstercat.wma
+Content\CreditsScreen\Dul.wmv
 Content\Audio\TM2Audio.xgs
 Content\Audio\Wave Bank.xwb
 Content\Audio\Sound Bank.xsb

@@ -22,7 +22,10 @@ namespace TM2
         // 3D audio objects
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();
+
         Cue cue;
+
+        List<Cue> cues;
 
         ContentManager content;
 
@@ -38,16 +41,36 @@ namespace TM2
             emitter.Position = new Vector3(0f, 0f, 0f);
             listener.Position = new Vector3(0f, 0f, 0f);
 
-            cue = soundBank.GetCue("zombie moan");
-
-            cue.Apply3D(listener, emitter);
-
-            cue.Play();
+            cues = new List<Cue>();
         }
 
         public void PlaySound(String soundCue)
         {
+            Cue cue = soundBank.GetCue(soundCue);
+
+            cue.Apply3D(listener, emitter);
+
             soundBank.PlayCue(soundCue);
+
+            cues.Add(cue);
+        }
+
+        public void PlaySound(String soundCue, Entity e, Entity e2)
+        {
+            Cue cue = soundBank.GetCue(soundCue);
+
+            // Move the sound left and right out to maximum distance.
+            emitter.Position = new Vector3(
+                e.Position.X, e.Position.Y, 0.0f);
+
+            listener.Position = new Vector3(
+                e2.Position.X, e2.Position.Y, 0.0f);
+
+            cue.Apply3D(listener, emitter);
+
+            cue.Play();
+
+            cues.Add(cue);
         }
 
         private Vector3 CalculateLocation(float angle, float distance)
@@ -60,14 +83,20 @@ namespace TM2
 
         public void Update(GameTime gameTime, Entity e, Entity e2)
         {
-            // Move the sound left and right out to maximum distance.
             emitter.Position = new Vector3(
                 e.Position.X, e.Position.Y, 0.0f);
 
             listener.Position = new Vector3(
                 e2.Position.X, e2.Position.Y, 0.0f);
 
-            cue.Apply3D(listener, emitter); // apply the 3D transform to the cue
+            for (int i = 0; i < cues.Count(); i++)
+            {
+                cues[i].Apply3D(listener, emitter);
+                if (cues[i].IsStopped)
+                {
+                    cues.RemoveAt(i);
+                }
+            }
         }
     }
 }
