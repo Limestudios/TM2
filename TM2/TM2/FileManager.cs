@@ -138,5 +138,35 @@ namespace TM2
                 }
             }
         }
+
+        public void SaveContent(string filename, string[] attrubutes, string[] contents, string identifer)
+        {
+            if (identifer == String.Empty)
+                identifierFound = true;
+
+            string[] lines = File.ReadAllLines(filename);
+            List<string> fileList = new List<string>();
+            fileList.AddRange(lines);
+
+            int i = fileList.Count;
+            string attribute = String.Empty;
+            string content = String.Empty;
+
+            if(!identifierFound)
+            {
+                for (i = 0; i < fileList.Count; i++)
+                {
+                    if (fileList[i].Contains("Load=") && fileList[i].Contains(identifer))
+                    {
+                        identifierFound = true;
+                        break;
+                    }
+                }
+
+                //foreach (string att in attributes)
+                    //attribute += "[" + att + "]";
+
+            }
+        }
     }
 }

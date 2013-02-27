@@ -127,7 +127,6 @@ namespace TM2
 
                                     tiles[tiles.Count - 1].SetTile(tempState, tempMotion, new Vector2(k * (int)TileDimensions.X, indexY * (int)TileDimensions.Y), tileSheet,
                                         new Rectangle(int.Parse(split[0]) * (int)TileDimensions.X, int.Parse(split[1]) * (int)TileDimensions.Y, (int)TileDimensions.X, (int)TileDimensions.Y));
-
                                 }
                             }
                             indexY++;
@@ -155,7 +154,7 @@ namespace TM2
         {
             for (int i = 0; i < tiles.Count; i++)
             {
-                tiles[i].UpdateCollision(ref entity);
+                tiles[i].UpdateCollision(ref entity, inputManager);
             }
         }
 

@@ -136,8 +136,8 @@ namespace TM2
             mapWidth = (int)ScreenManager.Instance.Dimensions.X * 10;
             mapHeight = (int)ScreenManager.Instance.Dimensions.Y * 3;
 
-            if (currentPosition.X < 640) currentPosition.X = 640;
-            if (currentPosition.Y < 360) currentPosition.Y = 360;
+            if (currentPosition.X < (int)ScreenManager.Instance.Dimensions.X / 2) currentPosition.X = (int)ScreenManager.Instance.Dimensions.X / 2;
+            if (currentPosition.Y < (int)ScreenManager.Instance.Dimensions.Y / 2) currentPosition.Y = (int)ScreenManager.Instance.Dimensions.Y / 2;
             if (currentPosition.X > mapWidth) currentPosition.X = mapWidth;
             if (currentPosition.Y > mapHeight) currentPosition.Y = mapHeight;
 

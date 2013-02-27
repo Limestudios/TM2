@@ -20,6 +20,7 @@ namespace TM2
         private SoundBank soundBank;
 
         // 3D audio objects
+        List<AudioEmitter> emitters = new List<AudioEmitter>();
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();
 
@@ -48,29 +49,27 @@ namespace TM2
         {
             Cue cue = soundBank.GetCue(soundCue);
 
-            cue.Apply3D(listener, emitter);
-
             soundBank.PlayCue(soundCue);
-
-            cues.Add(cue);
         }
 
-        public void PlaySound(String soundCue, Entity e, Entity e2)
+        public void PlaySound(String soundCue, List<Entity> e)
         {
-            Cue cue = soundBank.GetCue(soundCue);
+            for (int i = 0; i < e.Count(); i++)
+            {
+                Cue cue = soundBank.GetCue(soundCue);
 
-            // Move the sound left and right out to maximum distance.
-            emitter.Position = new Vector3(
-                e.Position.X, e.Position.Y, 0.0f);
+                AudioEmitter emitter = new AudioEmitter();
+                emitter.Position = new Vector3(
+                    e[i].Position.X, e[i].Position.Y, 0.0f);
 
-            listener.Position = new Vector3(
-                e2.Position.X, e2.Position.Y, 0.0f);
+                cue.Apply3D(listener, emitter);
 
-            cue.Apply3D(listener, emitter);
+                cue.Play();
 
-            cue.Play();
+                cues.Add(cue);
 
-            cues.Add(cue);
+                emitters.Add(emitter);
+            }
         }
 
         private Vector3 CalculateLocation(float angle, float distance)
@@ -81,20 +80,18 @@ namespace TM2
                 (float)Math.Sin(angle) * distance);
         }
 
-        public void Update(GameTime gameTime, Entity e, Entity e2)
+        public void Update(GameTime gameTime, Entity e2)
         {
-            emitter.Position = new Vector3(
-                e.Position.X, e.Position.Y, 0.0f);
-
             listener.Position = new Vector3(
                 e2.Position.X, e2.Position.Y, 0.0f);
 
             for (int i = 0; i < cues.Count(); i++)
             {
-                cues[i].Apply3D(listener, emitter);
+                cues[i].Apply3D(listener, emitters[i]);
                 if (cues[i].IsStopped)
                 {
                     cues.RemoveAt(i);
+                    emitters.RemoveAt(i);
                 }
             }
         }

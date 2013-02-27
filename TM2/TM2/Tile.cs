@@ -73,6 +73,23 @@ namespace TM2
             velocity = Vector2.Zero;
         }
 
+        public void SetTile(State state, Motion motion, Vector2 position, Texture2D tileSheet, Rectangle tileArea, string text)
+        {
+            this.state = state;
+            this.motion = motion;
+            this.position = position;
+            increase = true;
+
+            tileImage = CropImage(tileSheet, tileArea);
+            range = 90;
+            counter = 0;
+            moveSpeed = 80f;
+            animation = new Animation();
+            animation.LoadContent(ScreenManager.Instance.Content, tileImage, text, position);
+            containsEntity = false;
+            velocity = Vector2.Zero;
+        }
+
         public void Update(GameTime gameTime)
         {
             //should make this based on timespan...for now this will work tho (bad coding habits)
@@ -104,7 +121,7 @@ namespace TM2
             animation.Position = position;
         }
 
-        public void UpdateCollision(ref Entity entity)
+        public void UpdateCollision(ref Entity entity, InputManager inputManager)
         {
             FloatRect rect = new FloatRect(position.X, position.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
@@ -118,10 +135,8 @@ namespace TM2
 
                 if (entity.Rect.Right < rect.Left || entity.Rect.Left > rect.Right || entity.Rect.Bottom != rect.Top)
                 {
-                    entity.OnTile = false;
                     containsEntity = false;
                     entity.ActivateGravity = true;
-                    entity.CanJump = false;
                 }
             }
 
@@ -129,7 +144,7 @@ namespace TM2
             {
                 FloatRect preventity = new FloatRect(entity.PrevPosition.X, entity.PrevPosition.Y, entity.Animation.FrameWidth, entity.Animation.FrameHeight);
 
-                FloatRect prevTile = new FloatRect(prevPosition.X, prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
+                FloatRect prevTile = new FloatRect(this.prevPosition.X, this.prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
                 if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
                 {
@@ -143,7 +158,6 @@ namespace TM2
                 {
                     //top collision
                     entity.Position = new Vector2(entity.Position.X, position.Y + layer.TileDimensions.Y);
-                    entity.Velocity = new Vector2(entity.Velocity.X, 0);
                     entity.ActivateGravity = true;
                 }
                 else if (entity.Rect.Right >= rect.Left && preventity.Right <= prevTile.Left)
@@ -163,7 +177,7 @@ namespace TM2
             {
                 FloatRect preventity = new FloatRect(entity.PrevPosition.X, entity.PrevPosition.Y, entity.Animation.FrameWidth, entity.Animation.FrameHeight);
 
-                FloatRect prevTile = new FloatRect(prevPosition.X, prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
+                FloatRect prevTile = new FloatRect(this.prevPosition.X, this.prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
                 if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
                 {

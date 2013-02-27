@@ -593,18 +593,5 @@ Sound Bank
             Weight Min = 0;
             Weight Max = 255;
         }
-
-        Instance Limit
-        {
-            Max Instances = 1;
-            Behavior = 0;
-
-            Crossfade
-            {
-                Fade In = 0;
-                Fade Out = 0;
-                Crossfade Type = 0;
-            }
-        }
     }
 }

@@ -44,7 +44,7 @@ namespace TM2
 
             audio = new AudioManager();
             audio.LoadContent(content, "Map1");
-            audio.MusicVolume = 0.01f;
+            audio.MusicVolume = 0.1f;
             audio.PlaySong(0, true);
 
             map = new Map();
@@ -76,20 +76,22 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            player.Entities[playerIndex].Update(gameTime, inputManager, map);
-            enemies.Update(gameTime, map);
             map.Update(gameTime, camera, map);
-            soundEngine.Update(gameTime, enemies.Entities[0], player.Entities[playerIndex]);
+            player.Entities[playerIndex].Update(gameTime, inputManager, map);
+
+            for (int i = 0; i < enemies.Entities.Count(); i++)
+            {
+                enemies.Entities[i].Update(gameTime, inputManager, map);
+            }
 
             Entity entity;
 
             for (int i = 0; i < player.Entities.Count; i++)
             {
-                entity = this.player.Entities[playerIndex];
+                entity = this.player.Entities[i];
                 map.UpdateCollision(ref entity, inputManager);
-                this.player.Entities[playerIndex] = entity;
+                this.player.Entities[i] = entity;
             }
-
 
             for (int i = 0; i < enemies.Entities.Count; i++)
             {
@@ -155,15 +157,15 @@ namespace TM2
 
             if (gameTime.TotalGameTime - previousEnemySoundTime > enemySoundTime)
             {
-                soundEngine.PlaySound("zombie moan", enemies.Entities[0], player.Entities[playerIndex]);
+                soundEngine.PlaySound("zombie moan", enemies.Entities);
 
                 // Update the time left next enemy spawn
                 previousEnemySoundTime = gameTime.TotalGameTime;
-                var spawnSeconds = random.Next(1, 6); // random should be a member of the class
-                enemySoundTime = TimeSpan.FromSeconds(spawnSeconds);
+                var soundSeconds = random.Next(4, 8); // random should be a member of the class
+                enemySoundTime = TimeSpan.FromSeconds(soundSeconds);
             }
 
-            soundEngine.Update(gameTime, enemies.Entities[0], player.Entities[playerIndex]);
+                soundEngine.Update(gameTime, player.Entities[playerIndex]);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -192,8 +194,8 @@ namespace TM2
             spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);
             spriteBatch.Draw(this.player.Entities[playerIndex].Image, new Rectangle(1052, 80, this.player.Entities[playerIndex].Image.Width, this.player.Entities[playerIndex].Image.Height), Color.White);
             spriteBatch.DrawString(font, "Size : " + this.player.Entities[playerIndex].Image.Width + "px by " + this.player.Entities[playerIndex].Image.Height + "px", new Vector2(1052, 80 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Position :     X : " + Math.Floor(this.player.Entities[playerIndex].Position.X), new Vector2(966, 110 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Y : " + Math.Floor(this.player.Entities[playerIndex].Position.Y) + "px", new Vector2(1052, 130 + this.player.Entities[playerIndex].Image.Height), Color.Black);
+            spriteBatch.DrawString(font, "Position :     X : " + Math.Floor((this.player.Entities[playerIndex].Position.X) / 64), new Vector2(966, 110 + this.player.Entities[playerIndex].Image.Height), Color.Black);
+            spriteBatch.DrawString(font, "Y : " + Math.Floor((this.player.Entities[playerIndex].Position.Y) / 64), new Vector2(1052, 130 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "Frames :       Amount : " + this.player.Entities[playerIndex].Animation.Frames.X + " by " + this.player.Entities[playerIndex].Animation.Frames.Y, new Vector2(966, 160 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "Size :  " + this.player.Entities[playerIndex].Animation.FrameWidth + "px by " + this.player.Entities[playerIndex].Animation.FrameHeight + "px", new Vector2(1052, 180 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "MoveSpeed :  " + this.player.Entities[playerIndex].MoveSpeed, new Vector2(1052, 200 + this.player.Entities[playerIndex].Image.Height), Color.Black);

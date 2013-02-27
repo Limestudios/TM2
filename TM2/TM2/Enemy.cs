@@ -53,7 +53,7 @@ namespace TM2
                 velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (activateGravity)
+            if (ActivateGravity)
                 velocity.Y += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             else
                 velocity.Y = 0;

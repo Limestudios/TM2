@@ -35,7 +35,7 @@ namespace TM2
         public override void Update(GameTime gameTime, InputManager input, Map map)
         {
             base.Update(gameTime, input, map);
-            moveAnimation.IsActive = true;
+            this.moveAnimation.IsActive = true;
             this.Bleeding = false;
             this.shaking = false;
 
@@ -67,7 +67,7 @@ namespace TM2
                 activateGravity = true;
             }
 
-            if (activateGravity)
+            if (ActivateGravity)
                 velocity.Y += gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
             else
                 velocity.Y = 0;
@@ -90,7 +90,6 @@ namespace TM2
                 health--;
                 bleeding = true;
                 shaking = true;
-                
             }
         }
 

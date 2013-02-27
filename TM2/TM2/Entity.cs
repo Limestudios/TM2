@@ -17,6 +17,8 @@ namespace TM2
     {
         protected ParticleEngine particleEngine;
 
+        protected Random random = new Random();
+
         protected int health;
         protected List<int> healths;
 
@@ -114,6 +116,7 @@ namespace TM2
         public bool ActivateGravity
         {
             set { activateGravity = value; }
+            get { return activateGravity; }
         }
 
         public bool SyncTilePosition
