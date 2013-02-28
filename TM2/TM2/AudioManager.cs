@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -50,20 +52,25 @@ namespace TM2
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Audio.txt", id);
 
-            for (int i = 0; i < fileManager.Attributes.Count; i++)
+            ThreadStart threadStarter = delegate
             {
-                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
+                for (int i = 0; i < fileManager.Attributes.Count; i++)
                 {
-                    switch (fileManager.Attributes[i][j])
+                    for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                     {
-                        case "Songs":
-                            String[] temp = fileManager.Contents[i][j].Split(',');
-                            song = content.Load<Song>(temp[1]);
-                            songs.Add(song);
-                            break;
+                        switch (fileManager.Attributes[i][j])
+                        {
+                            case "Songs":
+                                String[] temp = fileManager.Contents[i][j].Split(',');
+                                song = content.Load<Song>(temp[1]);
+                                songs.Add(song);
+                                break;
+                        }
                     }
                 }
-            }
+            };
+            Thread loadingThread = new Thread(threadStarter);
+            loadingThread.Start();
         }
 
         public void UnloadContent()
