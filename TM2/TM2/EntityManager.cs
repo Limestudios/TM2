@@ -49,10 +49,10 @@ namespace TM2
                 entities[i].UnloadContent();
         }
 
-        public void Update(GameTime gameTime, Map map)
+        public void Update(GameTime gameTime, Map map, Camera camera)
         {
             for (int i = 0; i < entities.Count; i++)
-                entities[i].Update(gameTime, inputManager, map);
+                entities[i].Update(gameTime, inputManager, map, camera);
         }
 
         public void EntityCollision(EntityManager E2)

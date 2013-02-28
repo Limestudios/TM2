@@ -1,3 +1,2 @@
 ﻿Load=[Image][Frames][Position][Health][MoveSpeed]
-[Player/playerTemplate][6,4][1,16][10][400]
-[Player/potato][3,2][1,16][10][400]
+[Player/playerTemplate][6,6][1,16][10][400]

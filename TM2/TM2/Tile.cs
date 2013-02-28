@@ -33,6 +33,11 @@ namespace TM2
 
         Animation animation;
 
+        public Vector2 Position
+        {
+            get { return position;}
+        }
+
         private Texture2D CropImage(Texture2D tileSheet, Rectangle tileArea)
         {
             Texture2D croppedImage = new Texture2D(tileSheet.GraphicsDevice, tileArea.Width, tileArea.Height);
@@ -118,7 +123,7 @@ namespace TM2
             }
 
             position += velocity;
-            animation.Position = position;
+            this.animation.Position = this.position;
         }
 
         public void UpdateCollision(ref Entity entity, InputManager inputManager)
@@ -129,7 +134,7 @@ namespace TM2
             {
                 if (!entity.SyncTilePosition)
                 {
-                    entity.Position += velocity;
+                    entity.Position += this.velocity;
                     entity.SyncTilePosition = true;
                 }
 
@@ -137,6 +142,7 @@ namespace TM2
                 {
                     containsEntity = false;
                     entity.ActivateGravity = true;
+                    entity.CanJump = false;
                 }
             }
 
@@ -179,7 +185,15 @@ namespace TM2
 
                 FloatRect prevTile = new FloatRect(this.prevPosition.X, this.prevPosition.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
-                if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
+                if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top && inputManager.KeyDown(Keys.Down))
+                {
+                    //bottom collision
+                    //entity.Position = new Vector2(entity.Position.X, position.Y - entity.Animation.FrameHeight);
+                    entity.ActivateGravity = true;
+                    entity.OnTile = false;
+                    containsEntity = false;
+                }
+                else if (entity.Rect.Bottom >= rect.Top && preventity.Bottom <= prevTile.Top)
                 {
                     //bottom collision
                     entity.Position = new Vector2(entity.Position.X, position.Y - entity.Animation.FrameHeight);

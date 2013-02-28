@@ -37,10 +37,12 @@ namespace TM2
             base.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input, Map map)
+        public override void Update(GameTime gameTime, InputManager input, Map map, Camera camera)
         {
-            base.Update(gameTime, input, map);
+            base.Update(gameTime, input, map, camera);
             moveAnimation.IsActive = true;
+
+            syncTilePosition = true;
 
             if (direction == 1)
             {
@@ -77,7 +79,9 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            moveAnimation.Draw(spriteBatch);
+            if (camMinX <= this.position.X / Layer.Instance.TileDimensions.X && this.position.X / Layer.Instance.TileDimensions.X <= camMaxX &&
+                camMinY <= this.position.Y / Layer.Instance.TileDimensions.Y && this.position.Y / Layer.Instance.TileDimensions.Y <= camMaxY)
+                moveAnimation.Draw(spriteBatch);
         }
     }
 }

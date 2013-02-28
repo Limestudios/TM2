@@ -42,7 +42,7 @@ namespace TM2
             else
             {
                 frameCounter = 0;
-                currentFrame.X = 1;
+                //currentFrame.X = 1;
             }
             a.CurrentFrame = currentFrame;
             a.SourceRect = new Rectangle((int)currentFrame.X * a.FrameWidth, (int)currentFrame.Y * a.FrameHeight, a.FrameWidth, a.FrameHeight);

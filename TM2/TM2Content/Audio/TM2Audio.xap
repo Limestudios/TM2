@@ -16,8 +16,8 @@ Global Settings
     Header File = TM2Audio.h;
     Exclude Category Names = 0;
     Exclude Variable Names = 0;
-    Last Modified Low = 681993562;
-    Last Modified High = 30281483;
+    Last Modified Low = 30281483;
+    Last Modified High = 681993562;
 
     Category
     {
@@ -221,7 +221,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::fe5740bd-0ab6-468f-af36-e51742257095;
+            Name = Sound::dea71984-666b-4457-a843-f4529da63ad8;
             Property = 0;
             Sound = 1;
             Line Color = 4281221263;
@@ -378,7 +378,7 @@ Sound Bank
     Sound
     {
         Name = mario shrink;
-        Volume = 0;
+        Volume = -1500;
         Pitch = 0;
         Priority = 0;
 

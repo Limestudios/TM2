@@ -19,7 +19,7 @@ namespace TM2
         Map map;
         AudioManager audio;
         GUIManager guiManager;
-        private Texture2D highlight;
+        Texture2D highlight, pixel;
         int playerIndex;
         float zoom, frameRate;
         string frameRateAcceptable;
@@ -33,6 +33,10 @@ namespace TM2
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
+            //make 1x1 pixel dummy texture
+            pixel = content.Load<Texture2D>("fade");
+            pixel.SetData(new[] { Color.White });
+
             camera = new Camera(ScreenManager.Instance.graphicsDevice);
             //viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
 
@@ -44,7 +48,7 @@ namespace TM2
 
             audio = new AudioManager();
             audio.LoadContent(content, "Map1");
-            audio.MusicVolume = 0.1f;
+            audio.MusicVolume = 0.01f;
             audio.PlaySong(0, true);
 
             map = new Map();
@@ -77,11 +81,11 @@ namespace TM2
         {
             inputManager.Update();
             map.Update(gameTime, camera, map);
-            player.Entities[playerIndex].Update(gameTime, inputManager, map);
+            player.Entities[playerIndex].Update(gameTime, inputManager, map, camera);
 
             for (int i = 0; i < enemies.Entities.Count(); i++)
             {
-                enemies.Entities[i].Update(gameTime, inputManager, map);
+                enemies.Entities[i].Update(gameTime, inputManager, map, camera);
             }
 
             Entity entity;
@@ -189,10 +193,12 @@ namespace TM2
             int maxY = (int)(Math.Round((double)((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y)));
 
             spriteBatch.DrawString(font, "Camera :   X: " + new Vector2(minX, maxX) + " Y: " + new Vector2(minY, maxY), new Vector2(126, 80), Color.Black);
+
+            spriteBatch.Draw(pixel, new Rectangle(960, 4, 100 + this.player.Entities[playerIndex].Image.Width, 236 + this.player.Entities[playerIndex].Image.Height), Color.DarkGray * 0.2f);
             spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name , new Vector2(966, 10), Color.Black);
             spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40), Color.Black);
             spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);
-            spriteBatch.Draw(this.player.Entities[playerIndex].Image, new Rectangle(1052, 80, this.player.Entities[playerIndex].Image.Width, this.player.Entities[playerIndex].Image.Height), Color.White);
+            spriteBatch.Draw(this.player.Entities[playerIndex].Image, new Rectangle(1052, 80, this.player.Entities[playerIndex].Image.Width, this.player.Entities[playerIndex].Image.Height), Color.White * 0.5f);
             spriteBatch.DrawString(font, "Size : " + this.player.Entities[playerIndex].Image.Width + "px by " + this.player.Entities[playerIndex].Image.Height + "px", new Vector2(1052, 80 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "Position :     X : " + Math.Floor((this.player.Entities[playerIndex].Position.X) / 64), new Vector2(966, 110 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "Y : " + Math.Floor((this.player.Entities[playerIndex].Position.Y) / 64), new Vector2(1052, 130 + this.player.Entities[playerIndex].Image.Height), Color.Black);

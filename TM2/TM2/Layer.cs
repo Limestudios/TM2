@@ -49,7 +49,7 @@ namespace TM2
 
         public Vector2 MapDimensions
         {
-            get { return new Vector2(36, 20); }
+            get { return new Vector2(36, 33); }
             set { mapDimensions = value; }
         }
 
@@ -138,11 +138,11 @@ namespace TM2
 
         public void Update(GameTime gameTime, Camera camera, Map map)
         {
-            //minX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 2, 0, this.MapDimensions.X));
-            //maxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 2, 0, this.MapDimensions.X));
+            minX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 2, 0, this.MapDimensions.X));
+            maxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 2, 0, this.MapDimensions.X));
 
-            //minY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 2, 0, this.MapDimensions.Y));
-            //maxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, this.MapDimensions.Y));
+            minY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 2, 0, this.MapDimensions.Y));
+            maxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, this.MapDimensions.Y));
 
             for (int i = 0; i < tiles.Count; i++)
             {
@@ -162,7 +162,8 @@ namespace TM2
         {
             for (int i = 0; i < tiles.Count; i++)
             {
-                tiles[i].Draw(spriteBatch);
+                if (minX <= tiles[i].Position.X / tileDimensions.X && tiles[i].Position.X / tileDimensions.X <= maxX && minY <= tiles[i].Position.Y / tileDimensions.Y && tiles[i].Position.Y / tileDimensions.Y <= maxY)
+                    tiles[i].Draw(spriteBatch);
             }
         }
     }

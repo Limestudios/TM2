@@ -1,7 +1,7 @@
 ﻿Load=[Level1]
 
 Load=[Image][Position][Frames][MoveSpeed][Range]
-[Enemy/greenSlime][20,18][18,4][20][200]
+[Enemy/greenSlime][20,15][18,4][20][200]
 [Enemy/greenSlime][5,10][18,4][20][200]
 [Enemy/greenSlime][13,16][18,4][40][200]
 

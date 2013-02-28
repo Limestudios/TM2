@@ -15,6 +15,8 @@ namespace TM2
 {
     public class Entity
     {
+        protected int camMaxX, camMinX, camMaxY, camMinY;
+
         protected ParticleEngine particleEngine;
 
         protected Random random = new Random();
@@ -203,10 +205,16 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input, Map map)
+        public virtual void Update(GameTime gameTime, InputManager input, Map map, Camera camera)
         {
             syncTilePosition = false;
             prevPosition = position;
+
+            camMinX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 2, 0, map.layer.MapDimensions.X));
+            camMaxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 2, 0, map.layer.MapDimensions.X));
+
+            camMinY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 2, 0, map.layer.MapDimensions.Y));
+            camMaxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, map.layer.MapDimensions.Y));
         }
 
         public virtual void OnCollision(Entity e)
