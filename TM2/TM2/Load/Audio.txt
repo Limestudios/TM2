@@ -9,7 +9,7 @@ EndLoad=[Splash]
 Load=[Title]
 
 Load=[Songs]
-[memories,Audio/PewPewPew]
+[memories,Audio/MrFuby_No_Time_To_Explain]
 
 EndLoad=[Title]
 
@@ -41,6 +41,6 @@ EndLoad=[Credits]
 Load=[Map1]
 
 Load=[Songs]
-[memories,Audio/monstercat]
+[memories,Audio/MrFuby_No_Time_To_Explain]
 
 EndLoad=[Map1]

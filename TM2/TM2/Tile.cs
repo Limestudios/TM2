@@ -126,7 +126,7 @@ namespace TM2
             this.animation.Position = this.position;
         }
 
-        public void UpdateCollision(ref Entity entity, InputManager inputManager)
+        public void UpdateCollision(ref Entity entity, InputManager inputManager, SoundEngine soundEngine)
         {
             FloatRect rect = new FloatRect(position.X, position.Y, layer.TileDimensions.X, layer.TileDimensions.Y);
 
@@ -171,12 +171,14 @@ namespace TM2
                     entity.Position = new Vector2(position.X - entity.Animation.FrameWidth, entity.Position.Y);
                     entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
                     entity.CanJump = true;
+                    entity.Velocity = new Vector2(0, entity.Velocity.Y);
                 }
                 else if (entity.Rect.Left <= rect.Right && preventity.Left >= prevTile.Left)
                 {
                     entity.Position = new Vector2(position.X + layer.TileDimensions.X, entity.Position.Y);
                     entity.Direction = (entity.Direction == 1) ? entity.Direction = 2 : entity.Direction = 1;
                     entity.CanJump = true;
+                    entity.Velocity = new Vector2(0, entity.Velocity.Y);
                 }
             }
             else if (entity.Rect.Intersects(rect) && state == State.Platform)

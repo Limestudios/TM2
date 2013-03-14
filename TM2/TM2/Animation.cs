@@ -20,12 +20,12 @@ namespace TM2
         private SpriteFont font;
         private Color color;
         private Rectangle sourceRect;
-        private float rotation, scale, axis;
+        private float rotation, axis;
         private Vector2 origin, position;
         private ContentManager content;
         private bool isActive;
         private float alpha;
-        private Vector2 frames, currentFrame;
+        private Vector2 frames, currentFrame, scale;
 
         public Texture2D Image
         {
@@ -71,9 +71,10 @@ namespace TM2
             get { return isActive; }
         }
 
-        public float Scale
+        public Vector2 Scale
         {
             set { scale = value; }
+            get { return scale; }
         }
 
         public SpriteFont Font
@@ -102,7 +103,8 @@ namespace TM2
             }
             rotation = 0.0f;
             axis = 0.0f;
-            scale = alpha = 1.0f;
+            scale = new Vector2(1, 1);
+            alpha = 1.0f;
             isActive = false;
 
             currentFrame = new Vector2(0, 0);

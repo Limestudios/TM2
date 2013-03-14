@@ -221,7 +221,7 @@ Global Settings
 
         RPC Curve
         {
-            Name = Sound::dea71984-666b-4457-a843-f4529da63ad8;
+            Name = Sound::b07612e6-aae6-4186-819e-92e2990af135;
             Property = 0;
             Sound = 1;
             Line Color = 4281221263;
@@ -378,7 +378,7 @@ Sound Bank
     Sound
     {
         Name = mario shrink;
-        Volume = -1500;
+        Volume = 0;
         Pitch = 0;
         Priority = 0;
 
@@ -433,7 +433,7 @@ Sound Bank
     Sound
     {
         Name = zombie moan;
-        Volume = 600;
+        Volume = 0;
         Pitch = 0;
         Priority = 1;
 
@@ -485,7 +485,7 @@ Sound Bank
     Sound
     {
         Name = zombie moan 2;
-        Volume = 600;
+        Volume = 0;
         Pitch = 0;
         Priority = 1;
 

@@ -153,7 +153,6 @@ namespace TM2
                         Matrix.CreateScale(new Vector3(Zoom, Zoom, 0)) *
                         Matrix.CreateTranslation(new Vector3(halfViewportWidth, halfViewportHeight, 0));
 
-
             return transform;
         }
 

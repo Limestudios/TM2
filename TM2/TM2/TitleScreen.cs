@@ -33,9 +33,10 @@ namespace TM2
 
             audio = new AudioManager();
             audio.LoadContent(content, "Title");
-
+            audio.MusicVolume = 1.0f;
             audio.PlaySong(0, true);
-            //audio.FadeSong(0.0f, new TimeSpan(0, 0, 5));
+
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 0, 1000));
         }
 
         public override void UnloadContent()
@@ -47,7 +48,6 @@ namespace TM2
             attributes.Clear();
             contents.Clear();
             content.Unload();
-            MediaPlayer.Stop();
             this.content.Unload();
         }
 
@@ -61,8 +61,10 @@ namespace TM2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Begin();
             gui.Draw(spriteBatch);
             menu.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

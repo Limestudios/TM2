@@ -205,7 +205,7 @@ namespace TM2
             content.Unload();
         }
 
-        public virtual void Update(GameTime gameTime, InputManager input, Map map, Camera camera)
+        public virtual void Update(GameTime gameTime, InputManager input, Map map, Camera camera, EntityManager entityManager, SoundEngine soundEngine)
         {
             syncTilePosition = false;
             prevPosition = position;
@@ -217,7 +217,7 @@ namespace TM2
             camMaxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, map.layer.MapDimensions.Y));
         }
 
-        public virtual void OnCollision(Entity e)
+        public virtual void OnCollision(Entity e, SoundEngine soundEngine)
         {
 
         }

@@ -39,9 +39,9 @@ namespace TM2
             layer.Update(gameTime, camera, map);
         }
 
-        public void UpdateCollision(ref Entity entity, InputManager inputManager)
+        public void UpdateCollision(ref Entity entity, InputManager inputManager, SoundEngine soundEngine)
         {
-            layer.UpdateCollision(ref entity, inputManager);
+            layer.UpdateCollision(ref entity, inputManager, soundEngine);
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -135,6 +135,7 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterSelectScreen.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="SoundEngine.cs" />
     <Compile Include="FloatRect.cs" />
     <Compile Include="GUIManager.cs" />
@@ -240,7 +241,9 @@
     <None Include="Properties\app.manifest" />
     <None Include="TM2_TemporaryKey.pfx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

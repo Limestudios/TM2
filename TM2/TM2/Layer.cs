@@ -150,11 +150,11 @@ namespace TM2
             }
         }
 
-        public void UpdateCollision(ref Entity entity, InputManager inputManager)
+        public void UpdateCollision(ref Entity entity, InputManager inputManager, SoundEngine soundEngine)
         {
             for (int i = 0; i < tiles.Count; i++)
             {
-                tiles[i].UpdateCollision(ref entity, inputManager);
+                tiles[i].UpdateCollision(ref entity, inputManager, soundEngine);
             }
         }
 

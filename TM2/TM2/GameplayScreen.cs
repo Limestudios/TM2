@@ -25,17 +25,20 @@ namespace TM2
         string frameRateAcceptable;
         SpriteFont font;
         protected Camera camera;
-        SoundEngine soundEngine;
+        public SoundEngine soundEngine { get; set; }
+        SettingsManager settingsManager;
 
+        /*
         Random random = new Random();
 
         TimeSpan previousEnemySoundTime, enemySoundTime;
+         */
 
         public override void LoadContent(ContentManager content, InputManager input)
         {
             //make 1x1 pixel dummy texture
             pixel = content.Load<Texture2D>("fade");
-            pixel.SetData(new[] { Color.White });
+            //pixel.SetData(new[] { Color.White });
 
             camera = new Camera(ScreenManager.Instance.graphicsDevice);
             //viewport = new Viewport(0, 0, (int)ScreenManager.Instance.Dimensions.X, (int)ScreenManager.Instance.Dimensions.Y);
@@ -48,8 +51,8 @@ namespace TM2
 
             audio = new AudioManager();
             audio.LoadContent(content, "Map1");
-            audio.MusicVolume = 0.01f;
-            audio.PlaySong(0, true);
+            audio.MusicVolume = 0.5f;
+            //audio.PlaySong(0, true);
 
             map = new Map();
             map.LoadContent(content, map, "Map1");
@@ -81,11 +84,11 @@ namespace TM2
         {
             inputManager.Update();
             map.Update(gameTime, camera, map);
-            player.Entities[playerIndex].Update(gameTime, inputManager, map, camera);
+            player.Entities[playerIndex].Update(gameTime, inputManager, map, camera, enemies, soundEngine);
 
             for (int i = 0; i < enemies.Entities.Count(); i++)
             {
-                enemies.Entities[i].Update(gameTime, inputManager, map, camera);
+                enemies.Entities[i].Update(gameTime, inputManager, map, camera, enemies, soundEngine);
             }
 
             Entity entity;
@@ -93,20 +96,20 @@ namespace TM2
             for (int i = 0; i < player.Entities.Count; i++)
             {
                 entity = this.player.Entities[i];
-                map.UpdateCollision(ref entity, inputManager);
+                map.UpdateCollision(ref entity, inputManager, soundEngine);
                 this.player.Entities[i] = entity;
             }
 
             for (int i = 0; i < enemies.Entities.Count; i++)
             {
                 entity = this.enemies.Entities[i];
-                map.UpdateCollision(ref entity, inputManager);
+                map.UpdateCollision(ref entity, inputManager, soundEngine);
                 this.enemies.Entities[i] = entity;
             }
 
             guiManager.Update(gameTime);
 
-            if (inputManager.KeyPressed(Keys.R))
+            if (inputManager.KeyPressed(Keys.Back))
             {
                 //probably make it so the screenmanager handles this but for now...
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
@@ -128,13 +131,12 @@ namespace TM2
                 entity = this.player.Entities[playerIndex];
             }
 
-            player.EntityCollision(enemies);
+            player.EntityCollision(enemies, soundEngine);
             camera.Update((float)(gameTime.ElapsedGameTime.TotalSeconds), gameTime);
             camera.SetPosition(player.Entities[playerIndex].Position.X, player.Entities[playerIndex].Position.Y, false);
             if (player.Entities[playerIndex].Shaking)
             {
                 camera.Shake(5f, 1f);
-                soundEngine.PlaySound("mario shrink");
             }
 
             if (inputManager.KeyDown(Keys.T))
@@ -145,6 +147,10 @@ namespace TM2
             if (inputManager.KeyPressed(Keys.L))
             {
                 map.LoadContent(content, map, "Map1");
+            }
+
+            if (inputManager.KeyPressed(Keys.F))
+            {
             }
 
             //update FrameRate
@@ -159,17 +165,7 @@ namespace TM2
                 frameRateAcceptable = "TRUE";
             }
 
-            if (gameTime.TotalGameTime - previousEnemySoundTime > enemySoundTime)
-            {
-                soundEngine.PlaySound("zombie moan", enemies.Entities);
-
-                // Update the time left next enemy spawn
-                previousEnemySoundTime = gameTime.TotalGameTime;
-                var soundSeconds = random.Next(4, 8); // random should be a member of the class
-                enemySoundTime = TimeSpan.FromSeconds(soundSeconds);
-            }
-
-                soundEngine.Update(gameTime, player.Entities[playerIndex]);
+            soundEngine.Update(gameTime, player.Entities[playerIndex]);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -182,9 +178,9 @@ namespace TM2
             spriteBatch.End();
             spriteBatch.Begin();
             guiManager.Draw(spriteBatch);
-            spriteBatch.DrawString(font, "Use + / - keys to switch between characters", new Vector2(126, 10), Color.Black);
+            spriteBatch.DrawString(font, "Use + / - keys to switch between characters" + "    Audio Info: " +audio.songs[0].Duration.TotalMinutes + " [" + audio.songs[0].PlayCount +"]", new Vector2(126, 10), Color.Black);
             spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30), Color.Black);
-            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString() + frameRateAcceptable, new Vector2(126, 50), Color.Black);
+            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString() + " - " + frameRateAcceptable, new Vector2(126, 50), Color.Black);
 
             int minX = (int)(Math.Round((double)((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
             int maxX = (int)(Math.Round((double)((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
@@ -194,7 +190,7 @@ namespace TM2
 
             spriteBatch.DrawString(font, "Camera :   X: " + new Vector2(minX, maxX) + " Y: " + new Vector2(minY, maxY), new Vector2(126, 80), Color.Black);
 
-            spriteBatch.Draw(pixel, new Rectangle(960, 4, 100 + this.player.Entities[playerIndex].Image.Width, 236 + this.player.Entities[playerIndex].Image.Height), Color.DarkGray * 0.2f);
+            spriteBatch.Draw(pixel, new Rectangle(960, 4, 100 + this.player.Entities[playerIndex].Image.Width, 266 + this.player.Entities[playerIndex].Image.Height), Color.DarkGray * 0.2f);
             spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name , new Vector2(966, 10), Color.Black);
             spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40), Color.Black);
             spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);
@@ -205,6 +201,7 @@ namespace TM2
             spriteBatch.DrawString(font, "Frames :       Amount : " + this.player.Entities[playerIndex].Animation.Frames.X + " by " + this.player.Entities[playerIndex].Animation.Frames.Y, new Vector2(966, 160 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "Size :  " + this.player.Entities[playerIndex].Animation.FrameWidth + "px by " + this.player.Entities[playerIndex].Animation.FrameHeight + "px", new Vector2(1052, 180 + this.player.Entities[playerIndex].Image.Height), Color.Black);
             spriteBatch.DrawString(font, "MoveSpeed :  " + this.player.Entities[playerIndex].MoveSpeed, new Vector2(1052, 200 + this.player.Entities[playerIndex].Image.Height), Color.Black);
+            spriteBatch.DrawString(font, "Vel: " + this.player.Entities[playerIndex].Velocity, new Vector2(1052, 230 + this.player.Entities[playerIndex].Image.Height), Color.Black);
 
             int frameX = (int)this.player.Entities[playerIndex].Animation.CurrentFrame.X * this.player.Entities[playerIndex].Animation.FrameWidth;
             int frameY = (int)this.player.Entities[playerIndex].Animation.CurrentFrame.Y * this.player.Entities[playerIndex].Animation.FrameHeight;

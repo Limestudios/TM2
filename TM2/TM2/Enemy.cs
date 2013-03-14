@@ -17,6 +17,10 @@ namespace TM2
     {
         int rangeCounter;
 
+        Random random = new Random();
+
+        TimeSpan previousEnemySoundTime, enemySoundTime;
+
         public override void LoadContent(ContentManager content, List<string> attributes, List<string> contents, InputManager input)
         {
             base.LoadContent(content, attributes, contents, input);
@@ -37,9 +41,9 @@ namespace TM2
             base.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input, Map map, Camera camera)
+        public override void Update(GameTime gameTime, InputManager input, Map map, Camera camera, EntityManager entityManager, SoundEngine soundEngine)
         {
-            base.Update(gameTime, input, map, camera);
+            base.Update(gameTime, input, map, camera, entityManager, soundEngine);
             moveAnimation.IsActive = true;
 
             syncTilePosition = true;
@@ -75,6 +79,17 @@ namespace TM2
 
             ssAnimation.Update(gameTime, ref moveAnimation);
             moveAnimation.Position = position;
+
+
+            if (gameTime.TotalGameTime - previousEnemySoundTime > enemySoundTime)
+            {
+                soundEngine.PlaySound("zombie moan", this.position);
+
+                // Update the time left next enemy spawn
+                previousEnemySoundTime = gameTime.TotalGameTime;
+                var soundSeconds = random.Next(5, 8); // random should be a member of the class
+                enemySoundTime = TimeSpan.FromSeconds(soundSeconds);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

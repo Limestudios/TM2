@@ -52,25 +52,20 @@ namespace TM2
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Audio.txt", id);
 
-            ThreadStart threadStarter = delegate
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
-                for (int i = 0; i < fileManager.Attributes.Count; i++)
+                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                 {
-                    for (int j = 0; j < fileManager.Attributes[i].Count; j++)
+                    switch (fileManager.Attributes[i][j])
                     {
-                        switch (fileManager.Attributes[i][j])
-                        {
-                            case "Songs":
-                                String[] temp = fileManager.Contents[i][j].Split(',');
-                                song = content.Load<Song>(temp[1]);
-                                songs.Add(song);
-                                break;
-                        }
+                        case "Songs":
+                            String[] temp = fileManager.Contents[i][j].Split(',');
+                            song = content.Load<Song>(temp[1]);
+                            songs.Add(song);
+                            break;
                     }
                 }
-            };
-            Thread loadingThread = new Thread(threadStarter);
-            loadingThread.Start();
+            }
         }
 
         public void UnloadContent()

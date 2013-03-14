@@ -1,4 +1,7 @@
-﻿Load=[Image]
-[SplashScreen/LSSplash]
-[SplashScreen/RGSplash]
-[SplashScreen/TMSplash]
+﻿Load=[Axis][Align][Font][Animation][FadeSpeed]
+[3][Center][Coolvetica Rg][Fade][0.6]
+
+Load=[Item][Image][Alpha]
+[1][SplashScreen/LSSplash][0.001]
+[2][SplashScreen/RGSplash][0.002]
+[3][SplashScreen/TMSplash][0.001]

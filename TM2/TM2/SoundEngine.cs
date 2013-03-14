@@ -52,24 +52,21 @@ namespace TM2
             soundBank.PlayCue(soundCue);
         }
 
-        public void PlaySound(String soundCue, List<Entity> e)
+        public void PlaySound(String soundCue, Vector2 position)
         {
-            for (int i = 0; i < e.Count(); i++)
-            {
-                Cue cue = soundBank.GetCue(soundCue);
+            Cue cue = soundBank.GetCue(soundCue);
 
-                AudioEmitter emitter = new AudioEmitter();
-                emitter.Position = new Vector3(
-                    e[i].Position.X, e[i].Position.Y, 0.0f);
+            AudioEmitter emitter = new AudioEmitter();
+            emitter.Position = new Vector3(
+                position.X, position.Y, 0.0f);
 
-                cue.Apply3D(listener, emitter);
+            cue.Apply3D(listener, emitter);
 
-                cue.Play();
+            cue.Play();
 
-                cues.Add(cue);
+            cues.Add(cue);
 
-                emitters.Add(emitter);
-            }
+            emitters.Add(emitter);
         }
 
         private Vector3 CalculateLocation(float angle, float distance)

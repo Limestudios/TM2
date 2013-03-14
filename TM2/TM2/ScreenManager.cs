@@ -57,8 +57,9 @@ namespace TM2
 
         bool transition;
 
-        FadeAnimation fade;
-        Animation animation;
+        protected Animation Animation;
+        protected SpriteSheetAnimation ssAnimation;
+        protected FadeAnimation fAnimation;
 
         Texture2D fadeTexture;
 
@@ -107,10 +108,10 @@ namespace TM2
         {
             transition = true;
             newScreen = screen;
-            fade.IsActive = true;
-            fade.Alpha = 0.0f;
-            fade.ActivateValue = 1.0f;
-            fade.Increase = true;
+            Animation.IsActive = true;
+            Animation.Alpha = 0.0f;
+            fAnimation.ActivateValue = 1.0f;
+            fAnimation.Increase = true;
             this.inputManager = inputManager;
             //audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 1200));
         }
@@ -119,22 +120,28 @@ namespace TM2
         {
             transition = true;
             newScreen = screen;
-            fade.IsActive = true;
-            fade.ActivateValue = 1.0f;
+            Animation.IsActive = true;
+            fAnimation.ActivateValue = 1.0f;
             if (alpha != 1.0f)
-                fade.Alpha = 1.0f - alpha;
+            {
+                fAnimation.Alpha = 1.0f - alpha;
+            }
             else
-                fade.Alpha = alpha;
-            fade.Increase = true;
+            {
+                fAnimation.Alpha = alpha;
+            }
+            fAnimation.Increase = true;
             this.inputManager = inputManager;
             //audio.Play(0);
         }
 
         public void Initialize()
         {
-            currentScreen = new GameplayScreen();
-            fade = new FadeAnimation();
-            animation = new Animation();
+            Animation = new Animation();
+            ssAnimation = new SpriteSheetAnimation();
+            fAnimation = new FadeAnimation();
+
+            currentScreen = new SplashScreen();
             inputManager = new InputManager();
         }
         public void LoadContent(ContentManager Content)
@@ -144,8 +151,8 @@ namespace TM2
 
             fadeTexture = this.content.Load<Texture2D>("fade");
             nullImage = this.content.Load<Texture2D>("null");
-            animation.LoadContent(content, fadeTexture, "", Vector2.Zero);
-            animation.Scale = dimensions.X;
+            Animation.LoadContent(content, fadeTexture, "", Vector2.Zero);
+            Animation.Scale = new Vector2(1280,720);
         }
         public void Update(GameTime gameTime)
         {
@@ -160,7 +167,7 @@ namespace TM2
             if (transition)
             {
                 spriteBatch.Begin();
-                animation.Draw(spriteBatch);
+                Animation.Draw(spriteBatch);
                 spriteBatch.End();
             }
         }
@@ -171,18 +178,22 @@ namespace TM2
 
         private void Transition(GameTime gameTime)
         {
-            fade.Update(gameTime, ref animation);
-            if (fade.Alpha == 1.0f && fade.Timer.TotalSeconds == 1.0f)
+            fAnimation.Update(gameTime, ref Animation);
+            if (Animation.Alpha == 1.0f && fAnimation.Timer.TotalSeconds == 1.0f)
             {
                 screenStack.Push(newScreen);
                 currentScreen.UnloadContent();
                 currentScreen = newScreen;
                 currentScreen.LoadContent(content, this.inputManager);
             }
-            else if (fade.Alpha == 0.0f)
+            else if (Animation.Alpha == 0.0f)
             {
                 transition = false;
-                fade.IsActive = false;
+                Animation.IsActive = false;
+            }
+            else if (Animation.Alpha < 1.0f && fAnimation.Increase == false)
+            {
+                currentScreen.Update(gameTime);
             }
         }
 

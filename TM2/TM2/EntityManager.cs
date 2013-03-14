@@ -15,7 +15,7 @@ namespace TM2
 {
     public class EntityManager
     {
-        List<Entity> entities;
+        public List<Entity> entities;
         FileManager fileManager;
         InputManager inputManager;
 
@@ -49,20 +49,20 @@ namespace TM2
                 entities[i].UnloadContent();
         }
 
-        public void Update(GameTime gameTime, Map map, Camera camera)
+        public void Update(GameTime gameTime, Map map, Camera camera, EntityManager entityManager, SoundEngine soundEngine)
         {
             for (int i = 0; i < entities.Count; i++)
-                entities[i].Update(gameTime, inputManager, map, camera);
+                entities[i].Update(gameTime, inputManager, map, camera, entityManager, soundEngine);
         }
 
-        public void EntityCollision(EntityManager E2)
+        public void EntityCollision(EntityManager E2, SoundEngine soundEngine)
         {
             foreach (Entity e in entities)
             {
                 foreach (Entity e2 in E2.entities)
                 {
                     if (e.Rect.Intersects(e2.Rect))
-                        e.OnCollision(e2);
+                        e.OnCollision(e2, soundEngine);
                 }
             }
         }

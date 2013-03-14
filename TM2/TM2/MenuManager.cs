@@ -21,12 +21,9 @@ namespace TM2
         List<Animation> animation;
         FadeAnimation fAnimation;
         SpriteSheetAnimation ssAnimation;
-        List<Animation> tempAnimation;
-        Song song;
 
         ContentManager content;
         FileManager fileManager;
-        AudioManager audio;
 
         Vector2 position;
         Rectangle source;
@@ -218,7 +215,7 @@ namespace TM2
 
                     Animation a = animation[i];
 
-                    switch (animationTypes[i])
+                    switch (animationTypes[j])
                     {
                         case "Fade" :
                             fAnimation.Update(gameTime, ref a);

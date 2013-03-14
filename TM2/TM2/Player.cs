@@ -32,9 +32,14 @@ namespace TM2
             moveAnimation.UnloadContent();
         }
 
-        public override void Update(GameTime gameTime, InputManager input, Map map, Camera camera)
+        public override void Update(GameTime gameTime, InputManager input, Map map, Camera camera, EntityManager entityManager, SoundEngine soundEngine)
         {
-            base.Update(gameTime, input, map, camera);
+            if (shaking)
+                camera.Zoom = 1.2f;
+            else
+                camera.Zoom = 1.0f;
+
+            base.Update(gameTime, input, map, camera, entityManager, soundEngine);
             this.moveAnimation.IsActive = true;
             this.Bleeding = false;
             this.shaking = false;
@@ -105,7 +110,7 @@ namespace TM2
             particleEngine.Update(map, gameTime);
         }
 
-        public override void OnCollision(Entity e)
+        public override void OnCollision(Entity e, SoundEngine soundEngine)
         {
             Type type = e.GetType();
 
@@ -114,6 +119,7 @@ namespace TM2
                 health--;
                 bleeding = true;
                 shaking = true;
+                soundEngine.PlaySound("mario shrink");
             }
         }
 
