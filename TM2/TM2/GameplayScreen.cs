@@ -75,7 +75,7 @@ namespace TM2
 
         public override void UnloadContent()
         {
-            base.UnloadContent();
+            //base.UnloadContent();
             player.UnloadContent();
             map.UnloadContent();
         }

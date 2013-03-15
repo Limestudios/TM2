@@ -31,25 +31,25 @@ namespace TM2
             base.LoadContent(Content, inputManager);
             font = this.content.Load<SpriteFont>("CreditsScreen/Coolvetica Rg");
 
-            fileManager = new FileManager();
-            fileManager.LoadContent("Load/Credits.txt");
-
             gui = new GUIManager();
-            gui.LoadContent(content, "Credits");
+            gui.LoadContent(Content, "Credits");
 
             audio = new AudioManager();
-            audio.LoadContent(content, "Credits");
+            audio.LoadContent(Content, "Credits");
 
             dul = false;
 
-            for (int i = 0; i < attributes.Count; i++)
+            fileManager = new FileManager();
+            fileManager.LoadContent("Load/Credits.txt");
+
+            for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
-                for (int j = 0; j < attributes[i].Count; j++)
+                for (int j = 0; j < fileManager.Attributes[i].Count; j++)
                 {
-                    switch (attributes[i][j])
+                    switch (fileManager.Attributes[i][j])
                     {
                         case "Videos" :
-                            video = this.content.Load<Video>(contents[i][j]);
+                            video = this.content.Load<Video>(fileManager.Contents[i][j]);
                             videoPlayer = new VideoPlayer();
                             break;
                     }
@@ -75,36 +75,30 @@ namespace TM2
                 ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
 
             if (inputManager.KeyPressed(Keys.D))
-            {
-                if (videoPlayer.State == MediaState.Paused | videoPlayer.State == MediaState.Stopped)
-                {
-                    videoPlayer.IsLooped = true;
-                    videoPlayer.Resume();
-                    videoPlayer.Play(video);
-                    MediaPlayer.Pause();
-                }
                 dul = !dul;
-            }
-            else if (dul == false)
+
+            if (dul)
             {
-                if (videoPlayer.State == MediaState.Playing)
-                {
-                    videoPlayer.Pause();
-                    videoPlayer.IsMuted = true;
-                    MediaPlayer.Resume();
-                }
+                videoPlayer.Play(video);
+                MediaPlayer.Pause();
             }
             else
             {
-                videoPlayer.IsMuted = false;
+                videoPlayer.Stop();
+                MediaPlayer.Resume();
             }
-                
+
+            if (video.Duration.Seconds == videoPlayer.PlayPosition.Seconds + 1)
+            {
+                videoPlayer.Stop();
+                videoPlayer.Play(video);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             // Only call GetTexture if a video is playing or paused
-            if (videoPlayer.State == MediaState.Playing)
+            if (dul)
                 videoTexture = videoPlayer.GetTexture();
             else
                 videoTexture = null;
@@ -113,6 +107,7 @@ namespace TM2
             // video to fill the screen
             Rectangle screen = new Rectangle(0, 0, 1280, 720);
 
+            spriteBatch.Begin();
             // Draw the video, if we have a texture to draw.
             if (videoTexture != null)
             {
@@ -121,6 +116,7 @@ namespace TM2
             spriteBatch.DrawString(font, "Made by Liam Craver (Lime Studios)", new Vector2(100, 200), Color.Black);
             spriteBatch.DrawString(font, "Based off the members of Team Mongoose", new Vector2(100, 300), Color.Black);
             gui.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }
