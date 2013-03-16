@@ -135,11 +135,15 @@
     <Compile Include="AudioManager.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CharacterSelectScreen.cs" />
-    <Compile Include="SettingsManager.cs" />
+    <Compile Include="Helpers\InputHelper.cs" />
+    <Compile Include="Helpers\SettingsManager.cs" />
     <Compile Include="SoundEngine.cs" />
     <Compile Include="FloatRect.cs" />
     <Compile Include="GUIManager.cs" />
     <Compile Include="Layer.cs" />
+    <Content Include="Settings\GameSettings.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Layers.cs" />
     <None Include="Collision.cs" />
     <Compile Include="EntityManager.cs" />

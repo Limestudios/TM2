@@ -11,6 +11,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using TM2.Helpers;
+
 namespace TM2
 {
     public class GameplayScreen : GameScreen
@@ -26,7 +28,6 @@ namespace TM2
         SpriteFont font;
         protected Camera camera;
         public SoundEngine soundEngine { get; set; }
-        SettingsManager settingsManager;
 
         /*
         Random random = new Random();
@@ -166,6 +167,14 @@ namespace TM2
             }
 
             soundEngine.Update(gameTime, player.Entities[playerIndex]);
+
+
+            if (player.Entities[playerIndex].Health <= 0)
+            {
+                Type newClass = Type.GetType("TM2.TitleScreen");
+                ScreenManager.Instance.AddScreen((GameScreen)Activator.CreateInstance(newClass), inputManager);
+                audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 500));
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

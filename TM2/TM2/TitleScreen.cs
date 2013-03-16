@@ -34,9 +34,8 @@ namespace TM2
             audio = new AudioManager();
             audio.LoadContent(content, "Title");
             audio.MusicVolume = 1.0f;
-            audio.PlaySong(0, true);
 
-            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 0, 1000));
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 1));
         }
 
         public override void UnloadContent()
@@ -57,6 +56,8 @@ namespace TM2
             menu.Update(gameTime, inputManager, audio);
             gui.Update(gameTime);
             audio.Update(gameTime);
+            if (MediaPlayer.State != MediaState.Playing)
+                audio.PlaySong(0, true);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

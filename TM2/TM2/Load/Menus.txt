@@ -1,7 +1,7 @@
 ﻿Load=[Title]
 
 Load=[Axis][Align][Font][Animation]
-[2][Center][Coolvetica Rg][Fade]
+[3][Center][Coolvetica Rg][Fade]
 
 Load=[Item][LinkType][LinkID][Image]
 [NEW GAME][Screen][GameplayScreen][null]

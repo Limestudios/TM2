@@ -21,7 +21,7 @@ namespace TM2
 
         int imageNumber;
 
-        List<float> scale;
+        List<Vector2> scale;
 
         List<Vector2> position;
 
@@ -42,7 +42,7 @@ namespace TM2
             fileManager.LoadContent("Load/GUIs.txt", id);
 
             position = new List<Vector2>();
-            scale = new List<float>();
+            scale = new List<Vector2>();
             sourceRect = new List<Rectangle>();
 
             for (int i = 0; i < fileManager.Attributes.Count; i++)
@@ -61,7 +61,9 @@ namespace TM2
                                 float.Parse(temp[1]));
                             break;
                         case "Scale":
-                            scale.Add(float.Parse(fileManager.Contents[i][j]));
+                            temp = fileManager.Contents[i][j].Split(',');
+                            scale.Add(new Vector2(float.Parse(temp[0]) * ScreenManager.Instance.ScreenScale.X,
+                                float.Parse(temp[1]) * ScreenManager.Instance.ScreenScale.Y));
                             break;
                         case "Align":
                             temp = fileManager.Contents[i][j].Split(',');
@@ -70,11 +72,11 @@ namespace TM2
                                 align = temp[1];
                                 if (align == "X")
                                 {
-                                    position.Add(new Vector2((ScreenManager.Instance.Dimensions.X - images[i].Width * scale[i]) / 2, posTemp.Y));
+                                    position.Add(new Vector2((ScreenManager.Instance.Dimensions.X - images[i].Width * scale[i].X) / 2, posTemp.Y));
                                 }
                                 else if (align == "Y")
                                 {
-                                    position.Add(new Vector2(posTemp.X, (ScreenManager.Instance.Dimensions.Y - images[i].Height * scale[i]) / 2));
+                                    position.Add(new Vector2(posTemp.X, (ScreenManager.Instance.Dimensions.Y - images[i].Height * scale[i].Y) / 2));
                                 }
                             }
                             else

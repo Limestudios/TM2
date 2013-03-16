@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using TM2.Helpers;
 
 namespace TM2
 {
@@ -18,11 +19,18 @@ namespace TM2
     {
         GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        InputHelper inputHelper;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            Window.Title = "TEAM MONGOOSE VS ZAMBIES!";
             Content.RootDirectory = "Content";
+
+            //create and configure graphicsDevice
+            SettingsManager.GameSettings gameSettings = SettingsManager.Read("Settings/GameSettings.xml");
+            graphics = new GraphicsDeviceManager(this);
+            ConfigureGraphicsManager(gameSettings);
+
             this.IsFixedTimeStep = false;
         }
 
@@ -35,15 +43,6 @@ namespace TM2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            ScreenManager.Instance.Initialize();
-
-            ScreenManager.Instance.Dimensions = new Vector2(1280, 720);
-            graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferWidth = (int)ScreenManager.Instance.Dimensions.X;
-            graphics.PreferredBackBufferHeight = (int)ScreenManager.Instance.Dimensions.Y;
-            this.Window.Title = "TEAM MONGOOSE VS ZAMBIES!";
-            graphics.ApplyChanges();
-
             base.Initialize();
         }
 
@@ -82,6 +81,15 @@ namespace TM2
             {
                 this.Exit();
             }
+
+            /*if (inputHelper.IsKeyPressed(Buttons.F))
+            {
+                SettingsManager.GameSettings gameSettings = SettingsManager.Read("Settings/GameSettings.xml");
+                gameSettings.PreferredFullScreen = !gameSettings.PreferredFullScreen;
+                SettingsManager.Save("Settings/GameSettings.xml", gameSettings);
+                ConfigureGraphicsManager(gameSettings);
+            }*/
+
             // TODO: Add your update logic here
             ScreenManager.Instance.Update(gameTime);
             base.Update(gameTime);
@@ -98,6 +106,18 @@ namespace TM2
             // TODO: Add your drawing code here
             ScreenManager.Instance.Draw(spriteBatch);
             base.Draw(gameTime);
+        }
+
+        private void ConfigureGraphicsManager(SettingsManager.GameSettings gameSettings)
+        {
+            graphics.PreferredBackBufferWidth = gameSettings.PreferredWindowWidth;
+            graphics.PreferredBackBufferHeight = gameSettings.PreferredWindowHeight;
+            graphics.IsFullScreen = gameSettings.PreferredFullScreen;
+
+            ScreenManager.Instance.Initialize();
+            ScreenManager.Instance.ScreenScale = new Vector2((float)gameSettings.PreferredWindowWidth / (float)gameSettings.DefaultWindowWidth, (float)gameSettings.PreferredWindowHeight / (float)gameSettings.DefaultWindowHeight);
+            ScreenManager.Instance.Dimensions = new Vector2(gameSettings.PreferredWindowWidth, gameSettings.PreferredWindowHeight);
+            graphics.ApplyChanges();
         }
     }
 }

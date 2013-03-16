@@ -1,2 +1,2 @@
 ﻿Load=[Image][Frames][Position][Health][MoveSpeed]
-[Player/playerTemplate][6,6][1,16][10][400]
+[Player/playerTemplate][6,8][1,16][100][400]

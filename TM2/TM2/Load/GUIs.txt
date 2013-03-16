@@ -1,29 +1,29 @@
 ﻿Load=[Title]
 
 Load=[Images][Position][Scale][Align]
-[TitleScreen/TM][175,10][0.5][Center,X]
+[TitleScreen/TM][175,10][0.5,0.5][Center,X]
 
 EndLoad=[Title]
 
 Load=[CharacterSelect]
 
 Load=[Images][Position][Scale][Align]
-[Player/potato][100,100][1][Center,Y]
-[Player/player][100,100][1][Center,X]
+[Player/potato][100,100][1,1][Center,Y]
+[Player/player][100,100][1,1][Center,X]
 
 EndLoad=[CharacterSelect]
 
 Load=[Credits]
 
 Load=[Images][Position][Scale][Align]
-[SplashScreen/LSSplash][600,210][0.1][Center,X]
-[TitleScreen/TM][600,300][.1][Center,X]
+[SplashScreen/LSSplash][600,210][0.1,0.1][Center,X]
+[TitleScreen/TM][600,300][0.1,0.1][Center,X]
 
 EndLoad=[Credits]
 
 Load=[Map1]
 
 Load=[Images][Position][Scale][Align]
-[TitleScreen/TM][10,10][0.2][None]
+[TitleScreen/TM][10,10][0.2,0.2][None]
 
 EndLoad=[Map1]

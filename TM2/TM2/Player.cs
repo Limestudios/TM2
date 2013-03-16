@@ -48,13 +48,13 @@ namespace TM2
 
             if (input.KeyDown(Keys.Right, Keys.D))
             {
-                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 1);
+                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 3);
                 velocity.X = moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.direction = 0;
             }
             else if (input.KeyDown(Keys.Left, Keys.A))
             {
-                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 0);
+                moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 2);
                 velocity.X = -moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 this.direction = 1;
             }
@@ -74,26 +74,41 @@ namespace TM2
             {
                 moveAnimation.IsActive = true;
                 if (this.Direction == 1)
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 2);
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 4);
                 else
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 3);
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 5);
             }
             else if (activateGravity && this.velocity.Y < 0)
             {
                 moveAnimation.IsActive = true;
                 if (this.Direction == 1)
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 4);
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 6);
                 else
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 5);
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 7);
             }
             else if (!input.KeyDown(Keys.Up, Keys.W, Keys.Left, Keys.A, Keys.Right, Keys.D))
             {
                 if (this.Direction == 1)
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 0);
+                {
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 2);
+                }
                 else
-                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 1);
+                {
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 3);
+                }
+            }
 
-                moveAnimation.IsActive = false;
+            if (!input.KeyDown(Keys.Up, Keys.W, Keys.Left, Keys.A, Keys.Right, Keys.D) & velocity.X == 0)
+            {
+                moveAnimation.IsActive = true;
+                if (this.Direction == 1)
+                {
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 0);
+                }
+                else
+                {
+                    moveAnimation.CurrentFrame = new Vector2(moveAnimation.CurrentFrame.X, 1);
+                }
             }
 
             if (ActivateGravity)

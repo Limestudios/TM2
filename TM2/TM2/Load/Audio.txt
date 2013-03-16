@@ -1,7 +1,7 @@
 ﻿Load=[Splash]
 
 Load=[Songs]
-[SplashSound,Audio/SplashSound]
+[SplashSound,Audio/splashScreenMusic]
 
 EndLoad=[Splash]
 

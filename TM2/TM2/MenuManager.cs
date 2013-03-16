@@ -55,16 +55,21 @@ namespace TM2
             {
                 for (int i = 0; i < menuItems.Count; i++)
                 {
-                    dimensions.X += font.MeasureString(menuItems[i]).X + menuImages[i].Width;
-                    dimensions.Y += font.MeasureString(menuItems[i]).Y + menuImages[i].Height;
+                    dimensions.X += (font.MeasureString(menuItems[i]).X * ScreenManager.Instance.ScreenScale.X);
+                    dimensions.Y += (font.MeasureString(menuItems[i]).Y * ScreenManager.Instance.ScreenScale.Y);
                 }
 
-                if (axis == 1)
+                if (axis == 2)
                 {
                     pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
                 }
-                else if (axis == 2)
+                else if (axis == 1)
                 {
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                }
+                else
+                {
+                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
                     pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
                 }
             }
@@ -75,13 +80,13 @@ namespace TM2
 
             for (int i = 0; i < menuImages.Count; i++)
             {
-                dimensions = new Vector2(font.MeasureString(menuItems[i]).X + menuImages[i].Width,
-                    font.MeasureString(menuItems[i]).Y + menuImages[i].Height);
+                dimensions = new Vector2((font.MeasureString(menuItems[i]).X * ScreenManager.Instance.ScreenScale.X),
+                    (font.MeasureString(menuItems[i]).Y * ScreenManager.Instance.ScreenScale.Y));
 
                 if (axis == 1)
                     pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 else
-                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2 - font.MeasureString(menuItems[i]).X / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
 
                 animation.Add(new FadeAnimation());
                 animation[animation.Count - 1].LoadContent(content, menuImages[i], menuItems[i], pos);
@@ -196,6 +201,7 @@ namespace TM2
                 {
                     Type newClass = Type.GetType("TM2." + linkID[itemNumber]);
                     ScreenManager.Instance.AddScreen((GameScreen)Activator.CreateInstance(newClass), inputManager);
+                    audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 500));
                 }
             }
 
@@ -234,6 +240,7 @@ namespace TM2
         {
             for (int i = 0; i < animation.Count; i++)
             {
+                animation[i].Scale = ScreenManager.Instance.ScreenScale;
                 animation[i].Draw(spriteBatch);
             }
         }

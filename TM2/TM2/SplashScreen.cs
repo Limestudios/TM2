@@ -85,13 +85,13 @@ namespace TM2
                     splashImages[i].Height);
 
                 if (axis == 1)
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - splashImages[i].Height) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.X) / 2;
                 else if (axis == 2)
-                    pos.X = (ScreenManager.Instance.Dimensions.X - splashImages[i].Width) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.Y) / 2;
                 else
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - splashImages[i].Width) / 2;
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - splashImages[i].Height) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
                 }
 
                 Animation.Add(new FadeAnimation());
@@ -144,6 +144,8 @@ namespace TM2
             audio = new AudioManager();
             audio.LoadContent(content, "Splash");
             audio.PlaySong(0);
+            audio.MusicVolume = 0.0f;
+            audio.FadeSong(1.0f, new TimeSpan(0,0,1));
 
             for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
@@ -249,6 +251,7 @@ namespace TM2
             spriteBatch.Begin();
             for (int i = 0; i < Animation.Count; i++)
             {
+                Animation[i].Scale = new Vector2(ScreenManager.Instance.ScreenScale.X, ScreenManager.Instance.ScreenScale.Y);
                 Animation[itemNumber].Draw(spriteBatch);
             }
             spriteBatch.End();

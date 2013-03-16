@@ -51,12 +51,16 @@ namespace TM2
                         case "Videos" :
                             video = this.content.Load<Video>(fileManager.Contents[i][j]);
                             videoPlayer = new VideoPlayer();
+                            videoPlayer.Play(video);
+                            videoPlayer.IsLooped = true;
+                            videoPlayer.Pause();
                             break;
                     }
                 }
             }
 
             audio.PlaySong(0, true);
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 1));
         }
 
         public override void UnloadContent()
@@ -79,19 +83,13 @@ namespace TM2
 
             if (dul)
             {
-                videoPlayer.Play(video);
+                videoPlayer.Resume();
                 MediaPlayer.Pause();
             }
             else
             {
-                videoPlayer.Stop();
+                videoPlayer.Pause();
                 MediaPlayer.Resume();
-            }
-
-            if (video.Duration.Seconds == videoPlayer.PlayPosition.Seconds + 1)
-            {
-                videoPlayer.Stop();
-                videoPlayer.Play(video);
             }
         }
 
@@ -105,7 +103,7 @@ namespace TM2
 
             // Drawing to the rectangle will stretch the 
             // video to fill the screen
-            Rectangle screen = new Rectangle(0, 0, 1280, 720);
+            Rectangle screen = new Rectangle((int)ScreenManager.Instance.Dimensions.X - video.Width / 2, (int)ScreenManager.Instance.Dimensions.Y - video.Height / 2, video.Width / 2, video.Height / 2);
 
             spriteBatch.Begin();
             // Draw the video, if we have a texture to draw.

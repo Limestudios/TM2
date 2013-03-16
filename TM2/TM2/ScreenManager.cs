@@ -93,12 +93,21 @@ namespace TM2
             set { dimensions = value; }
         }
 
+        Vector2 screenScale;
+
+        public Vector2 ScreenScale
+        {
+            get { return screenScale; }
+            set { screenScale = value; }
+        }
+
         public Texture2D NullImage
         {
             get { return nullImage; }
         }
 
         public GraphicsDevice graphicsDevice;
+        public GraphicsDeviceManager graphicsDeviceManager;
 
         #endregion
 
@@ -152,7 +161,7 @@ namespace TM2
             fadeTexture = this.content.Load<Texture2D>("fade");
             nullImage = this.content.Load<Texture2D>("null");
             Animation.LoadContent(content, fadeTexture, "", Vector2.Zero);
-            Animation.Scale = new Vector2(1280,720);
+            Animation.Scale = new Vector2(this.Dimensions.X, this.Dimensions.Y);
         }
         public void Update(GameTime gameTime)
         {

@@ -1,5 +1,5 @@
 ﻿Load=[Axis][Align][Font][Animation][FadeSpeed]
-[3][Center][Coolvetica Rg][Fade][0.6]
+[3][Center][Coolvetica Rg][Fade][0.4]
 
 Load=[Image][Alpha]
 [SplashScreen/LSSplash][0.001]
