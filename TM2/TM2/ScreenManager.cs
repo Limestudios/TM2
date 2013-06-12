@@ -160,7 +160,7 @@ namespace TM2
 
             fadeTexture = this.content.Load<Texture2D>("fade");
             nullImage = this.content.Load<Texture2D>("null");
-            Animation.LoadContent(content, fadeTexture, "", Vector2.Zero);
+            Animation.LoadContent(content, fadeTexture, "", Vector2.Zero, Color.White);
             Animation.Scale = new Vector2(this.Dimensions.X, this.Dimensions.Y);
         }
         public void Update(GameTime gameTime)
@@ -187,6 +187,7 @@ namespace TM2
 
         private void Transition(GameTime gameTime)
         {
+            Animation.Scale = new Vector2(this.Dimensions.X, this.Dimensions.Y);
             fAnimation.Update(gameTime, ref Animation);
             if (Animation.Alpha == 1.0f && fAnimation.Timer.TotalSeconds == 1.0f)
             {

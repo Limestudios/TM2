@@ -5,11 +5,14 @@ using System.Text;
 using System.IO;
 using System.Xml.Serialization;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
 
 namespace TM2
 {
     public class SettingsManager
     {
+        public static GameSettings gameSettings;
+
         [Serializable]
         public struct KeyboardSettings
         {
@@ -54,7 +57,6 @@ namespace TM2
 
         public static GameSettings Read(string settingsFilename)
         {
-            GameSettings gameSettings;
             Stream stream = File.OpenRead(settingsFilename);
             XmlSerializer serializer = new XmlSerializer(typeof(GameSettings));
             gameSettings = (GameSettings)serializer.Deserialize(stream);
@@ -64,6 +66,8 @@ namespace TM2
 
         public static void Save(string settingsFilename, GameSettings gameSettings)
         {
+            if (File.Exists(settingsFilename))
+                File.Delete(settingsFilename);
             Stream stream = File.OpenWrite(settingsFilename);
             XmlSerializer serializer = new XmlSerializer(typeof(GameSettings));
             serializer.Serialize(stream, gameSettings);
@@ -82,6 +86,17 @@ namespace TM2
             dictionary.Add(Buttons.Y, keyboard.Y);
 
             return dictionary;
+        }
+
+        public static void ConfigureGraphicsManager(GraphicsDeviceManager graphics, SettingsManager.GameSettings gameSettings)
+        {
+            graphics.PreferredBackBufferWidth = gameSettings.PreferredWindowWidth;
+            graphics.PreferredBackBufferHeight = gameSettings.PreferredWindowHeight;
+            graphics.IsFullScreen = gameSettings.PreferredFullScreen;
+
+            ScreenManager.Instance.ScreenScale = new Vector2((float)gameSettings.PreferredWindowWidth / (float)gameSettings.DefaultWindowWidth, (float)gameSettings.PreferredWindowHeight / (float)gameSettings.DefaultWindowHeight);
+            ScreenManager.Instance.Dimensions = new Vector2(gameSettings.PreferredWindowWidth, gameSettings.PreferredWindowHeight);
+            graphics.ApplyChanges();
         }
     }
 }

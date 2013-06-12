@@ -62,16 +62,16 @@ namespace TM2
 
                 if (axis == 1)
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
                 }
                 else if (axis == 2)
                 {
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 }
                 else
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 }
             }
             else
@@ -85,32 +85,18 @@ namespace TM2
                     splashImages[i].Height);
 
                 if (axis == 1)
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.X) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 else if (axis == 2)
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.Y) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
                 else
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 }
 
                 Animation.Add(new FadeAnimation());
-                Animation[Animation.Count - 1].LoadContent(content, splashImages[i], splashItems[i], pos);
+                Animation[Animation.Count - 1].LoadContent(content, splashImages[i], splashItems[i], pos - dimensions/2, Color.White);
                 Animation[Animation.Count - 1].Font = font;
-
-                if (axis == 1)
-                {
-                    pos.X += dimensions.X;
-                }
-                else if (axis == 2)
-                {
-                    pos.Y += dimensions.Y;
-                }
-                else
-                {
-                    pos.X += dimensions.X;
-                    pos.Y += dimensions.Y;
-                }
             }
 
             for (int i = 0; i < Animation.Count; i++)
@@ -251,7 +237,7 @@ namespace TM2
             spriteBatch.Begin();
             for (int i = 0; i < Animation.Count; i++)
             {
-                Animation[i].Scale = new Vector2(ScreenManager.Instance.ScreenScale.X, ScreenManager.Instance.ScreenScale.Y);
+                Animation[itemNumber].Scale = ScreenManager.Instance.ScreenScale;
                 Animation[itemNumber].Draw(spriteBatch);
             }
             spriteBatch.End();

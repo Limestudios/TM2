@@ -197,7 +197,7 @@ namespace TM2
             velocity = Vector2.Zero;
             syncTilePosition = false;
             activateGravity = true;
-            moveAnimation.LoadContent(content, image, "", position);
+            moveAnimation.LoadContent(content, image, "", position, Color.White);
         }
 
         public virtual void UnloadContent()
@@ -210,11 +210,11 @@ namespace TM2
             syncTilePosition = false;
             prevPosition = position;
 
-            camMinX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 2, 0, map.layer.MapDimensions.X));
-            camMaxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 2, 0, map.layer.MapDimensions.X));
+            camMinX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 3 / camera.Zoom, 0, map.layer.MapDimensions.X));
+            camMaxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 3 / camera.Zoom, 0, map.layer.MapDimensions.X));
 
-            camMinY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 2, 0, map.layer.MapDimensions.Y));
-            camMaxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, map.layer.MapDimensions.Y));
+            camMinY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 3 / camera.Zoom, 0, map.layer.MapDimensions.Y));
+            camMaxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 3 / camera.Zoom, 0, map.layer.MapDimensions.Y));
         }
 
         public virtual void OnCollision(Entity e, SoundEngine soundEngine)

@@ -90,7 +90,7 @@ namespace TM2
         }
 
         public void LoadContent(ContentManager Content, Texture2D image,
-            string text, Vector2 position)
+            string text, Vector2 position, Color color)
         {
             content = new ContentManager(Content.ServiceProvider, "Content");
             this.image = image;
@@ -99,7 +99,33 @@ namespace TM2
             if (text != String.Empty)
             {
                 font = this.content.Load<SpriteFont>("Coolvetica Rg");
-                color = new Color(100, 100, 100);
+                this.color = color;
+            }
+            rotation = 0.0f;
+            axis = 0.0f;
+            scale = new Vector2(1, 1);
+            alpha = 1.0f;
+            isActive = false;
+
+            currentFrame = new Vector2(0, 0);
+            if (image != null && frames != Vector2.Zero)
+                sourceRect = new Rectangle((int)currentFrame.X * FrameWidth, (int)currentFrame.Y * FrameHeight, FrameWidth, FrameHeight);
+            else
+                sourceRect = new Rectangle(0, 0, image.Width, image.Height);
+        }
+
+
+        public void LoadContent(ContentManager Content, Texture2D image,
+            string text, Vector2 position, Color color, SpriteFont font)
+        {
+            content = new ContentManager(Content.ServiceProvider, "Content");
+            this.image = image;
+            this.text = text;
+            this.position = position;
+            if (text != String.Empty)
+            {
+                this.font = font;
+                this.color = color;
             }
             rotation = 0.0f;
             axis = 0.0f;
@@ -136,20 +162,32 @@ namespace TM2
             {
                 origin = new Vector2(sourceRect.Width / 2,
                     sourceRect.Height / 2);
-                spriteBatch.Draw(image, position + origin,
-                    sourceRect, Color.White * alpha,
-                    rotation, origin, scale,
-                    SpriteEffects.None, 0.0f);
+
+                spriteBatch.Draw(image,
+                    position + origin,
+                    sourceRect,
+                    Color.White * alpha,
+                    rotation,
+                    origin,
+                    scale,
+                    SpriteEffects.None,
+                    0.0f);
             }
 
             if (text != String.Empty)
             {
                 origin = new Vector2(font.MeasureString(text).X / 2,
                     font.MeasureString(text).Y / 2);
-                spriteBatch.DrawString(font, text, 
-                    position + origin, color * alpha,
-                    rotation, origin, scale, 
-                    SpriteEffects.None, 0.0f);
+
+                spriteBatch.DrawString(font,
+                    text, 
+                    position + origin,
+                    color * alpha,
+                    rotation,
+                    origin,
+                    scale, 
+                    SpriteEffects.None,
+                    0.0f);
             }
         }
     }

@@ -11,50 +11,34 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using TM2.Helpers;
+
 namespace TM2
 {
     public class OptionsScreen : GameScreen
     {
-        SpriteFont font;
-        OptionsManager options;
-        FileManager fileManager;
-        AudioManager audioManager;
+        MenuManager menu;
         List<Texture2D> images;
-        Song song;
-
-        protected Rectangle sourceRect;
-
-        int imageNumber;
-
-        protected float scale;
-
-        Vector2 position;
+        public AudioManager audio;
+        GUIManager gui;
 
         public override void LoadContent(ContentManager content, InputManager inputManager)
         {
-            this.content = new ContentManager(content.ServiceProvider, "Content");
             images = new List<Texture2D>();
             base.LoadContent(content, inputManager);
-            font = this.content.Load<SpriteFont>("TitleScreen/Coolvetica Rg");
 
-            imageNumber = 0;
+            menu = new MenuManager();
+            menu.LoadContent(content, "Option");
 
-            options = new OptionsManager();
-            options.LoadContent(content, "Options");
+            audio = new AudioManager();
+            audio.LoadContent(content, "Option");
+            audio.MusicVolume = 1.0f;
 
-            audioManager = new AudioManager();
-            audioManager.LoadContent(content, "Options");
-            audioManager.PlaySong(0, true);
-
-            fileManager = new FileManager();
-            fileManager.LoadContent("Load/Options.txt", attributes, contents, "OptionsScreen");
-
-            position = Vector2.Zero;
+            audio.FadeSong(1.0f, new TimeSpan(0, 0, 0, 1));
         }
 
         public override void UnloadContent()
         {
-            options.UnloadContent();
             inputManager = null;
             attributes.Clear();
             contents.Clear();
@@ -67,12 +51,22 @@ namespace TM2
         public override void Update(GameTime gameTime)
         {
             inputManager.Update();
-            options.Update(gameTime, inputManager);
+            menu.Update(gameTime, inputManager, audio);
+
+            if (inputManager.KeyPressed(Keys.Back))
+            {
+                SettingsManager.Save("Settings/GameSettings.xml", SettingsManager.gameSettings);
+                SettingsManager.ConfigureGraphicsManager(Game1.graphics, SettingsManager.gameSettings);
+                ScreenManager.Instance.AddScreen(new TitleScreen(), inputManager);
+                audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 0, 800));
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            options.Draw(spriteBatch);
+            spriteBatch.Begin();
+            menu.Draw(spriteBatch);
+            spriteBatch.End();
         }
     }
 }

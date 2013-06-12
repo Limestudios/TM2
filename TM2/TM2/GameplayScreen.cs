@@ -175,6 +175,8 @@ namespace TM2
                 ScreenManager.Instance.AddScreen((GameScreen)Activator.CreateInstance(newClass), inputManager);
                 audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 500));
             }
+
+            camera.Zoom = ScreenManager.Instance.ScreenScale.X;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -187,9 +189,9 @@ namespace TM2
             spriteBatch.End();
             spriteBatch.Begin();
             guiManager.Draw(spriteBatch);
-            spriteBatch.DrawString(font, "Use + / - keys to switch between characters" + "    Audio Info: " +audio.songs[0].Duration.TotalMinutes + " [" + audio.songs[0].PlayCount +"]", new Vector2(126, 10), Color.Black);
-            spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30), Color.Black);
-            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString() + " - " + frameRateAcceptable, new Vector2(126, 50), Color.Black);
+            spriteBatch.DrawString(font, "Use + / - keys to switch between characters" + "    Audio Info: " + audio.songs[0].Duration.TotalMinutes + " [" + audio.songs[0].PlayCount + "]", new Vector2(126, 10) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Use the T key to make the camera shake!", new Vector2(126, 30) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "FPS: " + frameRate.ToString() + " - " + frameRateAcceptable, new Vector2(126, 50) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
 
             int minX = (int)(Math.Round((double)((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
             int maxX = (int)(Math.Round((double)((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X)));
@@ -197,24 +199,24 @@ namespace TM2
             int minY = (int)(Math.Round((double)((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y)));
             int maxY = (int)(Math.Round((double)((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y)));
 
-            spriteBatch.DrawString(font, "Camera :   X: " + new Vector2(minX, maxX) + " Y: " + new Vector2(minY, maxY), new Vector2(126, 80), Color.Black);
+            spriteBatch.DrawString(font, "Camera :   X: " + new Vector2(minX, maxX) + " Y: " + new Vector2(minY, maxY), new Vector2(126, 80) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
 
-            spriteBatch.Draw(pixel, new Rectangle(960, 4, 100 + this.player.Entities[playerIndex].Image.Width, 266 + this.player.Entities[playerIndex].Image.Height), Color.DarkGray * 0.2f);
-            spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name , new Vector2(966, 10), Color.Black);
-            spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40), Color.Black);
-            spriteBatch.DrawString(font, "Image :", new Vector2(966, 70), Color.Black);
-            spriteBatch.Draw(this.player.Entities[playerIndex].Image, new Rectangle(1052, 80, this.player.Entities[playerIndex].Image.Width, this.player.Entities[playerIndex].Image.Height), Color.White * 0.5f);
-            spriteBatch.DrawString(font, "Size : " + this.player.Entities[playerIndex].Image.Width + "px by " + this.player.Entities[playerIndex].Image.Height + "px", new Vector2(1052, 80 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Position :     X : " + Math.Floor((this.player.Entities[playerIndex].Position.X) / 64), new Vector2(966, 110 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Y : " + Math.Floor((this.player.Entities[playerIndex].Position.Y) / 64), new Vector2(1052, 130 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Frames :       Amount : " + this.player.Entities[playerIndex].Animation.Frames.X + " by " + this.player.Entities[playerIndex].Animation.Frames.Y, new Vector2(966, 160 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Size :  " + this.player.Entities[playerIndex].Animation.FrameWidth + "px by " + this.player.Entities[playerIndex].Animation.FrameHeight + "px", new Vector2(1052, 180 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "MoveSpeed :  " + this.player.Entities[playerIndex].MoveSpeed, new Vector2(1052, 200 + this.player.Entities[playerIndex].Image.Height), Color.Black);
-            spriteBatch.DrawString(font, "Vel: " + this.player.Entities[playerIndex].Velocity, new Vector2(1052, 230 + this.player.Entities[playerIndex].Image.Height), Color.Black);
+            spriteBatch.Draw(pixel, new Rectangle((int)(960 * ScreenManager.Instance.ScreenScale.X), (int)(4 * ScreenManager.Instance.ScreenScale.Y), (int)((100 + this.player.Entities[playerIndex].Image.Width) * ScreenManager.Instance.ScreenScale.X), (int)((266 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale.Y)), Color.DarkGray * 0.2f);
+            spriteBatch.DrawString(font, "PlayerInfo :   " + this.player.Entities[playerIndex].Image.Name, new Vector2(966, 10) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Health :        " + this.player.Entities[playerIndex].Health.ToString(), new Vector2(966, 40) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Image :", new Vector2(966, 70) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.Draw(this.player.Entities[playerIndex].Image, new Rectangle((int)(1052 * ScreenManager.Instance.ScreenScale.X), (int)(80 * ScreenManager.Instance.ScreenScale.Y), (int)(this.player.Entities[playerIndex].Image.Width * ScreenManager.Instance.ScreenScale.X), (int)(this.player.Entities[playerIndex].Image.Height * ScreenManager.Instance.ScreenScale.Y)), Color.White * 0.5f);
+            spriteBatch.DrawString(font, "Size : " + this.player.Entities[playerIndex].Image.Width + "px by " + this.player.Entities[playerIndex].Image.Height + "px", new Vector2(1052, 80 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Position :     X : " + Math.Floor((this.player.Entities[playerIndex].Position.X) / 64), new Vector2(966, 110 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Y : " + Math.Floor((this.player.Entities[playerIndex].Position.Y) / 64), new Vector2(1052, 130 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Frames :       Amount : " + this.player.Entities[playerIndex].Animation.Frames.X + " by " + this.player.Entities[playerIndex].Animation.Frames.Y, new Vector2(966, 160 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Size :  " + this.player.Entities[playerIndex].Animation.FrameWidth + "px by " + this.player.Entities[playerIndex].Animation.FrameHeight + "px", new Vector2(1052, 180 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "MoveSpeed :  " + this.player.Entities[playerIndex].MoveSpeed, new Vector2(1052, 200 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
+            spriteBatch.DrawString(font, "Vel: " + this.player.Entities[playerIndex].Velocity, new Vector2(1052, 230 + this.player.Entities[playerIndex].Image.Height) * ScreenManager.Instance.ScreenScale, Color.Black, 0f, Vector2.Zero, ScreenManager.Instance.ScreenScale, SpriteEffects.None, 1f);
 
             int frameX = (int)this.player.Entities[playerIndex].Animation.CurrentFrame.X * this.player.Entities[playerIndex].Animation.FrameWidth;
             int frameY = (int)this.player.Entities[playerIndex].Animation.CurrentFrame.Y * this.player.Entities[playerIndex].Animation.FrameHeight;
-            spriteBatch.Draw(highlight, new Rectangle(frameX + 1052, frameY + 80, this.player.Entities[playerIndex].Animation.FrameWidth, this.player.Entities[playerIndex].Animation.FrameHeight), Color.White);
+            spriteBatch.Draw(highlight, new Rectangle((int)((frameX + 1052)* ScreenManager.Instance.ScreenScale.X), (int)((frameY + 80) * ScreenManager.Instance.ScreenScale.Y), (int)(this.player.Entities[playerIndex].Animation.FrameWidth * ScreenManager.Instance.ScreenScale.X), (int)(this.player.Entities[playerIndex].Animation.FrameHeight * ScreenManager.Instance.ScreenScale.Y)), Color.White);
             spriteBatch.End();
         }
     }

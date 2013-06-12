@@ -17,6 +17,7 @@ namespace TM2
     {
         List<string> menuItems;
         List<string> animationTypes, linkType, linkID;
+        List<Color> colors;
         List<Texture2D> menuImages;
         List<Animation> animation;
         FadeAnimation fAnimation;
@@ -55,22 +56,24 @@ namespace TM2
             {
                 for (int i = 0; i < menuItems.Count; i++)
                 {
-                    dimensions.X += (font.MeasureString(menuItems[i]).X * ScreenManager.Instance.ScreenScale.X);
-                    dimensions.Y += (font.MeasureString(menuItems[i]).Y * ScreenManager.Instance.ScreenScale.Y);
+                    dimensions.X += (font.MeasureString(menuItems[i]).X);
+                    dimensions.Y += (font.MeasureString(menuItems[i]).Y);
                 }
 
                 if (axis == 2)
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
+                    pos.Y = position.Y * ScreenManager.Instance.ScreenScale.Y;
                 }
                 else if (axis == 1)
                 {
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
+                    pos.X = position.X * ScreenManager.Instance.ScreenScale.X;
                 }
                 else
                 {
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y - dimensions.Y) / 2;
+                    pos.X = (ScreenManager.Instance.Dimensions.X) / 2;
+                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
                 }
             }
             else
@@ -78,18 +81,21 @@ namespace TM2
                 pos = position;
             }
 
-            for (int i = 0; i < menuImages.Count; i++)
+            for (int i = 0; i < menuItems.Count; i++)
             {
-                dimensions = new Vector2((font.MeasureString(menuItems[i]).X * ScreenManager.Instance.ScreenScale.X),
-                    (font.MeasureString(menuItems[i]).Y * ScreenManager.Instance.ScreenScale.Y));
+                dimensions = new Vector2(font.MeasureString(menuItems[i]).X, font.MeasureString(menuItems[i]).Y);
 
                 if (axis == 1)
-                    pos.Y = (ScreenManager.Instance.Dimensions.Y) / 2;
-                else
-                    pos.X = (ScreenManager.Instance.Dimensions.X - dimensions.X) / 2;
+                {
+                    pos.Y = ((ScreenManager.Instance.Dimensions.Y) / 2);
+                }
+                else if (axis == 2)
+                {
+                    pos.X = ((ScreenManager.Instance.Dimensions.X) / 2);
+                }
 
                 animation.Add(new FadeAnimation());
-                animation[animation.Count - 1].LoadContent(content, menuImages[i], menuItems[i], pos);
+                animation[animation.Count - 1].LoadContent(content, menuImages[i], menuItems[i], pos - dimensions / 2, colors[i]);
                 animation[animation.Count - 1].Font = font;
 
                 if (axis == 1)
@@ -98,7 +104,7 @@ namespace TM2
                 }
                 else
                 {
-                    pos.Y += dimensions.Y;
+                    pos.Y += dimensions.Y * ScreenManager.Instance.ScreenScale.Y;
                 }
             }
         }
@@ -114,11 +120,14 @@ namespace TM2
             animationTypes = new List<string>();
             linkID = new List<string>();
             linkType = new List<string>();
+            colors = new List<Color>();
             itemNumber = 0;
 
             position = Vector2.Zero;
             fileManager = new FileManager();
             fileManager.LoadContent("Load/Menus.txt", id);
+
+            string[] temp;
 
             for (int i = 0; i < fileManager.Attributes.Count; i++)
             {
@@ -128,6 +137,19 @@ namespace TM2
                     {
                         case "Font":
                             font = this.content.Load<SpriteFont>(fileManager.Contents[i][j]);
+                            break;
+                        case "Color" :
+                            if (fileManager.Contents[i][j].Contains(","))
+                            {
+                                temp = fileManager.Contents[i][j].Split(',');
+                                colors.Add(new Color(int.Parse(temp[0]),
+                                                     int.Parse(temp[1]),
+                                                     int.Parse(temp[2])));
+                            }
+                            else if (fileManager.Contents[i][j].Contains("Default"))
+                                colors.Add(new Color(100, 100, 100));
+                            else
+                                colors.Add(Color.Black);
                             break;
                         case "Item":
                             menuItems.Add(fileManager.Contents[i][j]);
@@ -139,12 +161,12 @@ namespace TM2
                             axis = int.Parse(fileManager.Contents[i][j]);
                             break;
                         case "Position":
-                            string[] temp = fileManager.Contents[i][j].Split(' ');
+                            temp = fileManager.Contents[i][j].Split(',');
                             position = new Vector2(float.Parse(temp[0]),
                                 float.Parse(temp[1]));
                             break;
                         case "Source":
-                            temp = fileManager.Contents[i][j].Split(' ');
+                            temp = fileManager.Contents[i][j].Split(',');
                             source = new Rectangle(int.Parse(temp[0]),
                                 int.Parse(temp[1]), int.Parse(temp[2]),
                                 int.Parse(temp[3]));
@@ -202,6 +224,18 @@ namespace TM2
                     Type newClass = Type.GetType("TM2." + linkID[itemNumber]);
                     ScreenManager.Instance.AddScreen((GameScreen)Activator.CreateInstance(newClass), inputManager);
                     audio.FadeSong(0.0f, new TimeSpan(0, 0, 0, 500));
+                }
+                if (linkType[itemNumber] == "ScreenSize")
+                {
+                    string[] temp = linkID[itemNumber].Split(',');
+                    SettingsManager.gameSettings.PreferredWindowWidth = int.Parse(temp[0]);
+                    SettingsManager.gameSettings.PreferredWindowHeight = int.Parse(temp[1]);
+                    SettingsManager.ConfigureGraphicsManager(Game1.graphics, SettingsManager.gameSettings);
+                }
+                if (linkType[itemNumber] == "FullScreen")
+                {
+                    SettingsManager.gameSettings.PreferredFullScreen = !SettingsManager.gameSettings.PreferredFullScreen;
+                    SettingsManager.ConfigureGraphicsManager(Game1.graphics, SettingsManager.gameSettings);
                 }
             }
 

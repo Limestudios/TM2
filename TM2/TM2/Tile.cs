@@ -73,7 +73,7 @@ namespace TM2
             counter = 0;
             moveSpeed = 80f;
             animation = new Animation();
-            animation.LoadContent(ScreenManager.Instance.Content, tileImage, "", position);
+            animation.LoadContent(ScreenManager.Instance.Content, tileImage, "", position, Color.White);
             containsEntity = false;
             velocity = Vector2.Zero;
         }
@@ -90,7 +90,7 @@ namespace TM2
             counter = 0;
             moveSpeed = 80f;
             animation = new Animation();
-            animation.LoadContent(ScreenManager.Instance.Content, tileImage, text, position);
+            animation.LoadContent(ScreenManager.Instance.Content, tileImage, text, position, Color.White);
             containsEntity = false;
             velocity = Vector2.Zero;
         }

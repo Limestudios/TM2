@@ -134,7 +134,7 @@ namespace TM2
             currentPosition.Y = MathHelper.SmoothStep(currentPosition.Y, MathHelper.Clamp(targetPosition.Y, 0 - halfViewportHeight, Layer.Instance.MapDimensions.Y * Layer.Instance.TileDimensions.Y - halfViewportHeight), delta * 9.0f);
 
             mapWidth = (int)ScreenManager.Instance.Dimensions.X * 10;
-            mapHeight = (int)ScreenManager.Instance.Dimensions.Y * 3;
+            mapHeight = (int)ScreenManager.Instance.Dimensions.Y * 10;
 
             if (currentPosition.X < (int)ScreenManager.Instance.Dimensions.X / 2) currentPosition.X = (int)ScreenManager.Instance.Dimensions.X / 2;
             if (currentPosition.Y < (int)ScreenManager.Instance.Dimensions.Y / 2) currentPosition.Y = (int)ScreenManager.Instance.Dimensions.Y / 2;
@@ -150,7 +150,7 @@ namespace TM2
 
             transform = Matrix.CreateTranslation(new Vector3(xpos, ypos, 0)) *
                         Matrix.CreateRotationZ(Rotation) *
-                        Matrix.CreateScale(new Vector3(Zoom, Zoom, 0)) *
+                        Matrix.CreateScale(new Vector3(Zoom / ScreenManager.Instance.ScreenScale.X, Zoom / ScreenManager.Instance.ScreenScale.Y, 0)) *
                         Matrix.CreateTranslation(new Vector3(halfViewportWidth, halfViewportHeight, 0));
 
             return transform;

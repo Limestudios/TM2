@@ -1,22 +1,26 @@
 ﻿Load=[Title]
 
-Load=[Axis][Align][Font][Animation]
-[3][Center][Coolvetica Rg][Fade]
+Load=[Axis][Align][Font][Animation][Position]
+[2][Center][Coolvetica Rg][Fade][300,300]
 
-Load=[Item][LinkType][LinkID][Image]
-[NEW GAME][Screen][GameplayScreen][null]
-[LOAD GAME][Screen][SplashScreen][null]
-[OPTIONS][Screen][SplashScreen][null]
-[CREDITS][Screen][CreditsScreen][null]
+Load=[Item][LinkType][LinkID][Color]
+[NEW GAME][Screen][GameplayScreen][100,200,100]
+[LOAD GAME][Screen][SplashScreen][200,200,200]
+[OPTIONS][Screen][OptionsScreen][Default]
+[CREDITS][Screen][CreditsScreen][Default]
 
 EndLoad=[Title]
 
-Load=[CharacterScreen]
+Load=[Option]
 
-Load=[Axis][Align][Font][Animation]
-[2][Center][Coolvetica Rg][Fade]
+Load=[Axis][Align][Font][Animation][Position]
+[2][Center][Coolvetica Rg][Fade][200,200]
 
-Load=[Item][LinkType][LinkID][Image]
-[NEW GAME][Screen][GameplayScreen][null]
+Load=[Item][LinkType][LinkID][Color]
+[640 / 480][ScreenSize][640,480][100,200,100]
+[800 / 600][ScreenSize][800,600][100,200,100]
+[1280 / 720][ScreenSize][1280,720][100,200,100]
+[1920 / 1080][ScreenSize][1920,1080][100,200,100]
+[FullScreen][FullScreen][null][100,200,100]
 
-EndLoad=[CharacterScreen]
+EndLoad=[Option]

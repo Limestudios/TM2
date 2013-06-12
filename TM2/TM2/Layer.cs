@@ -138,11 +138,11 @@ namespace TM2
 
         public void Update(GameTime gameTime, Camera camera, Map map)
         {
-            minX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 2, 0, this.MapDimensions.X));
-            maxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 2, 0, this.MapDimensions.X));
+            minX = (int)(MathHelper.Clamp((camera.CurrentPosision.X - camera.HalfViewportWidth) / map.layer.TileDimensions.X - 3 / camera.Zoom, 0, this.MapDimensions.X));
+            maxX = (int)(MathHelper.Clamp((camera.CurrentPosision.X + camera.HalfViewportWidth) / map.layer.TileDimensions.X + 3 / camera.Zoom, 0, this.MapDimensions.X));
 
-            minY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 2, 0, this.MapDimensions.Y));
-            maxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 2, 0, this.MapDimensions.Y));
+            minY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y - camera.HalfViewportHeight) / map.layer.TileDimensions.Y - 3 / camera.Zoom, 0, this.MapDimensions.Y));
+            maxY = (int)(MathHelper.Clamp((camera.CurrentPosision.Y + camera.HalfViewportHeight) / map.layer.TileDimensions.Y + 3 / camera.Zoom, 0, this.MapDimensions.Y));
 
             for (int i = 0; i < tiles.Count; i++)
             {

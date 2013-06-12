@@ -17,9 +17,8 @@ namespace TM2
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        public static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        InputHelper inputHelper;
 
         public Game1()
         {
@@ -29,9 +28,9 @@ namespace TM2
             //create and configure graphicsDevice
             SettingsManager.GameSettings gameSettings = SettingsManager.Read("Settings/GameSettings.xml");
             graphics = new GraphicsDeviceManager(this);
-            ConfigureGraphicsManager(gameSettings);
-
             this.IsFixedTimeStep = false;
+            ScreenManager.Instance.Initialize();
+            SettingsManager.ConfigureGraphicsManager(graphics, gameSettings);
         }
 
         /// <summary>
@@ -106,18 +105,6 @@ namespace TM2
             // TODO: Add your drawing code here
             ScreenManager.Instance.Draw(spriteBatch);
             base.Draw(gameTime);
-        }
-
-        private void ConfigureGraphicsManager(SettingsManager.GameSettings gameSettings)
-        {
-            graphics.PreferredBackBufferWidth = gameSettings.PreferredWindowWidth;
-            graphics.PreferredBackBufferHeight = gameSettings.PreferredWindowHeight;
-            graphics.IsFullScreen = gameSettings.PreferredFullScreen;
-
-            ScreenManager.Instance.Initialize();
-            ScreenManager.Instance.ScreenScale = new Vector2((float)gameSettings.PreferredWindowWidth / (float)gameSettings.DefaultWindowWidth, (float)gameSettings.PreferredWindowHeight / (float)gameSettings.DefaultWindowHeight);
-            ScreenManager.Instance.Dimensions = new Vector2(gameSettings.PreferredWindowWidth, gameSettings.PreferredWindowHeight);
-            graphics.ApplyChanges();
         }
     }
 }
